@@ -1,0 +1,94 @@
+name: Continuous Integration
+#trigger on push to main
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+    - develop
+
+jobs:
+  build_flutter:
+    runs-on: ubuntu-latest
+
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+      MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+
+    strategy:
+      matrix:
+        flutter_version: [3.22.1]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter_version }}
+
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Replace API key in google-services.json
+        run: dart run replace_api_key.dart
+
+      - name: Build
+        run: flutter build apk --debug
+
+  lint_flutter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        flutter_version: [3.22.1]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter_version }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Lint
+        run: flutter analyze
+
+  test_flutter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        flutter_version: [3.22.1]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter_version }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Test
+        run: flutter test --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

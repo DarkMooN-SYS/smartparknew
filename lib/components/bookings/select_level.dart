@@ -12,13 +12,12 @@ class LevelSelectPage extends StatefulWidget {
   final String selectedZone;
   final bool futureBooking;
 
-  const LevelSelectPage({
-    required this.bookedAddress,
-    required this.price,
-    required this.selectedZone,
-    required this.futureBooking,
-    super.key
-  });
+  const LevelSelectPage(
+      {required this.bookedAddress,
+      required this.price,
+      required this.selectedZone,
+      required this.futureBooking,
+      super.key});
 
   @override
   State<LevelSelectPage> createState() => _LevelSelectPageState();
@@ -41,7 +40,7 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
     // Add more levels here
   ];
 
-    // Get details on load
+  // Get details on load
   Future<void> getDetails() async {
     setState(() {
       _isFetching = true;
@@ -62,15 +61,18 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
         DocumentSnapshot parkingDocumentSnapshot = querySnapshot.docs[0];
 
         // Get the subcollection 'zones'
-        CollectionReference zonesCollection = parkingDocumentSnapshot.reference.collection('zones');
+        CollectionReference zonesCollection =
+            parkingDocumentSnapshot.reference.collection('zones');
 
         // Query the 'zones' subcollection for a document with matching id
-        DocumentSnapshot zoneDocumentSnapshot = await zonesCollection.doc(widget.selectedZone).get();
+        DocumentSnapshot zoneDocumentSnapshot =
+            await zonesCollection.doc(widget.selectedZone).get();
 
         // Check if a matching document was found
         if (zoneDocumentSnapshot.exists) {
           // Get the subcollection 'levels'
-          CollectionReference levelsCollection = zoneDocumentSnapshot.reference.collection('levels');
+          CollectionReference levelsCollection =
+              zoneDocumentSnapshot.reference.collection('levels');
 
           // Query the 'levels' subcollection for all documents
           QuerySnapshot levelsQuerySnapshot = await levelsCollection.get();
@@ -104,7 +106,8 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
             });
           } else {
             // No levels found
-            showToast(message: 'No levels found for zone: ${widget.selectedZone}');
+            showToast(
+                message: 'No levels found for zone: ${widget.selectedZone}');
           }
         } else {
           // No zone found
@@ -133,114 +136,136 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
     getDetails();
     futureBooking = widget.futureBooking;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2D2F41),
-      body: _isFetching ? loadingWidget()
-      : SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 30.0),
-                    onPressed: () => Navigator.of(context).pop(true),
-                  ),
-                  const Expanded(
-                    child: Text(
-                      'Parking Floors',
-                      style: TextStyle(color: Color(0xFF58C6A9), fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(width: 48), // To balance the back button
-                ],
-              ),
-              const SizedBox(height: 40),
-              const Center(
-                child: Text(
-                  'Choose your parking',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-              ),
-              Center(
-                child: Text(
-                  'Floor on Zone ${widget.selectedZone}',
-                  style: const TextStyle(color: Colors.white, fontSize: 30),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 80),
-                  decoration: BoxDecoration(
-                    // color: Colors.white,
-                    border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    '$totalSlots spaces available',
-                    style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 32),
-              Center(
-                child: Container(
-                  width: 330,
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: levels.expand((levels) => [
-                      _buildLevelButton(levels),
-                    ]).toList(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: SizedBox(
-                  width: 160,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedLevel != null ? const Color(0xFF58C6A9) : const Color(0xFF5B5B5B),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                    onPressed: selectedLevel != null
-                        ? () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => SelectRowPage( // 导航到 SelectRowPage
-                            bookedAddress: widget.bookedAddress,
-                            price: widget.price,
-                            selectedZone: widget.selectedZone,
-                            selectedLevel: selectedLevel!,
-                            futureBooking: futureBooking,
+      body: _isFetching
+          ? loadingWidget()
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white, size: 30.0),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                        const Expanded(
+                          child: Text(
+                            'Parking Floors',
+                            style: TextStyle(
+                                color: Color(0xFF58C6A9),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                      );
-                    }
-                        : null,
-                    child: const Text('Continue', style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ),
+                        const SizedBox(width: 48), // To balance the back button
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    const Center(
+                      child: Text(
+                        'Choose your parking',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        'Floor on Zone ${widget.selectedZone}',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 80),
+                        decoration: BoxDecoration(
+                          // color: Colors.white,
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              width: 2),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Text(
+                          '$totalSlots spaces available',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Center(
+                      child: Container(
+                        width: 330,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 25),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.05),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: levels
+                              .expand((levels) => [
+                                    _buildLevelButton(levels),
+                                  ])
+                              .toList(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: SizedBox(
+                        width: 160,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: selectedLevel != null
+                                ? const Color(0xFF58C6A9)
+                                : const Color(0xFF5B5B5B),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                          onPressed: selectedLevel != null
+                              ? () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => SelectRowPage(
+                                        // 导航到 SelectRowPage
+                                        bookedAddress: widget.bookedAddress,
+                                        price: widget.price,
+                                        selectedZone: widget.selectedZone,
+                                        selectedLevel: selectedLevel!,
+                                        futureBooking: futureBooking,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: const Text('Continue',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 
@@ -254,7 +279,8 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
           backgroundColor: isAvailable
               ? (isSelected ? const Color(0xFF58C6A9) : const Color(0xFF39C16B))
               : const Color(0xFFC0C0C0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         ),
         onPressed: isAvailable
@@ -271,15 +297,15 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
                   showToast(message: 'This must be a future booking');
                 });
               },
-        child: Row(
-            children: [
-              const Icon(Icons.directions_car, color: Colors.white),
-              const SizedBox(width: 10),
-              Text(levels.level, style: const TextStyle(color: Colors.white, fontSize: 18)),
-              const Spacer(),
-              Text('${levels.slots} Slots', style: const TextStyle(color: Colors.white, fontSize: 18)),
-            ]
-        ),
+        child: Row(children: [
+          const Icon(Icons.directions_car, color: Colors.white),
+          const SizedBox(width: 10),
+          Text(levels.level,
+              style: const TextStyle(color: Colors.white, fontSize: 18)),
+          const Spacer(),
+          Text('${levels.slots} Slots',
+              style: const TextStyle(color: Colors.white, fontSize: 18)),
+        ]),
       ),
     );
   }

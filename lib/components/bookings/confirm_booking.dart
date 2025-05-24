@@ -11,15 +11,14 @@ class ConfirmBookingPage extends StatefulWidget {
   final String? selectedRow;
   final bool futureBooking;
 
-  const ConfirmBookingPage({
-    required this.bookedAddress,
-    required this.price,
-    required this.selectedZone,
-    required this.selectedLevel,
-    required this.selectedRow,
-    required this.futureBooking,
-    super.key
-  });
+  const ConfirmBookingPage(
+      {required this.bookedAddress,
+      required this.price,
+      required this.selectedZone,
+      required this.selectedLevel,
+      required this.selectedRow,
+      required this.futureBooking,
+      super.key});
 
   @override
   State<ConfirmBookingPage> createState() => _ConfirmBookingState();
@@ -33,7 +32,6 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
 
   // use the variable to replace the text
   // final String appBarTitle = apiResponse['appBarTitle'];
-
 
   final String appBarTitle = 'Confirm Booking';
   // final String parkingSlot = 'Parking Slot ${widget.selectedZone}${widget.selectedLevel}${widget.selectedRow}';
@@ -50,7 +48,8 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
         return Theme(
           data: ThemeData.light().copyWith(
             timePickerTheme: const TimePickerThemeData(
-              dialHandColor: Color(0xFF58C6A9), // Change this to your desired color
+              dialHandColor:
+                  Color(0xFF58C6A9), // Change this to your desired color
             ),
           ),
           child: child!,
@@ -78,63 +77,67 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
     }
   }
 
-  void validateInputs() {  
+  void validateInputs() {
     // Get the current date
     DateTime now = DateTime.now();
 
     // Check if _checkInDate is today
     bool isToday = _checkInDate.year == now.year &&
-                  _checkInDate.month == now.month &&
-                  _checkInDate.day == now.day;
-    
+        _checkInDate.month == now.month &&
+        _checkInDate.day == now.day;
+
     // Split the time string into hours and minutes
     List<String> timeParts = _checkInTime.split(":");
     int hours = int.parse(timeParts[0]);
     int minutes = int.parse(timeParts[1]);
 
-    if(isToday){
+    if (isToday) {
       // Create a DateTime object for today with the given time
-      DateTime checkInDateTime = DateTime(now.year, now.month, now.day, hours, minutes);
+      DateTime checkInDateTime =
+          DateTime(now.year, now.month, now.day, hours, minutes);
 
       // Add the duration to the check-in time
-      DateTime endDateTime = checkInDateTime.add(Duration(hours: _currentSliderValue.toInt()));
+      DateTime endDateTime =
+          checkInDateTime.add(Duration(hours: _currentSliderValue.toInt()));
 
       // if( widget.futureBooking ) { endDateTime = endDateTime.add(const Duration(hours: 24)); }
 
-      if(endDateTime.isBefore(now)){
+      if (endDateTime.isBefore(now)) {
         showToast(message: "Invalid time");
         return;
       }
     }
-    if ( widget.futureBooking ) {
+    if (widget.futureBooking) {
       // Create a DateTime object for the check in time
-      DateTime checkInDateTime = DateTime(_checkInDate.year, _checkInDate.month, _checkInDate.day, hours, minutes);
+      DateTime checkInDateTime = DateTime(_checkInDate.year, _checkInDate.month,
+          _checkInDate.day, hours, minutes);
 
       // Add the duration to the check-in time
-      DateTime startDateTime = checkInDateTime.subtract(const Duration(hours: 24));
+      DateTime startDateTime =
+          checkInDateTime.subtract(const Duration(hours: 24));
 
       // if( widget.futureBooking ) { endDateTime = endDateTime.add(const Duration(hours: 24)); }
 
-      if(startDateTime.isBefore(now)){
+      if (startDateTime.isBefore(now)) {
         showToast(message: "Invalid time");
         return;
       }
     }
 
-    if(mounted){
+    if (mounted) {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => ChooseVehiclePage(
-                            bookedAddress: widget.bookedAddress,
-                            selectedZone: widget.selectedZone,
-                            selectedLevel: widget.selectedLevel,
-                            selectedRow: widget.selectedRow,
-                            selectedTime: _checkInTime,
-                            selectedDate: _checkInDate,
-                            selectedDuration: _currentSliderValue,
-                            price: widget.price,
-                            selectedDisabled: _disabledParking,
-                          ),
+            bookedAddress: widget.bookedAddress,
+            selectedZone: widget.selectedZone,
+            selectedLevel: widget.selectedLevel,
+            selectedRow: widget.selectedRow,
+            selectedTime: _checkInTime,
+            selectedDate: _checkInDate,
+            selectedDuration: _currentSliderValue,
+            price: widget.price,
+            selectedDisabled: _disabledParking,
+          ),
         ),
       );
     }
@@ -195,7 +198,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       spreadRadius: 1,
                       blurRadius: 8,
                       offset: const Offset(0, 3), // changes position of shadow
@@ -215,7 +218,8 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                       ),
                       child: Text(
                         '${_currentSliderValue.round()} hours - R${(widget.price.toInt() * _currentSliderValue.round()).toInt()}',
-                        style: const TextStyle(color: Colors.white, fontSize: 18),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -229,8 +233,9 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                       max: 24,
                       divisions: 23,
                       activeColor: const Color(0xFF58C6A9),
-                      inactiveColor: Colors.white.withOpacity(0.5),
-                      label: '${_currentSliderValue.toInt()} hour(s) - R${_currentSliderValue.toInt() * widget.price.toInt()}',
+                      inactiveColor: Colors.white.withValues(alpha: 0.5),
+                      label:
+                          '${_currentSliderValue.toInt()} hour(s) - R${_currentSliderValue.toInt() * widget.price.toInt()}',
                       onChanged: (double value) {
                         setState(() {
                           _currentSliderValue = value != 0 ? value : 1;
@@ -244,7 +249,8 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                         children: [
                           Text(
                             checkInTimeText,
-                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                           const SizedBox(width: 8),
                           const Icon(
@@ -255,7 +261,8 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                           const SizedBox(width: 8),
                           Text(
                             _checkInTime,
-                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                         ],
                       ),
@@ -280,7 +287,8 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                           const SizedBox(width: 8),
                           Text(
                             '${_checkInDate.day}/${_checkInDate.month}/${_checkInDate.year}',
-                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                         ],
                       ),
@@ -303,7 +311,8 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                             const SizedBox(width: 8),
                             Text(
                               disabledParkingText,
-                              style: const TextStyle(color: Colors.white, fontSize: 16),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 16),
                             ),
                           ],
                         ),

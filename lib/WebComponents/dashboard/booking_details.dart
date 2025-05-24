@@ -34,7 +34,8 @@ class _BookingDetailsState extends State<BookingDetails> {
       }
 
       // Query the parkings collection
-      final parkingQuery = await _firestore.collection('parkings')
+      final parkingQuery = await _firestore
+          .collection('parkings')
           .where('userId', isEqualTo: currentUser.uid)
           .limit(1)
           .get();
@@ -59,7 +60,7 @@ class _BookingDetailsState extends State<BookingDetails> {
         bookings = bookingsQuery.docs;
       });
     } catch (e) {
-      if(kDebugMode){
+      if (kDebugMode) {
         print("Error: $e");
       }
     }
@@ -88,39 +89,41 @@ class _BookingDetailsState extends State<BookingDetails> {
               ),
             ),
             const SizedBox(height: 20),
-            isLoading ? const Center(child: CircularProgressIndicator()) :
-            bookings.isEmpty ?
-              Center(
-                child: Text(
-                  "All your bookings found for this parking spot will be displayed here",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              )
-            :
-              Column(
-                children: bookings.map((doc) {
-                  final data = doc.data() as Map<String, dynamic>;
-                  final zone = data['zone'] ?? '';
-                  final row = data['row'] ?? '';
-                  final title = 'Zone/Row : $zone/$row - Parking Booking';
-                  final date = data['date'] ?? '';
-                  final time = data['time'] ?? '';
-                  final dateTimeString = '$date, at $time';
-                  return _buildBookingItem(context, doc.id, title, dateTimeString, data);
-                }).toList(),
-              ),
+            isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : bookings.isEmpty
+                    ? Center(
+                        child: Text(
+                          "All your bookings found for this parking spot will be displayed here",
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.8),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: bookings.map((doc) {
+                          final data = doc.data() as Map<String, dynamic>;
+                          final zone = data['zone'] ?? '';
+                          final row = data['row'] ?? '';
+                          final title =
+                              'Zone/Row : $zone/$row - Parking Booking';
+                          final date = data['date'] ?? '';
+                          final time = data['time'] ?? '';
+                          final dateTimeString = '$date, at $time';
+                          return _buildBookingItem(
+                              context, doc.id, title, dateTimeString, data);
+                        }).toList(),
+                      ),
           ],
         ),
       ),
     );
   }
 
-
-  Widget _buildBookingItem(BuildContext context, String bookingId, String title, String date, Map<String, dynamic> data) {
+  Widget _buildBookingItem(BuildContext context, String bookingId, String title,
+      String date, Map<String, dynamic> data) {
     return Card(
       color: const Color(0xFF2D3447),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -171,18 +174,23 @@ class _BookingDetailsState extends State<BookingDetails> {
     );
   }
 
-  void _showEditDialog(BuildContext context, String bookingId, Map<String, dynamic> data) {
+  void _showEditDialog(
+      BuildContext context, String bookingId, Map<String, dynamic> data) {
     final formKey = GlobalKey<FormState>();
-    final TextEditingController dateController = TextEditingController(text: data['date'] ?? '');
-    final TextEditingController timeController = TextEditingController(text: data['time'] ?? '');
-    final TextEditingController durationController = TextEditingController(text: data['duration']?.toString() ?? '');
+    final TextEditingController dateController =
+        TextEditingController(text: data['date'] ?? '');
+    final TextEditingController timeController =
+        TextEditingController(text: data['time'] ?? '');
+    final TextEditingController durationController =
+        TextEditingController(text: data['duration']?.toString() ?? '');
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           backgroundColor: const Color(0xFF1A1F37),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: const Text(
             'Edit Booking',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -267,7 +275,8 @@ class _BookingDetailsState extends State<BookingDetails> {
           ),
           actions: [
             TextButton(
-              child: const Text('Cancel', style: TextStyle(color: Color(0xFF58C6A9))),
+              child: const Text('Cancel',
+                  style: TextStyle(color: Color(0xFF58C6A9))),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
@@ -282,10 +291,10 @@ class _BookingDetailsState extends State<BookingDetails> {
                       .collection('bookings')
                       .doc(bookingId)
                       .update({
-                        'date': dateController.text,
-                        'time': timeController.text,
-                        'duration': int.parse(durationController.text),
-                      });
+                    'date': dateController.text,
+                    'time': timeController.text,
+                    'duration': int.parse(durationController.text),
+                  });
                   navigator.pop(); // Close the dialog after saving
                 }
               },

@@ -2,13 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parking_system/components/common/custom_widgets.dart';
-import 'package:smart_parking_system/components/payment/top_up.dart';
+// import 'package:smart_parking_system/components/payment/payment_options.dart';
 import 'package:smart_parking_system/components/settings/about_us.dart';
-import 'package:smart_parking_system/components/home/main_page.dart';
-import 'package:smart_parking_system/components/parking/parking_history.dart';
-import 'package:smart_parking_system/components/payment/payment_options.dart';
 import 'package:smart_parking_system/components/settings/user_profile.dart';
-import 'package:smart_parking_system/components/home/sidebar.dart';
 import 'package:smart_parking_system/components/vehicledetails/view_vehicle.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -18,303 +14,231 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-Future<String> getUserName(String userId) async {
-  DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-  String username = userDoc.get('username');
-  String? surname = userDoc.get('surname');
-  return surname == null ? username : '$username $surname';
-}
-
-Future<String?> getProfileImageUrl(String userId) async {
-  try {
-    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-    return userDoc.get('profileImageUrl') as String?;
-  } catch (e) {
-    return null;
-  }
-}
-
-Future<void> updateNotificationPreference(bool isEnabled) async {
-  User? user = FirebaseAuth.instance.currentUser;
-
-  if (user != null) {
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-      'notificationsEnabled': isEnabled,
-    });
-  }
-}
-
 class _SettingsPageState extends State<SettingsPage> {
-  int _selectedIndex = 3;
-  bool _isSwitched = true;
-  bool _isFetching = true;
+  bool _notificationsEnabled = true;
+  bool _isLoading = true;
   String _username = 'Loading...';
   String? _profileImageUrl;
 
   @override
   void initState() {
     super.initState();
-    _setUserData();
+    _loadUserDataAndPreferences();
   }
 
-  Future<void> _setUserData() async {
+  Future<void> _loadUserDataAndPreferences() async {
     setState(() {
-      _isFetching = true;
+      _isLoading = true;
     });
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      String userId = user.uid;
-      String username = await getUserName(userId);
-      String? profileImageUrl = await getProfileImageUrl(userId);
+      try {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
 
-      // Fetch the notification preference from Firestore and set it
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-      bool notificationsEnabled = userDoc.get('notificationsEnabled') ?? true;
-
+        if (userDoc.exists) {
+          final data = userDoc.data() as Map<String, dynamic>?;
+          _username = data?['username'] ?? 'User';
+          final String? surname = data?['surname'];
+          if (surname != null && surname.isNotEmpty) {
+            _username = '$_username $surname';
+          }
+          _profileImageUrl = data?['profileImageUrl'] as String?;
+          _notificationsEnabled = data?['notificationsEnabled'] ?? true;
+        } else {
+          _username = 'User not found';
+        }
+      } catch (e) {
+        print("Error loading user data: $e");
+        _username = 'Error loading data';
+        // Keep default _notificationsEnabled = true or set to false based on desired error behavior
+      }
+    } else {
+      _username = 'Not logged in';
+    }
+    if (mounted) {
       setState(() {
-        _username = username;
-        _profileImageUrl = profileImageUrl;
-        _isSwitched = notificationsEnabled;
+        _isLoading = false;
       });
     }
-    setState(() {
-      _isFetching = false;
-    });
+  }
+
+  Future<void> _updateNotificationPreference(bool isEnabled) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({
+          'notificationsEnabled': isEnabled,
+        });
+      } catch (e) {
+        print("Error updating notification preference: $e");
+        // Optionally revert UI or show error to user
+        if (mounted) {
+          setState(() {
+            _notificationsEnabled = !isEnabled; // Revert switch on error
+          });
+        }
+      }
+    }
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 16.0, bottom: 8.0, left: 16.0, right: 16.0),
+      child: Text(
+        title,
+        style: const TextStyle(color: Color(0xFFADADAD), fontSize: 16),
+      ),
+    );
+  }
+
+  Widget _buildSettingsTile({
+    required String title,
+    Widget? trailing,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      title: Text(title, style: const TextStyle(color: Colors.white)),
+      trailing: trailing ??
+          const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
+      onTap: onTap,
+      contentPadding:
+          const EdgeInsets.symmetric(horizontal: 16.0), // Standard padding
+    );
+  }
+
+  Widget _buildUserProfileSection() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 40, // Increased radius
+              backgroundColor: Colors.grey.shade700,
+              backgroundImage:
+                  _profileImageUrl != null && _profileImageUrl!.isNotEmpty
+                      ? NetworkImage(_profileImageUrl!)
+                      : null,
+              child: _profileImageUrl == null || _profileImageUrl!.isEmpty
+                  ? const Icon(Icons.person, size: 50, color: Colors.white70)
+                  : null,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              _username,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAccountSettingsSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionHeader('Account Settings'),
+        _buildSettingsTile(
+          title: 'Edit profile',
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const UserProfilePage())),
+        ),
+        _buildSettingsTile(
+          title: 'My vehicles',
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const ViewVehiclePage())),
+        ),
+        // _buildSettingsTile(
+        //   title: 'My payment options',
+        //   onTap: () => Navigator.of(context).push(
+        //       MaterialPageRoute(builder: (_) => const PaymentMethodPage())),
+        // ),
+        _buildSettingsTile(
+            title: 'Push notifications',
+            trailing: Switch(
+              value: _notificationsEnabled,
+              onChanged: (bool value) {
+                setState(() {
+                  _notificationsEnabled = value;
+                });
+                _updateNotificationPreference(value);
+              },
+              activeColor: Colors.tealAccent,
+              inactiveTrackColor: Colors.grey.shade600,
+              inactiveThumbColor: Colors.grey.shade300,
+            ),
+            onTap: () {
+              // Allow tapping the row to toggle switch too
+              setState(() {
+                _notificationsEnabled = !_notificationsEnabled;
+              });
+              _updateNotificationPreference(_notificationsEnabled);
+            }),
+      ],
+    );
+  }
+
+  Widget _buildMoreSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionHeader('More'),
+        _buildSettingsTile(
+          title: 'About',
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const AboutUsPage())),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF35344A),
-      body: _isFetching ? loadingWidget()
-      : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 30),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                color: const Color(0xFF35344A),
-                child: Stack(
-                  children: [
-                    Builder(
-                      builder: (BuildContext context) {
-                        return IconButton(
-                          icon: const Icon(Icons.menu, color: Colors.white, size: 30.0),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer(); // Open the drawer
-                          },
-                        );
-                      },
-                    ),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Settings',
-                        style: TextStyle(
-                          color: Colors.tealAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
+      // AppBar is handled by main_page.dart for the settings tab
+      // If this page can be accessed directly, an AppBar might be needed here.
+      body: _isLoading
+          ? loadingWidget() // Uses the imported loadingWidget
+          : SafeArea(
+              // Ensure content is not obscured by notches, status bars
+              child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.grey,
-                      backgroundImage: _profileImageUrl != null ? NetworkImage(_profileImageUrl!) : null,
-                      child: _profileImageUrl == null ? const Icon(Icons.person, size: 40, color: Colors.white) : null,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      _username,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
+                    // Custom header section removed, assuming AppBar is provided by MainPage
+                    // If standalone, uncomment and adapt _buildAppBar or use Scaffold AppBar.
+                    _buildUserProfileSection(),
+                    const Divider(
+                        color: Colors.white24,
+                        thickness: 0.5,
+                        indent: 16,
+                        endIndent: 16),
+                    _buildAccountSettingsSection(context),
+                    const Divider(
+                        color: Colors.white24,
+                        thickness: 0.5,
+                        indent: 16,
+                        endIndent: 16),
+                    _buildMoreSection(context),
+                    const SizedBox(height: 20), // Padding at the bottom
                   ],
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  width: 500,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Divider(
-                        color: Colors.grey,
-                        thickness: 1,
-                      ),
-                      const Text(
-                        '   Account Settings',
-                        style: TextStyle(
-                          color: Color(0xFFADADAD),
-                          fontSize: 16,
-                        ),
-                      ),
-                      ListTile(
-                        title: const Text('Edit profile', style: TextStyle(color: Colors.white)),
-                        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const UserProfilePage(),
-                            ),
-                          );
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('My vehicles', style: TextStyle(color: Colors.white)),
-                        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const ViewVehiclePage(),
-                            ),
-                          );
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('My payment options', style: TextStyle(color: Colors.white)),
-                        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const TopUpPage(),
-                            ),
-                          );
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Push notifications', style: TextStyle(color: Colors.white)),
-                        trailing: Switch(
-                          value: _isSwitched,
-                          onChanged: (bool value) async {
-                            setState(() {
-                              _isSwitched = value;
-                            });
-                            await updateNotificationPreference(value);
-                          },
-                          activeColor: Colors.tealAccent,
-                        ),
-                      ),
-                      const Divider(
-                        color: Colors.grey,
-                        thickness: 1,
-                      ),
-                      const Text(
-                        '   More',
-                        style: TextStyle(
-                          color: Color(0xFFADADAD),
-                          fontSize: 16,
-                        ),
-                      ),
-                      ListTile(
-                        title: const Text('About', style: TextStyle(color: Colors.white)),
-                        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const AboutUsPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              
-              
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: const Color(0xFF35344A),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.6),
-                spreadRadius: 1,
-                blurRadius: 8,
-                offset: const Offset(0, -3),
-              ),
-            ],
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: const Color(0xFF35344A),
-            currentIndex: _selectedIndex,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined, size: 30),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.wallet, size: 30),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.history, size: 30),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined, size: 30),
-                label: '',
-              ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _selectedIndex = index;
-
-                if (_selectedIndex == 0) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const MainPage(),
-                    ),
-                  );
-                } else if (_selectedIndex == 1) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PaymentMethodPage(),
-                    ),
-                  );
-                } else if (_selectedIndex == 2) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const ParkingHistoryPage(),
-                    ),
-                  );
-                } else if (_selectedIndex == 3) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
-                      ),
-                    );
-                }
-              });
-            },
-            selectedItemColor: const Color(0xFF58C6A9),
-            unselectedItemColor: Colors.grey,
-            showUnselectedLabels: false,
-            showSelectedLabels: false,
-          ),
-        ),
-      ),
-      drawer: const SideMenu(),
+            ),
+      // drawer: const SideMenu(), // Drawer is typically part of the parent Scaffold in MainPage
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class BookingBillings extends StatefulWidget {
   const BookingBillings({super.key});
 
@@ -35,7 +34,8 @@ class _BookingBillingsState extends State<BookingBillings> {
       }
 
       // Query the parkings collection
-      final parkingQuery = await _firestore.collection('parkings')
+      final parkingQuery = await _firestore
+          .collection('parkings')
           .where('userId', isEqualTo: currentUser.uid)
           .limit(1)
           .get();
@@ -60,7 +60,7 @@ class _BookingBillingsState extends State<BookingBillings> {
         bookings = bookingsQuery.docs;
       });
     } catch (e) {
-      if(kDebugMode){
+      if (kDebugMode) {
         print("Error: $e");
       }
     }
@@ -96,55 +96,58 @@ class _BookingBillingsState extends State<BookingBillings> {
               ],
             ),
             const SizedBox(height: 20),
-            isLoading ? const Center(child: CircularProgressIndicator()) :
-            bookings.isEmpty ?
-              Center(
-                child: Text(
-                  "Your booking billings details will be displayed here",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              )
-            :
-              Column(
-                children: bookings.map((doc) {
-                  final data = doc.data() as Map<String, dynamic>;
-                  final zone = data['zone'] ?? '';
-                  final row = data['row'] ?? '';
-                  final title = 'Zone/Row : $zone/$row - Parking Booking';
+            isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : bookings.isEmpty
+                    ? Center(
+                        child: Text(
+                          "Your booking billings details will be displayed here",
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.8),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: bookings.map((doc) {
+                          final data = doc.data() as Map<String, dynamic>;
+                          final zone = data['zone'] ?? '';
+                          final row = data['row'] ?? '';
+                          final title =
+                              'Zone/Row : $zone/$row - Parking Booking';
 
-                  final date = data['date'] ?? ''; // e.g., "2024-11-14"
-                  final time = data['time'] ?? ''; // e.g., "12:00"
-                  final dateTimeString = '$date, at $time';
+                          final date = data['date'] ?? ''; // e.g., "2024-11-14"
+                          final time = data['time'] ?? ''; // e.g., "12:00"
+                          final dateTimeString = '$date, at $time';
 
-                  final price = data['price'] ?? 0; // e.g., 10
-                  String amount = '+R$price';
+                          final price = data['price'] ?? 0; // e.g., 10
+                          String amount = '+R$price';
 
-                  // Determine the amount based on booking status
-                  final disabled = data['disabled'] ?? false;
-                  final sent = data['sent'] ?? false;
+                          // Determine the amount based on booking status
+                          final disabled = data['disabled'] ?? false;
+                          final sent = data['sent'] ?? false;
 
-                  if (disabled) {
-                    // Booking was canceled/refunded
-                    amount = '-R$price';
-                  } else if (!sent) {
-                    // Booking is pending
-                    amount = 'Pending';
-                  }
+                          if (disabled) {
+                            // Booking was canceled/refunded
+                            amount = '-R$price';
+                          } else if (!sent) {
+                            // Booking is pending
+                            amount = 'Pending';
+                          }
 
-                  return _buildBillingItem(context, title, dateTimeString, amount);
-                }).toList(),
-              ),
+                          return _buildBillingItem(
+                              context, title, dateTimeString, amount);
+                        }).toList(),
+                      ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBillingItem(BuildContext context, String title, String date, String amount) {
+  Widget _buildBillingItem(
+      BuildContext context, String title, String date, String amount) {
     Color amountColor;
     IconData iconData;
 

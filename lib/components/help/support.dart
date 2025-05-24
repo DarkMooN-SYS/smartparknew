@@ -5,7 +5,7 @@ import 'package:smart_parking_system/components/parking/parking_history.dart';
 import 'package:smart_parking_system/components/payment/payment_options.dart';
 import 'package:smart_parking_system/components/settings/settings.dart';
 import 'package:smart_parking_system/components/home/sidebar.dart';
-import 'package:smart_parking_system/components/help/bookinghelp.dart'; 
+import 'package:smart_parking_system/components/help/bookinghelp.dart';
 import 'package:smart_parking_system/components/help/accounthelp.dart';
 
 class SupportApp extends StatefulWidget {
@@ -31,14 +31,16 @@ class _SupportAppState extends State<SupportApp> {
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 40, horizontal: 15),
                       color: const Color(0xFF2D2F41),
                       child: Stack(
                         children: [
                           Builder(
                             builder: (BuildContext context) {
                               return IconButton(
-                                icon: const Icon(Icons.menu, color: Colors.white, size: 30.0),
+                                icon: const Icon(Icons.menu,
+                                    color: Colors.white, size: 30.0),
                                 onPressed: () {
                                   Scaffold.of(context).openDrawer();
                                 },
@@ -208,7 +210,10 @@ class _SupportAppState extends State<SupportApp> {
                   child: Text(
                     label,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

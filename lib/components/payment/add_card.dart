@@ -24,17 +24,34 @@ class AddCardPageState extends State<AddCardPage> {
   Future<void> _saveCardDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
 
-    final String cardNumber = _cardNumberController.text.replaceAll(RegExp(r'\s+'), '');
+    final String rawCardNumber = _cardNumberController.text;
+    final String cardNumber = rawCardNumber.replaceAll(RegExp(r'[^0-9]'), '');
     final String holderName = _holderNameController.text;
     final String expiry = _expiryController.text;
     final String cvv = _cvvController.text;
     final String bank = _bankController.text;
 
-    if(!isValidString(cardNumber, r'^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$')){showToast(message: "Invalid Card Number, Remove any spaces"); return;}
-    if(!isValidString(holderName, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid Holder Name"); return;}
-    if(!isValidString(expiry, r'^\d{2}/\d{2}$')){showToast(message: "Invalid Expiry, format: 00/00"); return;}
-    if(!isValidString(cvv, r'^\d{3}$')){showToast(message: "Invalid CVV, format 000"); return;}
-    if(!isValidString(bank, r'^[a-zA-Z]+$')){showToast(message: "Invalid Bank Name"); return;}
+    if (!isValidString(cardNumber,
+        r'^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$')) {
+      showToast(message: "Invalid card number format.");
+      return;
+    }
+    if (!isValidString(holderName, r'^[a-zA-Z/\s]+$')) {
+      showToast(message: "Invalid Holder Name");
+      return;
+    }
+    if (!isValidString(expiry, r'^\d{2}/\d{2}$')) {
+      showToast(message: "Invalid Expiry, format: 00/00");
+      return;
+    }
+    if (!isValidString(cvv, r'^\d{3,4}$')) {
+      showToast(message: "Invalid CVV, format 000 or 0000");
+      return;
+    }
+    if (!isValidString(bank, r'^[a-zA-Z0-9\s&().-]+$')) {
+      showToast(message: "Invalid Bank Name");
+      return;
+    }
 
     Map<String, String> cardPatterns = {
       'visa': r'^4[0-9]{12}(?:[0-9]{3})?$',
@@ -63,7 +80,8 @@ class AddCardPageState extends State<AddCardPage> {
           'cardType': cardType
         });
 
-        if (mounted) {  // Check if the widget is still mounted
+        if (mounted) {
+          // Check if the widget is still mounted
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => const PaymentMethodPage(),
@@ -71,187 +89,178 @@ class AddCardPageState extends State<AddCardPage> {
           );
         }
       } catch (e) {
-        // 这里可以添加更多错误处理逻辑，例如显示错误消息给用户
-        if (mounted) {  // Check if the widget is still mounted
+        if (mounted) {
+          // Check if the widget is still mounted
           showToast(message: 'Failed to save card details: $e');
         }
       }
+    } else {
+      showToast(message: 'User not found');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF35344A),
-      body: SingleChildScrollView(
-        child: Center(
-        child: SizedBox(
-          width: 550,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        icon: const Icon(Icons.chevron_left, color: Colors.white, size: 35),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const PaymentMethodPage(),
+        backgroundColor: const Color(0xFF35344A),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: SizedBox(
+                    width: 550,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Center(
+                            child: ShaderMask(
+                              shaderCallback: (bounds) {
+                                return const LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    Colors.transparent,
+                                    Colors.white,
+                                    Colors.white,
+                                    Colors.transparent
+                                  ],
+                                  stops: [0.0, 0.1, 0.9, 1.0],
+                                ).createShader(bounds);
+                              },
+                              blendMode: BlendMode.dstIn,
+                              child: Image.asset('assets/main_add_card.png'),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    const Center(
-                      child: Text(
-                        'Add Card',
-                        style: TextStyle(
-                          color: Color(0xFF58C6A9),
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 40.0),
-                Center(
-                  child: ShaderMask(
-                    shaderCallback: (bounds) {
-                      return const LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
-                        stops: [0.0, 0.1, 0.9, 1.0],
-                      ).createShader(bounds);
-                    },
-                    blendMode: BlendMode.dstIn,
-                    child: Image.asset('assets/main_add_card.png'),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                TextField(
-                  controller: _cardNumberController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.transparent,
-                    labelText: 'Card Number',
-                    labelStyle: TextStyle(color: Colors.grey),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-
-                  ),
-                  style: const TextStyle(color: Colors.white),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 10.0),
-                TextField(
-                  controller: _bankController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.transparent,
-                    labelText: 'Bank',
-                    labelStyle: TextStyle(color: Colors.grey),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                  style: const TextStyle(color: Colors.white),
-                ),
-                const SizedBox(height: 10.0),
-                TextField(
-                  controller: _holderNameController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.transparent,
-                    labelText: 'Holder Name',
-                    labelStyle: TextStyle(color: Colors.grey),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                  style: const TextStyle(color: Colors.white),
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _expiryController,
-                        decoration: const InputDecoration(
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          labelText: 'MM/YY',
-                          labelStyle: TextStyle(color: Colors.grey),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
+                          Column(spacing: 10.0, children: [
+                            TextField(
+                              controller: _cardNumberController,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                labelText: 'Card Number',
+                                labelStyle: TextStyle(color: Colors.grey),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                              ),
+                              style: const TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.number,
+                            ),
+                            TextField(
+                              controller: _bankController,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                labelText: 'Bank',
+                                labelStyle: TextStyle(color: Colors.grey),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                              ),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            TextField(
+                              controller: _holderNameController,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                labelText: 'Holder Name',
+                                labelStyle: TextStyle(color: Colors.grey),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                              ),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              spacing: 50,
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: _expiryController,
+                                    decoration: const InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.transparent,
+                                      labelText: 'MM/YY',
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                      counterStyle:
+                                          TextStyle(color: Colors.grey),
+                                    ),
+                                    style: const TextStyle(color: Colors.white),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      _ExpiryDateInputFormatter(),
+                                    ],
+                                    maxLength: 5,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _cvvController,
+                                    decoration: const InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.transparent,
+                                      labelText: 'CVV',
+                                      labelStyle: TextStyle(color: Colors.grey),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                      counterStyle:
+                                          TextStyle(color: Colors.grey),
+                                    ),
+                                    style: const TextStyle(color: Colors.white),
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]),
+                          const SizedBox(height: 60.0),
+                          nextButton(
+                            displayText: 'Save',
+                            action: _saveCardDetails,
                           ),
-                          counterStyle: TextStyle(color: Colors.grey),
-                        ),
-                        style: const TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          _ExpiryDateInputFormatter(),
                         ],
-                        maxLength: 5,
                       ),
                     ),
-                    const SizedBox(width: 120.0),
-                    Expanded(
-                      child: TextField(
-                        controller: _cvvController,
-                        decoration: const InputDecoration(
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          labelText: 'CVV',
-                          labelStyle: TextStyle(color: Colors.grey),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          counterStyle: TextStyle(color: Colors.grey),
-                        ),
-                        style: const TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.number,
-                        maxLength: 3,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 60.0),
-                nextButton(
-                  displayText: 'Save', 
-                  action: _saveCardDetails,
-                ),
-              ],
-            ),
+              );
+            },
           ),
-        ),
-      ),
-      )
-      
-    );
+        ));
   }
 }
 

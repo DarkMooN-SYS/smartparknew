@@ -11,12 +11,11 @@ class ZoneSelectPage extends StatefulWidget {
   final double price;
   final String bookedAddress;
   final String distanceAndDurationString;
-  const ZoneSelectPage({
-    required this.bookedAddress,
-    required this.price,
-    required this.distanceAndDurationString,
-    super.key
-  });
+  const ZoneSelectPage(
+      {required this.bookedAddress,
+      required this.price,
+      required this.distanceAndDurationString,
+      super.key});
 
   @override
   State<ZoneSelectPage> createState() => _ZoneSelectPageState();
@@ -63,11 +62,11 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
     });
   }
 
-   String getZoneLetter(int index) {
+  String getZoneLetter(int index) {
     return String.fromCharCode('A'.codeUnitAt(0) + index);
   }
 
-   Future<void> getDetails() async {
+  Future<void> getDetails() async {
     setState(() {
       _isFetching = true;
     });
@@ -79,13 +78,14 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
           .get();
 
       DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
-      
+
       if (documentSnapshot.exists) {
         double latitude = documentSnapshot.get('latitude');
         double longitude = documentSnapshot.get('longitude');
         initialPosition = LatLng(latitude, longitude);
-        
-        CollectionReference zonesCollection = documentSnapshot.reference.collection('zones');
+
+        CollectionReference zonesCollection =
+            documentSnapshot.reference.collection('zones');
         QuerySnapshot zonesQuerySnapshot = await zonesCollection.get();
         if (zonesQuerySnapshot.docs.isNotEmpty) {
           for (var zoneDocument in zonesQuerySnapshot.docs) {
@@ -124,7 +124,8 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
 
           zones.sort((a, b) => a.zone.compareTo(b.zone));
         } else {
-          showToast(message: 'No zones found for parking: ${widget.bookedAddress}');
+          showToast(
+              message: 'No zones found for parking: ${widget.bookedAddress}');
         }
       } else {
         showToast(message: 'No parkings found called: ${widget.bookedAddress}');
@@ -142,7 +143,8 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
           Marker(
             markerId: initialMarkerId!,
             position: initialPosition!,
-            icon: carIcon ?? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            icon: carIcon ??
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
             infoWindow: InfoWindow(
               title: widget.bookedAddress,
             ),
@@ -155,7 +157,6 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
       _isFetching = false;
     });
   }
-
 
   void selectZone(String zone) {
     // showToast(message: zone);
@@ -176,190 +177,201 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2D2F41),
-      body: _isFetching ? loadingWidget()
-      : Container(
-        color: const Color(0xFF2D2F41),
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Container(
-            color: const Color(0xFF2D2F41),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+      body: _isFetching
+          ? loadingWidget()
+          : Container(
+              color: const Color(0xFF2D2F41),
+              padding: const EdgeInsets.all(16),
+              child: SingleChildScrollView(
+                child: Container(
                   color: const Color(0xFF2D2F41),
-                  child: Stack(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 30.0),
-                        onPressed: () {
-                          Navigator.of(context).pop(true);
-                        },
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 40, horizontal: 15),
+                        color: const Color(0xFF2D2F41),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                                  color: Colors.white, size: 30.0),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                            ),
+                            const Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Parking Zones',
+                                style: TextStyle(
+                                  color: Colors.tealAccent,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const Align(
-                        alignment: Alignment.center,
+                      const Text(
+                        'Choose Your Parking\nZone',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(color: Colors.white),
+                        ),
                         child: Text(
-                          'Parking Zones',
-                          style: TextStyle(
-                            color: Colors.tealAccent,
+                          '$totalSlots spaces available',
+                          style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image(
+                            image: AssetImage('assets/zone.png'),
+                            width: 40,
+                            height: 40,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            '  Click on a icon which\ndenotes a parking zone',
+                            style: TextStyle(
+                              color: Colors.tealAccent,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: 400,
+                        child: initialPosition == null
+                            ? const Center(child: CircularProgressIndicator())
+                            : GoogleMap(
+                                onMapCreated: (GoogleMapController controller) {
+                                  mapController = controller;
+                                  if (initialMarkerId != null) {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 500), () {
+                                      mapController.showMarkerInfoWindow(
+                                          initialMarkerId!);
+                                    });
+                                  }
+                                },
+                                initialCameraPosition: CameraPosition(
+                                  target: initialPosition!,
+                                  zoom: 17.0,
+                                ),
+                                markers: _markers,
+                              ),
+                      ),
+                      if (selectedZone != null) ...[
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF34354A),
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withValues(alpha: 0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Zone $selectedZone',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                'Spaces Available: ${zones.firstWhere((z) => z.zone == selectedZone).slots} slots',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                'Distance to Zone: ${widget.distanceAndDurationString}', // Display the string here
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: 20),
+                      Center(
+                        child: SizedBox(
+                          width: 160,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: selectedZone != null
+                                  ? const Color(0xFF58C6A9)
+                                  : const Color(0xFF5B5B5B),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                            ),
+                            onPressed: selectedZone != null
+                                ? () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => LevelSelectPage(
+                                          bookedAddress: widget.bookedAddress,
+                                          price: widget.price,
+                                          selectedZone: selectedZone!,
+                                          futureBooking: futureBooking,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                : null,
+                            child: const Text('Continue',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18)),
                           ),
                         ),
                       ),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
-                const Text(
-                  'Choose Your Parking\nZone',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(color: Colors.white),
-                  ),
-                  child: Text(
-                    '$totalSlots spaces available',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/zone.png'),
-                      width: 40,
-                      height: 40,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      '  Click on a icon which\ndenotes a parking zone',
-                      style: TextStyle(
-                        color: Colors.tealAccent,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: 400,
-                  child: initialPosition == null
-                      ? const Center(child: CircularProgressIndicator())
-                      : GoogleMap(
-                          onMapCreated: (GoogleMapController controller) {
-                            mapController = controller;
-                            if (initialMarkerId != null) {
-                              Future.delayed(const Duration(milliseconds: 500), () {
-                                mapController.showMarkerInfoWindow(initialMarkerId!);
-                              });
-                            }
-                          },
-                          initialCameraPosition: CameraPosition(
-                            target: initialPosition!,
-                            zoom: 17.0,
-                          ),
-                          markers: _markers,
-                        ),
-                ),
-                if (selectedZone != null) ...[
-                  const SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF34354A),
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Zone $selectedZone',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Spaces Available: ${zones.firstWhere((z) => z.zone == selectedZone).slots} slots',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Distance to Zone: ${widget.distanceAndDurationString}', // Display the string here
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 20),
-                Center(
-                  child: SizedBox(
-                    width: 160,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: selectedZone != null ? const Color(0xFF58C6A9) : const Color(0xFF5B5B5B),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                      ),
-                      onPressed: selectedZone != null
-                          ? () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => LevelSelectPage(
-                                    bookedAddress: widget.bookedAddress,
-                                    price: widget.price,
-                                    selectedZone: selectedZone!,
-                                    futureBooking: futureBooking,
-                                  ),
-                                ),
-                              );
-                            }
-                          : null,
-                      child: const Text('Continue', style: TextStyle(color: Colors.white, fontSize: 18)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -373,7 +385,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
 //           if(zones.slots == 0) {
 //             futureBooking = true;
 //             showToast(message: 'This must be a future booking');
-//           } else { 
+//           } else {
 //             futureBooking = false;
 //           }
 //         },

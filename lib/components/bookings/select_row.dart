@@ -43,7 +43,7 @@ class SelectRowPageState extends State<SelectRowPage> {
     // Add more rows here
   ];
 
-    // Get details on load
+  // Get details on load
   Future<void> getDetails() async {
     setState(() {
       _isFetching = true;
@@ -64,23 +64,28 @@ class SelectRowPageState extends State<SelectRowPage> {
         DocumentSnapshot parkingDocumentSnapshot = querySnapshot.docs[0];
 
         // Get the subcollection 'zones'
-        CollectionReference zonesCollection = parkingDocumentSnapshot.reference.collection('zones');
+        CollectionReference zonesCollection =
+            parkingDocumentSnapshot.reference.collection('zones');
 
         // Query the 'zones' subcollection for a document with matching id
-        DocumentSnapshot zoneDocumentSnapshot = await zonesCollection.doc(widget.selectedZone).get();
+        DocumentSnapshot zoneDocumentSnapshot =
+            await zonesCollection.doc(widget.selectedZone).get();
 
         // Check if a matching document was found
         if (zoneDocumentSnapshot.exists) {
           // Get the subcollection 'levels'
-          CollectionReference levelsCollection = zoneDocumentSnapshot.reference.collection('levels');
+          CollectionReference levelsCollection =
+              zoneDocumentSnapshot.reference.collection('levels');
 
           // Query the 'levels' subcollection for a document with matching id
-          DocumentSnapshot levelDocumentSnapshot = await levelsCollection.doc(widget.selectedLevel).get();
+          DocumentSnapshot levelDocumentSnapshot =
+              await levelsCollection.doc(widget.selectedLevel).get();
 
           // Check if a matching document was found
           if (levelDocumentSnapshot.exists) {
             // Get the subcollection 'rows'
-            CollectionReference rowsCollection = levelDocumentSnapshot.reference.collection('rows');
+            CollectionReference rowsCollection =
+                levelDocumentSnapshot.reference.collection('rows');
 
             // Query the 'rows' subcollection for all documents
             QuerySnapshot rowsQuerySnapshot = await rowsCollection.get();
@@ -114,7 +119,8 @@ class SelectRowPageState extends State<SelectRowPage> {
               });
             } else {
               // No rows found
-              showToast(message: 'No rows found for level: ${widget.selectedLevel}');
+              showToast(
+                  message: 'No rows found for level: ${widget.selectedLevel}');
             }
           } else {
             // No level found
@@ -147,115 +153,126 @@ class SelectRowPageState extends State<SelectRowPage> {
     getDetails();
     futureBooking = widget.futureBooking;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2D2F41),
-      body: _isFetching ? loadingWidget()
-      : SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                        Icons.arrow_back_ios_new_rounded, color: Colors.white,
-                        size: 30.0),
-                    onPressed: () => Navigator.of(context).pop(true),
-                  ),
-                  const Expanded(
-                    child: Text(
-                      'Parking Row',
-                      style: TextStyle(color: Color(0xFF58C6A9),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(width: 48), // To balance the back button
-                ],
-              ),
-              const SizedBox(height: 40),
-              const Center(
-                child: Text(
-                  'Choose your parking',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-              ),
-              const Center(
-                child: Text(
-                  'Row',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-              ),
-              const SizedBox(height: 13),
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 15, horizontal: 80),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.white.withOpacity(0.2), width: 2),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    '$totalSlots spaces available',
-                    style: const TextStyle(color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: rows.expand((rows) => [
-                  _buildRowButton(rows),
-                ]).toList(),
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: SizedBox(
-                  width: 160,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: selectedRow != null ? const Color(0xFF58C6A9) : const Color(0xFF5B5B5B),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                    onPressed: selectedRow != null
-                        ? () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (_) => const ChooseVehiclePage(),
-                      //   ),
-                      // );
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => ConfirmBookingPage(
-                            bookedAddress: widget.bookedAddress,
-                            price: widget.price,
-                            selectedZone: widget.selectedZone,
-                            selectedLevel: widget.selectedLevel,
-                            selectedRow: selectedRow,
-                            futureBooking: futureBooking,
+      body: _isFetching
+          ? loadingWidget()
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white, size: 30.0),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                        const Expanded(
+                          child: Text(
+                            'Parking Row',
+                            style: TextStyle(
+                                color: Color(0xFF58C6A9),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                      );
-                    }
-                        : null,
-                    child: const Text('Continue', style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ),
+                        const SizedBox(width: 48), // To balance the back button
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    const Center(
+                      child: Text(
+                        'Choose your parking',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ),
+                    const Center(
+                      child: Text(
+                        'Row',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ),
+                    const SizedBox(height: 13),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 80),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              width: 2),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Text(
+                          '$totalSlots spaces available',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: rows
+                          .expand((rows) => [
+                                _buildRowButton(rows),
+                              ])
+                          .toList(),
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: SizedBox(
+                        width: 160,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: selectedRow != null
+                                ? const Color(0xFF58C6A9)
+                                : const Color(0xFF5B5B5B),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                          onPressed: selectedRow != null
+                              ? () {
+                                  // Navigator.of(context).push(
+                                  //   MaterialPageRoute(
+                                  //     builder: (_) => const ChooseVehiclePage(),
+                                  //   ),
+                                  // );
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => ConfirmBookingPage(
+                                        bookedAddress: widget.bookedAddress,
+                                        price: widget.price,
+                                        selectedZone: widget.selectedZone,
+                                        selectedLevel: widget.selectedLevel,
+                                        selectedRow: selectedRow,
+                                        futureBooking: futureBooking,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: const Text('Continue',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18)),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 
@@ -264,97 +281,106 @@ class SelectRowPageState extends State<SelectRowPage> {
 
     bool isDisabled = rows.slots == 0;
     bool isSelected = selectedRow == row;
-    Color buttonColor = isDisabled ? const Color(0xFFC0C0C0) : (isSelected ? const Color(0xFF58C6A9) : const Color(0xFF39C16B));
+    Color buttonColor = isDisabled
+        ? const Color(0xFFC0C0C0)
+        : (isSelected ? const Color(0xFF58C6A9) : const Color(0xFF39C16B));
 
     return Center(
-      child: Column(
-        children: [ 
-          const SizedBox(height: 13),
-          SizedBox(
-            width: 300,
-            height: 1,
-            child: CustomPaint(
-              painter: DottedLinePainter(),
-            ),
+      child: Column(children: [
+        const SizedBox(height: 13),
+        SizedBox(
+          width: 300,
+          height: 1,
+          child: CustomPaint(
+            painter: DottedLinePainter(),
           ),
-          const SizedBox(height: 13),
-          Container(
-            width: 290,
-            height: 110,
-            decoration: BoxDecoration(
-              color: buttonColor,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: buttonColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
+        ),
+        const SizedBox(height: 13),
+        Container(
+          width: 290,
+          height: 110,
+          decoration: BoxDecoration(
+            color: buttonColor,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: buttonColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
               ),
-              onPressed: isDisabled 
+            ),
+            onPressed: isDisabled
                 ? () {
-                  setState(() {
-                    selectedRow = row;
-                    futureBooking = true;
-                    showToast(message: 'This must be a future booking');
-                  });
-                } 
+                    setState(() {
+                      selectedRow = row;
+                      futureBooking = true;
+                      showToast(message: 'This must be a future booking');
+                    });
+                  }
                 : () {
-                  setState(() {
-                    selectedRow = row;
-                    futureBooking = false;
-                  });
-                },
-              child: Stack(
-                children: [
-                  if (isSelected)
-                    Center(
-                      child: Text(
-                        'Row $row Selected',
-                        style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  else ...[
-                    Positioned(
-                      left: 2,
-                      top: 8,
-                      child: Text(
-                        'Row $row',
-                        style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.normal),
-                        textAlign: TextAlign.left,
-                      ),
+                    setState(() {
+                      selectedRow = row;
+                      futureBooking = false;
+                    });
+                  },
+            child: Stack(
+              children: [
+                if (isSelected)
+                  Center(
+                    child: Text(
+                      'Row $row Selected',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     ),
-                    Positioned(
-                      right: 2,
-                      top: 8,
-                      child: Text(
-                        '${rows.slots} Slots Available',
-                        style: const TextStyle(color: Colors.white, fontSize: 18),
-                      ),
+                  )
+                else ...[
+                  Positioned(
+                    left: 2,
+                    top: 8,
+                    child: Text(
+                      'Row $row',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal),
+                      textAlign: TextAlign.left,
                     ),
-                    Positioned(
-                      bottom: 8,
-                      left: 2,
-                      child: Row(
-                        children: List.generate(6, (index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Image.asset(
-                            'assets/smallCar.png',
-                            width: 30,
-                            height: 50,
-                          ),
-                        )),
-                      ),
+                  ),
+                  Positioned(
+                    right: 2,
+                    top: 8,
+                    child: Text(
+                      '${rows.slots} Slots Available',
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                  ],
+                  ),
+                  Positioned(
+                    bottom: 8,
+                    left: 2,
+                    child: Row(
+                      children: List.generate(
+                          6,
+                          (index) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: Image.asset(
+                                  'assets/smallCar.png',
+                                  width: 30,
+                                  height: 50,
+                                ),
+                              )),
+                    ),
+                  ),
                 ],
-              ),
+              ],
             ),
           ),
-        ]
-      ),
+        ),
+      ]),
     );
   }
 }
@@ -363,7 +389,7 @@ class DottedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..color = Colors.white.withValues(alpha: 0.5)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 

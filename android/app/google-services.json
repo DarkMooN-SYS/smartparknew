@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419907757847",
+    "project_id": "parkme-246a0",
+    "storage_bucket": "parkme-246a0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419907757847:android:e30aba44abcf584fe0b952",
+        "android_client_info": {
+          "package_name": "com.parksmart.ParkMe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4eswwBVBucUv8lJdCJs3CYdwN2ONFQA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

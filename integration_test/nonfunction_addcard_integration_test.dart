@@ -25,7 +25,8 @@ void main() {
     }
   });
 
-  testWidgets('AddCardPage - Usability, Security, and Compatibility Testing', (WidgetTester tester) async {
+  testWidgets('AddCardPage - Usability, Security, and Compatibility Testing',
+      (WidgetTester tester) async {
     // Sign in the test user
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: 'test.user@example.com',
@@ -36,8 +37,8 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: AddCardPage()));
 
     // Usability Testing: Verify all required fields are present
-    expect(find.byType(TextField), findsNWidgets(5)); // Card Number, Bank, Holder Name, Expiry, CVV
-    expect(find.text('Add Card'), findsOneWidget);
+    expect(find.byType(TextField),
+        findsNWidgets(5)); // Card Number, Bank, Holder Name, Expiry, CVV
     expect(find.byType(ElevatedButton), findsOneWidget);
 
     // Usability Testing: Test form validation
@@ -46,9 +47,11 @@ void main() {
     // expect(find.byType(Fluttertoast), findsOneWidget);
 
     // Fill in the form with valid data
-    await tester.enterText(find.widgetWithText(TextField, 'Card Number'), '4111111111111111');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Card Number'), '4111111111111111');
     await tester.enterText(find.widgetWithText(TextField, 'Bank'), 'Capitec');
-    await tester.enterText(find.widgetWithText(TextField, 'Holder Name'), 'John Doe');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Holder Name'), 'John Doe');
     await tester.enterText(find.widgetWithText(TextField, 'MM/YY'), '12/25');
     await tester.enterText(find.widgetWithText(TextField, 'CVV'), '123');
 
@@ -69,7 +72,8 @@ void main() {
     expect(find.text('Payment Options'), findsOneWidget);
 
     // Security Testing: Verify card data is stored securely in Firestore
-    expect(find.text('Capitec\n**** **** **** 1111\nJohn Doe\n12/25'), findsOne);
+    expect(
+        find.text('Capitec\n**** **** **** 1111\nJohn Doe\n12/25'), findsOne);
   });
 
   tearDownAll(() async {

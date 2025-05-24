@@ -32,7 +32,8 @@ class BookedNotification extends Notification {
   final String parkingslot;
 
   BookedNotification(String time, this.location, this.parkingslot)
-      : super(time, 'Successfully Booked', Icons.check_circle, Colors.tealAccent);
+      : super(
+            time, 'Successfully Booked', Icons.check_circle, Colors.tealAccent);
 }
 
 class AlertNotification extends Notification {
@@ -47,30 +48,28 @@ class ReminderNotification extends Notification {
   final String location;
 
   ReminderNotification(String time, this.bookingTime, this.location)
-      : super(time, 'Upcoming Parking Session', Icons.notification_important, Colors.green);
+      : super(time, 'Upcoming Parking Session', Icons.notification_important,
+            Colors.green);
 }
 
+List<Notification> today = [
+  // ReminderNotification('1 hour ago', '12:00 PM', 'Sandton City'),
+  // AlertNotification('2 hours ago', 'You have parked longer allocated duration'),
+  // BookedNotification('5 hours ago', 'Sandton City', 'A4c'),
 
-  List<Notification> today = [
-    // ReminderNotification('1 hour ago', '12:00 PM', 'Sandton City'),
-    // AlertNotification('2 hours ago', 'You have parked longer allocated duration'),
-    // BookedNotification('5 hours ago', 'Sandton City', 'A4c'),
-    
-    // Add more notifications here
-  ];
+  // Add more notifications here
+];
 
-  List<Notification> thisweek = [
-    // BookedNotification('3 days ago', 'Sandton City', 'A4c'),
-    
-    // Add more notifications here
-  ];
+List<Notification> thisweek = [
+  // BookedNotification('3 days ago', 'Sandton City', 'A4c'),
 
-  List<Notification> older = [
-   
-    // AlertNotification('2 weeks ago', 'You have parked in a no-parking zone'),
-    // Add more notifications here
-  ];
+  // Add more notifications here
+];
 
+List<Notification> older = [
+  // AlertNotification('2 weeks ago', 'You have parked in a no-parking zone'),
+  // Add more notifications here
+];
 
 class _NotificationPageState extends State<NotificationApp> {
   int _selectedIndex = 0;
@@ -102,7 +101,8 @@ class _NotificationPageState extends State<NotificationApp> {
           .collection('notifications')
           .where('userId', isEqualTo: currentUserId)
           .get();
-      List<Map<String, dynamic>> fetchedNotifications = querySnapshot.docs.map((doc) {
+      List<Map<String, dynamic>> fetchedNotifications =
+          querySnapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return data;
       }).toList();
@@ -114,9 +114,10 @@ class _NotificationPageState extends State<NotificationApp> {
 
       for (var element in fetchedNotifications) {
         Timestamp parkingTimestamp = element["parkingTime"];
-        String updatedDateString = DateFormat('yyyy-MM-dd - kk:mm').format(parkingTimestamp.toDate());
+        String updatedDateString =
+            DateFormat('yyyy-MM-dd - kk:mm').format(parkingTimestamp.toDate());
         // showToast(message: 'Here is the updatedDateString : ${element["parkingSlot"]}');
-        
+
         // Now you can use the `updatedDateString` variable in your notification creation
         if (element["type"] == "Reminder" && element["sent"] == true) {
           var tempNotification = ReminderNotification(
@@ -135,7 +136,6 @@ class _NotificationPageState extends State<NotificationApp> {
             }
           });
         } else if (element["type"] == "Booking") {
-          
           var tempNotification = BookedNotification(
             updatedDateString,
             element["address"],
@@ -204,7 +204,7 @@ class _NotificationPageState extends State<NotificationApp> {
         thisweek.clear();
         older.clear();
       });
-      
+
       showToast(message: 'All notifications cleared successfully');
     } catch (e) {
       showToast(message: 'Failed to clear notifications : $e');
@@ -215,94 +215,103 @@ class _NotificationPageState extends State<NotificationApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2D2F41),
-      body: _isFetching ? loadingWidget()
-      : SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
-              color: const Color(0xFF2D2F41),
-              child: Stack(
+      body: _isFetching
+          ? loadingWidget()
+          : SingleChildScrollView(
+              child: Column(
                 children: [
-                  Builder(
-                    builder: (BuildContext context) {
-                      return IconButton(
-                        icon: const Icon(Icons.menu, color: Colors.white, size: 30.0),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer(); // Open the drawer
-                        },
-                      );
-                    },
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 40, horizontal: 15),
+                    color: const Color(0xFF2D2F41),
+                    child: Stack(
+                      children: [
+                        Builder(
+                          builder: (BuildContext context) {
+                            return IconButton(
+                              icon: const Icon(Icons.menu,
+                                  color: Colors.white, size: 30.0),
+                              onPressed: () {
+                                Scaffold.of(context)
+                                    .openDrawer(); // Open the drawer
+                              },
+                            );
+                          },
+                        ),
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Notifications',
+                            style: TextStyle(
+                              color: Colors.tealAccent,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Align(
+                            alignment: Alignment.topRight,
+                            child: ElevatedButton(
+                                onPressed: clearAllNotifications,
+                                style: const ButtonStyle(
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      Color.fromARGB(255, 58, 58, 58)),
+                                ),
+                                child: const Text(
+                                  "Clear all",
+                                  style: TextStyle(color: Colors.white),
+                                )))
+                      ],
+                    ),
                   ),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Notifications',
-                      style: TextStyle(
-                        color: Colors.tealAccent,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                  // IconButton(
+                  //           icon: const Icon(Icons.delete_sweep),
+                  //           color: Colors.red,
+                  //           onPressed: clearAllNotifications,
+                  //           tooltip: 'Clear All Notifications',
+                  //         ),
+                  Center(
+                    child: SizedBox(
+                      width: 500,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SectionTitle(title: 'Today'),
+                          for (var notification in today)
+                            _buildNotification(notification),
+                          if (today.isEmpty)
+                            const Text(
+                              '       -',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                          const SizedBox(height: 10),
+                          const SectionTitle(title: 'This Week'),
+                          for (var notification in thisweek)
+                            _buildNotification(notification),
+                          if (thisweek.isEmpty)
+                            const Text(
+                              '       -',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                          const SizedBox(height: 10),
+                          const SectionTitle(title: 'Older'),
+                          for (var notification in older)
+                            _buildNotification(notification),
+                          if (older.isEmpty)
+                            const Text(
+                              '       -',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 25),
+                            ),
+                        ],
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: ElevatedButton(
-                      onPressed: clearAllNotifications,
-                      style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 58, 58, 58)),
-                      ),
-                      child: const Text(
-                        "Clear all",
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
-                      )
-                    )
-                  )
                 ],
               ),
             ),
-            // IconButton(
-            //           icon: const Icon(Icons.delete_sweep),
-            //           color: Colors.red,
-            //           onPressed: clearAllNotifications,
-            //           tooltip: 'Clear All Notifications',
-            //         ),
-            Center(
-              child: SizedBox(
-                width: 500,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SectionTitle(title: 'Today'),
-                    for (var notification in today)
-                    _buildNotification(notification),
-                    if(today.isEmpty)
-                          const Text('       -', style: TextStyle(color: Colors.white, fontSize: 25),),
-                    const SizedBox(height: 10),
-                    const SectionTitle(title: 'This Week'),
-                    for (var notification in thisweek)
-                    _buildNotification(notification),
-                    if(thisweek.isEmpty)
-                          const Text('       -', style: TextStyle(color: Colors.white, fontSize: 25),),
-                    const SizedBox(height: 10),
-                    const SectionTitle(title: 'Older'),
-                    for (var notification in older)
-                    _buildNotification(notification),
-                    if(older.isEmpty)
-                          const Text('       -', style: TextStyle(color: Colors.white, fontSize: 25),),
-                    
-                    
-                  ],
-                ),
-              ),
-            ),
-            
-            
-          ],
-        ),
-      ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: const Color(0xFF35344A),
@@ -312,7 +321,7 @@ class _NotificationPageState extends State<NotificationApp> {
             // color: const Color(0xFF2C2C54),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withValues(alpha: 0.6),
                 spreadRadius: 1,
                 blurRadius: 8,
                 offset: const Offset(0, -3),
@@ -321,7 +330,8 @@ class _NotificationPageState extends State<NotificationApp> {
           ),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: const Color(0xFF35344A), // To ensure the Container color is visible
+            backgroundColor: const Color(
+                0xFF35344A), // To ensure the Container color is visible
             currentIndex: _selectedIndex,
             items: const [
               BottomNavigationBarItem(
@@ -364,11 +374,11 @@ class _NotificationPageState extends State<NotificationApp> {
                     ),
                   );
                 } else if (_selectedIndex == 3) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
-                      ),
-                    );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  );
                 }
               });
             },
@@ -464,7 +474,7 @@ Widget _buildNotification(Notification notification) {
                     color: Colors.white,
                     fontSize: 16,
                   ),
-                ),  
+                ),
             ],
           ),
         ],

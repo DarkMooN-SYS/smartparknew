@@ -66,7 +66,8 @@ class Sidebar extends StatelessWidget {
       width: 220, // Set the width of the container
       height: 154, // Adjusted height to prevent overflow
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1F37), // Set the background color of the container
+        color: const Color(
+            0xFF1A1F37), // Set the background color of the container
         borderRadius: BorderRadius.circular(20), // Set the border radius to 20
       ),
       child: Column(
@@ -90,7 +91,8 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(String title, String iconUrl, {bool isSelected = false, VoidCallback? onTap}) {
+  Widget _buildMenuItem(String title, String iconUrl,
+      {bool isSelected = false, VoidCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -107,7 +109,9 @@ class Sidebar extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.white.withOpacity(0.8),
+                color: isSelected
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.8),
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
               ),
@@ -120,7 +124,7 @@ class Sidebar extends StatelessWidget {
 
   static Widget _buildSubMenuItem(String title) {
     return Padding(
-      padding: const EdgeInsets.only(left: 61.0, top: 8.0, bottom: 8.0),//test
+      padding: const EdgeInsets.only(left: 61.0, top: 8.0, bottom: 8.0), //test
       child: Text(
         title,
         style: const TextStyle(

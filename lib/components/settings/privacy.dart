@@ -29,13 +29,15 @@ class PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                        icon: const Icon(Icons.arrow_back_ios,
+                            color: Colors.white),
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       const Text(
@@ -61,15 +63,20 @@ class PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSection('Introduction', 'We are committed to protecting your privacy. This policy outlines how we collect, use, and secure your data.'),
+              _buildSection('Introduction',
+                  'We are committed to protecting your privacy. This policy outlines how we collect, use, and secure your data.'),
               const SizedBox(height: 20),
-              _buildSection('Information We Collect', 'We collect certain information, including your vehicle\'s number plate, to improve our app\'s functionality.'),
+              _buildSection('Information We Collect',
+                  'We collect certain information, including your vehicle\'s number plate, to improve our app\'s functionality.'),
               const SizedBox(height: 20),
-              _buildSection('Data Usage', 'Your data is used solely within the app and is never shared with third parties.'),
+              _buildSection('Data Usage',
+                  'Your data is used solely within the app and is never shared with third parties.'),
               const SizedBox(height: 20),
-              _buildSection('Data Security', 'All data is encrypted to ensure your privacy and security.'),
+              _buildSection('Data Security',
+                  'All data is encrypted to ensure your privacy and security.'),
               const SizedBox(height: 20),
-              _buildSection('Your Rights', 'You can access or request the deletion of your data at any time.'),
+              _buildSection('Your Rights',
+                  'You can access or request the deletion of your data at any time.'),
             ],
           ),
         ),
@@ -82,7 +89,7 @@ class PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withValues(alpha: 0.6),
                 spreadRadius: 1,
                 blurRadius: 8,
                 offset: const Offset(0, -3),

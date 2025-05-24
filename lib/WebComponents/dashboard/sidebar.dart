@@ -29,7 +29,7 @@ class Sidebar extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Image.asset(
               // gitguardian:ignore
-              'assets/logo_small.jpg', 
+              'assets/logo_small.jpg',
               width: 197,
               fit: BoxFit.contain,
             ),
@@ -56,7 +56,8 @@ class Sidebar extends StatelessWidget {
       width: 220, // Set the width of the container
       height: 154, // Adjusted height to prevent overflow
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1F37), // Set the background color of the container
+        color: const Color(
+            0xFF1A1F37), // Set the background color of the container
         borderRadius: BorderRadius.circular(20), // Set the border radius to 20
       ),
       child: Column(
@@ -64,7 +65,7 @@ class Sidebar extends StatelessWidget {
         children: [
           _buildMenuItem(
             'Dashboard',
-            'assets/Frame 1171275428-1.png', 
+            'assets/Frame 1171275428-1.png',
             isSelected: true,
             onTap: () {},
           ),
@@ -127,7 +128,8 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(String title, String iconPath, {bool isSelected = false, VoidCallback? onTap}) {
+  Widget _buildMenuItem(String title, String iconPath,
+      {bool isSelected = false, VoidCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -144,7 +146,9 @@ class Sidebar extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.white.withOpacity(0.8),
+                color: isSelected
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.8),
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
               ),

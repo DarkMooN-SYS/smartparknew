@@ -37,7 +37,8 @@ class _InvoicesState extends State<Invoices> {
       }
 
       // Query the parkings collection
-      final parkingQuery = await _firestore.collection('parkings')
+      final parkingQuery = await _firestore
+          .collection('parkings')
           .where('userId', isEqualTo: currentUser.uid)
           .limit(1)
           .get();
@@ -62,7 +63,7 @@ class _InvoicesState extends State<Invoices> {
         bookings = bookingsQuery.docs;
       });
     } catch (e) {
-      if(kDebugMode){
+      if (kDebugMode) {
         print("Error: $e");
       }
     }
@@ -97,56 +98,62 @@ class _InvoicesState extends State<Invoices> {
               ],
             ),
             const SizedBox(height: 20),
-            isLoading ? const Center(child: CircularProgressIndicator()) :
-            bookings.isEmpty ?
-              Center(
-                child: Text(
-                  "Your invoices details will be displayed here",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              )
-            :
-              Column(
-                children: bookings.map((doc) {
-                  final data = doc.data() as Map<String, dynamic>;
+            isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : bookings.isEmpty
+                    ? Center(
+                        child: Text(
+                          "Your invoices details will be displayed here",
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.8),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        children: bookings.map((doc) {
+                          final data = doc.data() as Map<String, dynamic>;
 
-                  final notificationTime = data['notificationTime'] as Timestamp?;
-                  String formattedDate = '';
-                  if (notificationTime != null) {
-                    final dateTime = notificationTime.toDate();
-                    formattedDate = '${_formatMonth(dateTime.month)} ${dateTime.day}, ${dateTime.year}';
-                  } else {
-                    // Fallback to 'date' field if 'notificationTime' is null
-                    final dateString = data['date'] as String?;
-                    if (dateString != null) {
-                      formattedDate = dateString;
-                    }
-                  }
+                          final notificationTime =
+                              data['notificationTime'] as Timestamp?;
+                          String formattedDate = '';
+                          if (notificationTime != null) {
+                            final dateTime = notificationTime.toDate();
+                            formattedDate =
+                                '${_formatMonth(dateTime.month)} ${dateTime.day}, ${dateTime.year}';
+                          } else {
+                            // Fallback to 'date' field if 'notificationTime' is null
+                            final dateString = data['date'] as String?;
+                            if (dateString != null) {
+                              formattedDate = dateString;
+                            }
+                          }
 
-                  final invoiceNumber = '#${doc.id.substring(0, 8).toUpperCase()}'; // Shortened doc ID as invoice number
-                  final amount = 'R ${data['price'] ?? 0}';
+                          final invoiceNumber =
+                              '#${doc.id.substring(0, 8).toUpperCase()}'; // Shortened doc ID as invoice number
+                          final amount = 'R ${data['price'] ?? 0}';
 
-                  return _buildInvoiceItem(context, formattedDate, invoiceNumber, amount, data);
-                }).toList(),
-              ),
+                          return _buildInvoiceItem(context, formattedDate,
+                              invoiceNumber, amount, data);
+                        }).toList(),
+                      ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInvoiceItem(BuildContext context, String date, String invoiceNumber, String amount, Map<String, dynamic> data) {
+  Widget _buildInvoiceItem(BuildContext context, String date,
+      String invoiceNumber, String amount, Map<String, dynamic> data) {
     return Card(
       color: const Color(0xFF2D3447),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         leading: const CircleAvatar(
           backgroundColor: Color(0xFF58C6A9),
           child: Icon(Icons.receipt_long, color: Colors.white),
@@ -191,7 +198,8 @@ class _InvoicesState extends State<Invoices> {
     );
   }
 
-  void _generateAndOpenPdf(BuildContext context, Map<String, dynamic> data, String invoiceNumber, String formattedDate) async {
+  void _generateAndOpenPdf(BuildContext context, Map<String, dynamic> data,
+      String invoiceNumber, String formattedDate) async {
     final pdf = pw.Document();
 
     // Extract data needed for the invoice
@@ -216,7 +224,8 @@ class _InvoicesState extends State<Invoices> {
               children: [
                 pw.Text(
                   'Invoice',
-                  style: pw.TextStyle(fontSize: 28, fontWeight: pw.FontWeight.bold),
+                  style: pw.TextStyle(
+                      fontSize: 28, fontWeight: pw.FontWeight.bold),
                 ),
                 pw.SizedBox(height: 20),
                 pw.Row(
@@ -228,10 +237,12 @@ class _InvoicesState extends State<Invoices> {
                 ),
                 pw.Divider(),
                 pw.SizedBox(height: 20),
-                pw.Text('Customer Details:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.Text('Customer Details:',
+                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 pw.Text('User ID: $userId'),
                 pw.SizedBox(height: 10),
-                pw.Text('Parking Details:', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.Text('Parking Details:',
+                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 pw.Bullet(text: 'Location: $address'),
                 pw.Bullet(text: 'Zone: $zone'),
                 pw.Bullet(text: 'Row: $row'),
@@ -245,16 +256,19 @@ class _InvoicesState extends State<Invoices> {
                   children: [
                     pw.Text(
                       'Total Amount:',
-                      style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
+                      style: pw.TextStyle(
+                          fontSize: 16, fontWeight: pw.FontWeight.bold),
                     ),
                     pw.Text(
                       'R$price',
-                      style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
+                      style: pw.TextStyle(
+                          fontSize: 16, fontWeight: pw.FontWeight.bold),
                     ),
                   ],
                 ),
                 pw.SizedBox(height: 20),
-                pw.Text('Thank you for your business!', style: pw.TextStyle(fontStyle: pw.FontStyle.italic)),
+                pw.Text('Thank you for your business!',
+                    style: pw.TextStyle(fontStyle: pw.FontStyle.italic)),
               ],
             ),
           );
@@ -263,13 +277,24 @@ class _InvoicesState extends State<Invoices> {
     );
 
     // Display the PDF
-    await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
+    await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => pdf.save());
   }
 
   String _formatMonth(int month) {
     const months = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July',
-      'August', 'September', 'October', 'November', 'December'
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
     ];
     return months[month - 1];
   }

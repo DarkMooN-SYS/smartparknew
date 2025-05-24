@@ -13,198 +13,268 @@ import 'package:smart_parking_system/components/payment/promotion_code.dart';
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
 
-  Future<String> getUserName(String userId) async {
-    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+  Future<String> _getUserName(String userId) async {
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
     String username = userDoc.get('username');
-    String? surname = userDoc.get('surname');
-    return surname == null ? username : '$username $surname';
+    String? surname = userDoc.get('surname'); // Made nullable
+    return surname == null || surname.isEmpty ? username : '$username $surname';
   }
 
-  Future<String?> getProfileImageUrl(String userId) async {
+  Future<String?> _getProfileImageUrl(String userId) async {
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
       return userDoc.get('profileImageUrl') as String?;
     } catch (e) {
+      print("Error fetching profile image URL: $e");
       return null;
     }
   }
 
   Future<void> _logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', false); // Set isLoggedIn to false
+    await prefs.setBool('isLoggedIn', false);
     if (!context.mounted) return;
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const LoginPage(),
-      ),
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+      (Route<dynamic> route) => false, // Remove all previous routes
     );
   }
 
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
-    return FutureBuilder<Map<String, dynamic>>(
-      future: user != null 
-        ? Future.wait([
-            getUserName(user.uid),
-            getProfileImageUrl(user.uid),
-          ]).then((results) => {
-            'username': results[0],
-            'profileImageUrl': results[1],
-          })
-        : Future.value({'username': 'Unknown User', 'profileImageUrl': null}),
-      builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); // Show a loading spinner while waiting
-        } else if (snapshot.hasError) {
-          return const Center(child: Text('Error loading data')); // Handle errors
-        } else {
-          String userName = snapshot.data?['username'] ?? 'Unknown User';
-          String? profileImageUrl = snapshot.data?['profileImageUrl'];
 
-          return Drawer(
-            width: 240, // Set the width of the sidebar
-            child: Container(
-              color: const Color(0xFF35344A), // Updated background color
-              child: Column(
+    return Drawer(
+      width: MediaQuery.of(context).size.width * 0.85, // 85% of screen width
+      elevation: 0,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF35344A),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: FutureBuilder<Map<String, dynamic>>(
+          future: user != null
+              ? Future.wait([
+                  _getUserName(user.uid),
+                  _getProfileImageUrl(user.uid),
+                ]).then((results) => {
+                    'username': results[0] as String,
+                    'profileImageUrl': results[1],
+                  })
+              : Future.value(
+                  {'username': 'Guest User', 'profileImageUrl': null}),
+          builder: (BuildContext context,
+              AsyncSnapshot<Map<String, dynamic>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.white));
+            } else if (snapshot.hasError) {
+              print("Error in FutureBuilder: ${snapshot.error}");
+              return Column(children: [
+                _buildDrawerHeader(context, 'Error Loading User', null),
+                _buildNavigationList(context),
+                const Spacer(),
+                _buildFooterItems(context),
+              ]);
+            } else {
+              String userName = snapshot.data?['username'] ?? 'User';
+              String? profileImageUrl = snapshot.data?['profileImageUrl'];
+
+              return Column(
                 children: <Widget>[
-                  DrawerHeader(
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     builder: (_) => const UserProfilePage(),
-                                //   ),
-                                // );
-                              },
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.grey,
-                                backgroundImage: profileImageUrl != null
-                                    ? NetworkImage(profileImageUrl)
-                                    : null,
-                                child: profileImageUrl == null
-                                    ? const Icon(Icons.person, size: 40, color: Colors.white)
-                                    : null,
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.close, color: Colors.white),
-                              onPressed: () {
-                                Navigator.of(context).pop(true); // Close the drawer
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          userName,
-                          style: const TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: <Widget>[
-                        ListTile(
-                          leading: const Icon(Icons.payment, color: Colors.white),
-                          title: const Text('Payment methods', style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const PaymentMethodPage(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.history, color: Colors.white),
-                          title: const Text('Parking History', style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ParkingHistoryPage(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.local_offer, color: Colors.white),
-                          title: const Text('Promotion code', style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const PromotionCode(),
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 30),
-                        ListTile(
-                          leading: const Icon(Icons.notifications, color: Colors.white),
-                          title: const Text('Notification', style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const NotificationApp(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.support, color: Colors.white),
-                          title: const Text('Support', style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const SupportApp(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.settings, color: Colors.white),
-                          title: const Text('Settings', style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const SettingsPage(),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
-                    child: Image.asset(
-                      'assets/logo_small.png', // Path to the image asset
-                      height: 100, // Adjust height as needed
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.logout, color: Colors.white),
-                    title: const Text('Logout', style: TextStyle(color: Colors.white)),
-                    onTap: () => _logout(context),
-                  ),
+                  _buildDrawerHeader(context, userName, profileImageUrl),
+                  _buildNavigationList(context),
+                  _buildFooterItems(context),
                 ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawerHeader(
+      BuildContext context, String userName, String? profileImageUrl) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
+      decoration: const BoxDecoration(
+        color: Color(0xFF2D2F41),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop(); // Close drawer
+                },
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey.shade400,
+                  backgroundImage:
+                      profileImageUrl != null && profileImageUrl.isNotEmpty
+                          ? NetworkImage(profileImageUrl)
+                          : null,
+                  child: profileImageUrl == null || profileImageUrl.isEmpty
+                      ? const Icon(Icons.person, size: 30, color: Colors.white)
+                      : null,
+                ),
+              ),
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: const Icon(Icons.close, color: Colors.white),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the drawer
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            userName,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavigationList(BuildContext context) {
+    return Expanded(
+      child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        children: <Widget>[
+          _buildListTile(
+            context,
+            Icons.payment,
+            'Payment methods',
+            const PaymentMethodPage(),
+          ),
+          _buildListTile(
+            context,
+            Icons.history,
+            'Parking History',
+            const ParkingHistoryPage(),
+          ),
+          _buildListTile(
+            context,
+            Icons.local_offer,
+            'Promotion code',
+            const PromotionCode(),
+          ),
+          const SizedBox(height: 20),
+          const Divider(color: Colors.white24, indent: 16, endIndent: 16),
+          const SizedBox(height: 10),
+          _buildListTile(
+            context,
+            Icons.notifications,
+            'Notification',
+            const NotificationApp(),
+          ),
+          _buildListTile(
+            context,
+            Icons.support,
+            'Support',
+            const SupportApp(),
+          ),
+          _buildListTile(
+            context,
+            Icons.settings,
+            'Settings',
+            const SettingsPage(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ListTile _buildListTile(
+      BuildContext context, IconData icon, String title, Widget page) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white),
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+        ),
+      ),
+      onTap: () {
+        Navigator.of(context).pop(); // Close drawer before navigating
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => page,
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOut;
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 300),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildFooterItems(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Color(0xFF2D2F41),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Image.asset(
+              'assets/logo_small.png',
+              height: 80,
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.white),
+            title: const Text(
+              'Logout',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
               ),
             ),
-          );
-        }
-      },
+            onTap: () => _logout(context),
+          ),
+        ],
+      ),
     );
   }
 }

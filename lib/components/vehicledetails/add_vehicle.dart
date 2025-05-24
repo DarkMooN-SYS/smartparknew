@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:smart_parking_system/components/common/common_functions.dart';
 import 'package:smart_parking_system/components/common/custom_widgets.dart';
 import 'package:smart_parking_system/components/common/toast.dart';
-import 'package:smart_parking_system/components/settings/settings.dart';
 import 'package:smart_parking_system/components/vehicledetails/view_vehicle.dart';
 
 class AddVehiclePage extends StatefulWidget {
@@ -21,15 +20,27 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
   final TextEditingController _licenseController = TextEditingController();
 
   Future<void> _addVehicleDetails() async {
-    final String brand = _brandController.text; 
+    final String brand = _brandController.text;
     final String model = _modelController.text;
     final String color = _colorController.text;
     final String license = _licenseController.text;
 
-    if(!isValidString(brand, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid Brand"); return;}
-    if(!isValidString(model, r'^[a-zA-Z0-9/\s]+$')){showToast(message: "Invalid Model"); return;}
-    if(!isValidString(color, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid Color"); return;}
-    if(!isValidString(license, r'^[a-zA-Z0-9/\s]+$')){showToast(message: "Invalid License"); return;}
+    if (!isValidString(brand, r'^[a-zA-Z/\s]+$')) {
+      showToast(message: "Invalid Brand");
+      return;
+    }
+    if (!isValidString(model, r'^[a-zA-Z0-9/\s]+$')) {
+      showToast(message: "Invalid Model");
+      return;
+    }
+    if (!isValidString(color, r'^[a-zA-Z/\s]+$')) {
+      showToast(message: "Invalid Color");
+      return;
+    }
+    if (!isValidString(license, r'^[a-zA-Z0-9/\s]+$')) {
+      showToast(message: "Invalid License");
+      return;
+    }
 
     try {
       User? user = FirebaseAuth.instance.currentUser;
@@ -61,9 +72,6 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
     super.initState();
   }
 
-  
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +88,7 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
                     padding: const EdgeInsets.only(left: 1.0),
                     child: IconButton(
                       onPressed: () {
-                        // Add your onPressed logic here
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const SettingsPage(),
-                          ),
-                        );
+                        Navigator.of(context).pop(true);
                       },
                       icon: const Icon(
                         Icons.arrow_back_ios,
@@ -107,28 +110,29 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 48), // Placeholder to keep the text centered
+                  const SizedBox(width: 48),
                 ],
               ),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             Container(
-              width: 200, // Adjust the size as needed
-              height: 200, // Make sure width and height are equal for a perfect circle
+              width: 200,
+              height: 200,
               decoration: const BoxDecoration(
-                color: Color(0xFF25253d), // The color you specified
-                shape: BoxShape.circle, // This makes the container perfectly round
+                color: Color(0xFF25253d),
+                shape: BoxShape.circle,
               ),
               child: Center(
-                child: Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/parkme-c2508.appspot.com/o/vehiclelogo%2Fracecarsketch.png?alt=media&token=193239fc-ba59-429b-8868-4175f8b0ff96', // Make sure this path is correct
-                  width: 200, // Adjust the image size as needed
+                child: Image.asset(
+                  'assets/racecarsketch.png',
+                  width: 200,
                   height: 200,
-                  fit: BoxFit.contain, // This will ensure the image fits within the circle
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
-            //FInish your code here!
             Container(
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.all(20),
@@ -163,9 +167,11 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
                     value: '',
                     controller: _licenseController,
                   ),
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   nextButton(
-                    displayText: 'Add Vehicle', 
+                    displayText: 'Add Vehicle',
                     action: () {
                       _addVehicleDetails();
                     },
@@ -203,14 +209,11 @@ class ProfileField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         style: const TextStyle(
-          fontWeight: FontWeight.w600, // Make the input text bold
-          fontSize: 16,
-          color: Colors.white
-        ),
+            fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
         decoration: InputDecoration(
           labelText: label,
           labelStyle: const TextStyle(
-            color: Color(0xFF757F8C), // Set the color here
+            color: Color(0xFF757F8C),
             fontSize: 18,
           ),
           contentPadding: const EdgeInsets.only(top: 0),

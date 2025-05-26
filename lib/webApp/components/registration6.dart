@@ -105,11 +105,11 @@ class _Registration6State extends State<Registration6> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
         const SizedBox(height: 40),
-        _buildLabeledTextField('Төлбөр төлөгчийн нэр *', 'Нэрээ оруулна уу', _billingNameController),
+        _buildLabeledTextField('Байгууллагын картны нэр *', 'Нэрээ оруулна уу', _billingNameController),
         const SizedBox(height: 15),
         _buildLabeledTextField('Дансны дугаар *', 'Дугаараа оруулна уу', _accountNumberController),
         const SizedBox(height: 15),
-        _buildLabeledTextField('Дансны төрөл *', 'Төрлөө оруулна уу', _accountTypeController),
+        _buildLabeledTextField('Картны төрөл *', 'Төрлөө оруулна уу', _accountTypeController),
         const SizedBox(height: 15),
         _buildLabeledTextField('Банк *', 'Банкны нэрийг оруулна уу', _bankController),
         const SizedBox(height: 25),

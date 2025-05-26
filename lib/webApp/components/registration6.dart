@@ -32,7 +32,7 @@ class _Registration6State extends State<Registration6> {
   bool _isLoading = false;
 
   final Map<String, String> _validBanks = {
-    "ABSA": "Absa Bank",
+    "GOLOMT BANK": "Absa Bank",
     "CAPITEC": "Capitec Bank",
     "KHAAN BANK": "First National Bank",
     "INVESTEC": "Investec Bank",

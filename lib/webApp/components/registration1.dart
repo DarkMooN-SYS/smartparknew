@@ -328,7 +328,7 @@ class _Registration1State extends State<Registration1> {
           ),
         ),
         const SizedBox(height: 40),
-        _buildLabeledTextField('Данс эзэмшигчийн нэр *', 'Нэрээ оруулна уу', _accountHolderController),
+        _buildLabeledTextField('Хэрэглэгчийн нэр *', 'Нэрээ оруулна уу', _accountHolderController),
         const SizedBox(height: 15),
         _buildLabeledTextField('Компаний нэр *', 'Компаний нэрийг оруулна уу', _companyController),
         const SizedBox(height: 15),

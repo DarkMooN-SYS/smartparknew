@@ -138,7 +138,7 @@ class _Registration6State extends State<Registration6> {
                     ),
                   )
                 : const Text(
-                  'Нэвтрэх',
+                  'Join',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

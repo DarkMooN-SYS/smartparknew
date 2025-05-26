@@ -358,7 +358,7 @@ class _Registration1State extends State<Registration1> {
                     ),
                   )
                 : const Text(
-                'Дараах',
+                'Next',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

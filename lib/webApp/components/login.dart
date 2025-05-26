@@ -299,11 +299,11 @@ class _LoginPageState extends State<LoginPage> {
                                 Center(
                                   child: RichText(
                                     text: TextSpan(
-                                      text: "Don't have an account? ",
+                                      text: "Бүртгэлгүй юу? ",
                                       style: const TextStyle(color: Colors.white70),
                                       children: [
                                         TextSpan(
-                                          text: 'Register here',
+                                          text: 'Энд бүртгүүлнэ үү',
                                           style: const TextStyle(
                                             color: Color(0xFF58C6A9), // Link color
                                             fontWeight: FontWeight.bold,

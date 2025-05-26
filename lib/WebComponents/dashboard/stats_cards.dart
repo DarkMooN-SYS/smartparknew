@@ -160,10 +160,10 @@ class _StatsCardsState extends State<StatsCards> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             isLoading ?  const Center(child: CircularProgressIndicator()) :
-                _buildCardHeader(context, 'Total Income', 'R $totalIncome'),
+                _buildCardHeader(context, 'Нийт орлого', '$totalIncome₮'),
             const SizedBox(height: 24),
             Text(
-              'LATEST BOOKING',
+              'СҮҮЛИЙН ЗАХИАЛГА',
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: const Color(0xFFA0AEC0),
                 fontWeight: FontWeight.w500,
@@ -174,7 +174,7 @@ class _StatsCardsState extends State<StatsCards> {
               isLatestBooking
                 ? _buildLatestBookingInfo(context)
                 : const Text(
-                    'No bookings yet',
+                    'Одоогоор захиалга алга',
                     style: TextStyle(color: Colors.white),
                   ),
           ],

@@ -80,13 +80,13 @@ class DefaultFirebaseOptions {
   }
 
   static FirebaseOptions web = const FirebaseOptions(
-      apiKey: "AIzaSyAxF9DI0koOx1NM_gi1UASV__y3Sxqr1tg",
-      authDomain: "parksmart-f0854.firebaseapp.com",
-      projectId: "parksmart-f0854",
-      storageBucket: "parksmart-f0854.firebasestorage.app",
-      messagingSenderId: "775822127181",
-      appId: "1:775822127181:web:e3dcc86480b87fc494ac04",
-      measurementId: "G-WDSYHED30S");
+      apiKey: "AIzaSyCJ-oWJdpQk4K-EtRhZwLrgeG6ds7OnY5E",
+      authDomain: "parkme-246a0.firebaseapp.com",
+      projectId: "parkme-246a0",
+      storageBucket: "parkme-246a0.firebasestorage.app",
+      messagingSenderId: "419907757847",
+      appId: "1:419907757847:web:6d248b164d20e029e0b952",
+      measurementId: "G-C9KY9G41BN");
   }
 
 void main() async {

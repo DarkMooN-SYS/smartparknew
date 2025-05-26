@@ -41,7 +41,7 @@ class _ParkingRateState extends State<ParkingRate> {
         var parkingDoc = parkingQuerySnapshot.docs.first;
         var price = parkingDoc.data()['price'] ?? 'N/A';
         setState(() {
-          rate = 'R$price';
+          rate = '$price₮';
         });
       } else {
         // Handle the case when there is no parking document for the current user
@@ -76,7 +76,7 @@ class _ParkingRateState extends State<ParkingRate> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Parking rate',
+            'Зогсоолын үнэ',
             style: TextStyle(
               color: Colors.white,
               fontSize: 40,
@@ -95,7 +95,7 @@ class _ParkingRateState extends State<ParkingRate> {
             ),
           ),
           const Text(
-            'per hour',
+            'цагт',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,

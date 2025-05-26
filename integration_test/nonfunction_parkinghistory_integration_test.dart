@@ -46,12 +46,12 @@ void main() {
         'address': 'Test Location $i',
         'zone': 'Zone A',
         'level': 'L1',
-        'row': 'R$i',
+        'row': '$i₮',
         'date': dateFormatter.format(date),
         'time': timeFormatter.format(date),
-        'price': 10,
+        'price': 1000,
         'duration': 2,
-      });
+      }); 
     }
 
     await batch.commit();

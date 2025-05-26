@@ -115,8 +115,8 @@ class _Registration5State extends State<Registration5> {
   Widget _buildPriceSlider() {
     return Slider(
       value: _pricePerHour,
-      min: 500,
-      max: 50000,
+      min: 1000,
+      max: 10000,
       divisions: 40,
       activeColor: const Color(0xFF58C6A9),
       inactiveColor: Colors.grey,

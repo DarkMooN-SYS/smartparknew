@@ -114,14 +114,20 @@ class SplashScreen extends StatelessWidget {
                                 width: constraints.maxWidth * 0.15,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/registration');
+                                    Navigator.pushNamed(
+                                        context, '/registration');
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.blueGrey,
-                                    padding: const EdgeInsets.symmetric(vertical: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    alignment: Alignment
+                                        .center,
                                   ),
                                   child: Text(
                                     'Үйлчлүүлэгчийн бүртгэл',
+                                    textAlign: TextAlign
+                                        .center,
                                     style: TextStyle(
                                       fontSize: constraints.maxWidth * 0.015,
                                       fontWeight: FontWeight.w900,

@@ -298,7 +298,7 @@ class _Registration1State extends State<Registration1> {
         }
       }
     } else {
-      showToast(message: 'An Error Occured');
+      showToast(message: 'Алдаа гарлаа');
     }
 
     setState((){
@@ -312,7 +312,7 @@ class _Registration1State extends State<Registration1> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Get started',
+          'Эхлээрэй',
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.w900,
@@ -321,20 +321,20 @@ class _Registration1State extends State<Registration1> {
         ),
         const SizedBox(height: 5),
         const Text(
-          'Please enter your details',
+          'Мэдээллээ оруулна уу',
           style: TextStyle(
             fontSize: 20,
             color: Colors.white70,
           ),
         ),
         const SizedBox(height: 40),
-        _buildLabeledTextField('Account holder name *', 'Enter your name', _accountHolderController),
+        _buildLabeledTextField('Данс эзэмшигчийн нэр *', 'Нэрээ оруулна уу', _accountHolderController),
         const SizedBox(height: 15),
-        _buildLabeledTextField('Company name *', 'Enter company name', _companyController),
+        _buildLabeledTextField('Компаний нэр *', 'Компаний нэрийг оруулна уу', _companyController),
         const SizedBox(height: 15),
-        _buildLabeledTextField('Email *', 'Enter your email', _emailController),
+        _buildLabeledTextField('Имэйл *', 'Имэйл хаягаа оруулна уу', _emailController),
         const SizedBox(height: 15),
-        _buildLabeledTextField('Password *', 'Enter your password', _passwordController, obscureText: true),
+        _buildLabeledTextField('Нууц үг *', 'Нууц үгээ оруулна уу', _passwordController, obscureText: true),
         const SizedBox(height: 25),
         Center(
           child: SizedBox(
@@ -358,7 +358,7 @@ class _Registration1State extends State<Registration1> {
                     ),
                   )
                 : const Text(
-                'Next',
+                'Дараах',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -372,11 +372,11 @@ class _Registration1State extends State<Registration1> {
         Center(
           child: RichText(
             text: TextSpan(
-              text: "Already have an account? ",
+              text: "Бүртгэлтэй юу? ",
               style: const TextStyle(color: Colors.white70, fontSize: 12),
               children: [
                 TextSpan(
-                  text: 'Log in',
+                  text: 'Нэвтрэх',
                   style: const TextStyle(
                     color: Color(0xFF58C6A9),
                     fontWeight: FontWeight.bold,

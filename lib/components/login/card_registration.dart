@@ -28,10 +28,10 @@ class AddCardRegistrationPage extends StatelessWidget {
         final String cvv = cvvController.text;
         final String bank = bankController.text;
         if(!isValidString(cardNumber, r'^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$')){showToast(message: "Invalid Card Number, Remove any spaces"); return;}
-        if(!isValidString(holderName, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid Holder Name"); return;}
-        if(!isValidString(expiry, r'^\d{2}/\d{2}$')){showToast(message: "Invalid Expiry, format: 00/00"); return;}
-        if(!isValidString(cvv, r'^\d{3}$')){showToast(message: "Invalid CVV, format 000"); return;}
-        if(!isValidString(bank, r'^[a-zA-Z]+$')){showToast(message: "Invalid Bank Name"); return;}
+        if(!isValidString(holderName, r'^[a-zA-Z/\s]+$')){showToast(message: "Эзэмшигчийн нэр буруу"); return;}
+        if(!isValidString(expiry, r'^\d{2}/\d{2}$')){showToast(message: "Хүчингүй хугацаа, 00/00"); return;}
+        if(!isValidString(cvv, r'^\d{3}$')){showToast(message: "CVV буруу, 000"); return;}
+        if(!isValidString(bank, r'^[a-zA-Z]+$')){showToast(message: "Банкны нэр буруу"); return;}
         Map<String, String> cardPatterns = {
           'visa': r'^4[0-9]{12}(?:[0-9]{3})?$',
           'mastercard': r'^5[1-5][0-9]{14}$',
@@ -58,7 +58,7 @@ class AddCardRegistrationPage extends StatelessWidget {
             'cardType': cardType
           });
 
-          showToast(message: 'Card Added Successfully!');
+          showToast(message: 'Картыг амжилттай нэмлээ!');
           if(context.mounted) {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -68,7 +68,7 @@ class AddCardRegistrationPage extends StatelessWidget {
           }
         }
       } catch (e) {
-        showToast(message: 'Error: $e');
+        showToast(message: 'Алдаа: $e');
       }
     }
 
@@ -86,7 +86,7 @@ class AddCardRegistrationPage extends StatelessWidget {
                   const SizedBox(height: 40.0), // Space from the top
                   const Center(
                     child: Text(
-                      'Add Card',
+                      'Карт нэмэх',
                       style: TextStyle(
                         color: Color(0xFF58C6A9),
                         fontSize: 28.0,
@@ -120,7 +120,7 @@ class AddCardRegistrationPage extends StatelessWidget {
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.transparent,
-                      labelText: 'Card Number',
+                      labelText: 'Картын дугаар',
                       labelStyle: TextStyle(color: Colors.grey),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -138,7 +138,7 @@ class AddCardRegistrationPage extends StatelessWidget {
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.transparent,
-                      labelText: 'Bank',
+                      labelText: 'Банк',
                       labelStyle: TextStyle(color: Colors.grey),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -155,7 +155,7 @@ class AddCardRegistrationPage extends StatelessWidget {
                     decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.transparent,
-                      labelText: 'Holder Name',
+                      labelText: 'Эзэмшигчийн нэр',
                       labelStyle: TextStyle(color: Colors.grey),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -220,7 +220,7 @@ class AddCardRegistrationPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 60.0),
                   nextButtonWithSkip(
-                    displayText: 'Continue',
+                    displayText: 'Үргэлжлүүлэх',
                     action: addCardDetails,
                     nextPage: const CarRegistration(),
                     context: context

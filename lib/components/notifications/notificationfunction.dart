@@ -124,7 +124,7 @@ Future<void> bookSlot(DateTime parkingTime) async {
 
   if (!notificationsEnabled) {
     // If notifications are disabled, do not proceed with scheduling the notification
-    showToast(message: 'Notifications are disabled in your preferences.');
+    showToast(message: 'Мэдэгдэл таны сонголтоор идэвхгүй болсон.');
     return;
   }
 
@@ -146,7 +146,7 @@ Future<void> bookSlot(DateTime parkingTime) async {
       'sent': false,
     });
   } catch (e) {
-    showToast(message: 'Error: $e');
+    showToast(message: 'Алдаа: $e');
   }
 }
 

@@ -128,10 +128,10 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
             finishedSessions.add(session);
           } else {
             if (remaining.inHours < 1 && remaining.inMinutes % 60 < 1) {
-              session.remainingtime = 'less than 1 minute';
+              session.remainingtime = '1 минутаас бага';
             } else {
               session.remainingtime =
-                  '${remaining.inHours}h ${remaining.inMinutes % 60}m';
+                  '${remaining.inHours}цаг ${remaining.inMinutes % 60}минута';
             }
           }
         }
@@ -269,7 +269,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
         parkingDocument.reference.update({'slots_available': updatedSlot});
       } else {
         // No parking found
-        showToast(message: 'No parking found for update: $bookedAddress');
+        showToast(message: 'Шинэчлэгдсэн зогсоол олдсонгүй: $bookedAddress');
       }
 
       if (parkingQuerySnapshot.docs.isNotEmpty) {
@@ -298,7 +298,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
           }
         } else {
           // No zones found
-          showToast(message: 'No zone found for update: $selectedZone');
+          showToast(message: 'Шинэчлэгдсэн бүс олдсонгүй: $selectedZone');
         }
 
         if (zoneDocumentSnapshot.exists) {
@@ -363,7 +363,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
       }
     } catch (e) {
       // Handle any errors
-      showToast(message: 'Error updating slot availability: $e');
+      showToast(message: 'Слотын бэлэн байдлыг шинэчлэхэд алдаа гарлаа: $e');
     }
 
     setState(() {}); // This will trigger a rebuild with the new values
@@ -502,7 +502,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
       }
     } catch (e) {
       // Handle any errors
-      showToast(message: 'Error retrieving booking details: $e');
+      showToast(message: 'Захиалгын дэлгэрэнгүй мэдээллийг авахад алдаа гарлаа: $e');
     }
 
     try {
@@ -586,7 +586,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
       }
     } catch (e) {
       // Handle any errors
-      showToast(message: 'Error retrieving past booking details: $e');
+      showToast(message: 'Өмнөх захиалгын дэлгэрэнгүй мэдээллийг сэргээхэд алдаа гарлаа: $e');
     }
 
     setState(() {
@@ -607,13 +607,13 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
           ),
           backgroundColor: const Color(0xFF35344A),
           content: const Text(
-            "Are you sure you want to cancel this booking?",
+            "Та энэ захиалгыг цуцлахдаа итгэлтэй байна уу?",
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             TextButton(
               child: const Text(
-                "No",
+                "Үгүй",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -622,7 +622,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
               },
             ),
             TextButton(
-              child: const Text("Yes",
+              child: const Text("Тийм",
                   style: TextStyle(
                       color: Colors.red, fontWeight: FontWeight.bold)),
               onPressed: () {
@@ -692,12 +692,12 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
               (spot) => spot.documentId == reservedspot.documentId);
         });
 
-        showToast(message: 'Booking cancelled successfully');
+        showToast(message: 'Захиалгыг амжилттай цуцаллаа');
       } else {
-        showToast(message: 'Booking not found');
+        showToast(message: 'Захиалга олдсонгүй');
       }
     } catch (e) {
-      showToast(message: 'Error cancelling booking: $e');
+      showToast(message: 'Захиалгыг цуцлахад алдаа гарлаа: $e');
     }
   }
 
@@ -707,19 +707,19 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-            "End Sesssion Early",
+            "Зогсоолын хугацааг дуусгах",
             style: TextStyle(
                 color: Colors.tealAccent, fontWeight: FontWeight.bold),
           ),
           backgroundColor: const Color(0xFF35344A),
           content: const Text(
-            "Are you sure you want to end this session early?",
+            "Та энэ зогсоолыг хугацаанаас нь өмнө дуусгахыг үнэхээр хүсэж байна уу?",
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             TextButton(
               child: const Text(
-                "No",
+                "Үгүй",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -728,7 +728,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
               },
             ),
             TextButton(
-              child: const Text("Yes",
+              child: const Text("Тийм",
                   style: TextStyle(
                       color: Colors.red, fontWeight: FontWeight.bold)),
               onPressed: () {
@@ -843,12 +843,12 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
           });
         });
 
-        showToast(message: 'Session ended successfully');
+        showToast(message: 'Зогсоолоос амжилттай гарлаа');
       } else {
-        showToast(message: 'Booking not found');
+        showToast(message: 'Захиалга олдсонгүй');
       }
     } catch (e) {
-      showToast(message: 'Error ending session: $e');
+      showToast(message: 'Зогсолтыг дуусгах үед алдаа гарлаа: $e');
     }
   }
 
@@ -872,13 +872,13 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
           userDocument.reference.update({'balance': amount});
           showToast(message: "Refund : $refundAmount");
         } else {
-          showToast(message: 'No balance found for update: $userId');
+          showToast(message: 'Шинэчлэгдсэн үлдэгдэл олдсонгүй: $userId');
         }
       } else {
-        showToast(message: 'User ID is null');
+        showToast(message: 'Хэрэглэгчийн ID хоосон байна');
       }
     } catch (e) {
-      showToast(message: 'Error updating slot availability: $e');
+      showToast(message: 'Паркийн хүртээмжийг шинэчлэхэд алдаа гарлаа: $e');
     }
     setState(() {});
   }
@@ -903,7 +903,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
                           child: Column(
                             children: [
                               const Text(
-                                'Active Session',
+                                'Идэвхтэй зогсоол',
                                 style: TextStyle(
                                   color: Colors.tealAccent,
                                   fontSize: 18,
@@ -912,7 +912,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
                               ),
                               if (activesessions.isEmpty)
                                 const Text(
-                                  'No Sessions',
+                                  'Зогсоол байхгүй байна',
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 16),
                                 ),
@@ -930,7 +930,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
                               const SizedBox(height: 20),
                               // Reserved Spots
                               const Text(
-                                'Reserved Spots',
+                                'Захиалсан цэгүүд',
                                 style: TextStyle(
                                   color: Colors.tealAccent,
                                   fontSize: 18,
@@ -939,7 +939,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
                               ),
                               if (reservedspots.isEmpty)
                                 const Text(
-                                  'No Sessions',
+                                  'Зогсоол байхгүй байна',
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 16),
                                 ),
@@ -963,7 +963,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
                         width: 500,
                         child: ExpansionTile(
                           title: const Text(
-                            'Completed Sessions',
+                            'Дууссан зогсоол',
                             style: TextStyle(
                               color: Colors.tealAccent,
                               fontSize: 18,
@@ -1134,7 +1134,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  'R ${extractPrice(activesession.price).toString()}/Hr',
+                  '${extractPrice(activesession.price).toString()}₮/Цаг',
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -1157,7 +1157,7 @@ class _ParkingHistoryPageState extends State<ParkingHistoryPage> {
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 const Text(
-                  'Time Remaining : ',
+                  'Үлдсэн хугацаа : ',
                   style: TextStyle(color: Colors.grey),
                 ),
                 Text(

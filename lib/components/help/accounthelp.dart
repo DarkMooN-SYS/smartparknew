@@ -27,7 +27,7 @@ class Accounthelp extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       const Text(
-                        'Account questions',
+                        'Бүртгэлийн асуултууд',
                         style: TextStyle(
                           color: Color(0xFF5CEAD8),
                           fontSize: 20,
@@ -50,32 +50,32 @@ class Accounthelp extends StatelessWidget {
           children: [
             _buildQuestionBlock(
               context,
-              'How do I register a new car ',
+              'Шинэ машиныг хэрхэн бүртгүүлэх вэ? ',
               [],
               [
-                'Navigate to the "My vehicles" page from the side bar and click on the plus icon'
+                'Хажуугийн самбараас "Миний тээврийн хэрэгсэл" хуудас руу очоод нэмэх дүрс дээр дарна уу'
               ],
             ),
             _buildQuestionBlock(
               context,
-              'How do I change my email',
+              'Би имэйлээ хэрхэн өөрчлөх вэ',
               [
                 'assets/help9.png',
                 'assets/help10.png',
                 'assets/help11.png',
               ],
               [
-                '1   Navigate to the "Settings" page',
-                '2   Click on "Edit profile',
-                '3   Edit your email address'
+                '1   "Тохиргоо" хуудас руу очно уу',
+                '2   "Профайлыг засах" дээр дарна уу',
+                '3   Имэйл хаягаа засна уу'
               ],
             ),
             _buildQuestionBlock(
               context,
-              'Why am I not getting notified of bookings',
+              'Яагаад надад захиалга өгөхгүй байна вэ?',
               [],
               [
-                'Make sure notifications are turned on in settings and check app notifications in your phone\'s settings'
+                'Тохиргоо хэсэгт мэдэгдлүүд асаалттай байгаа эсэхийг шалгаад утасныхаа тохиргооноос програмын мэдэгдлийг шалгана уу'
               ],
             ),
             // Add more question blocks as needed

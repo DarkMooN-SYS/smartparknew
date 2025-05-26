@@ -45,7 +45,7 @@ class _SuccessionPageState extends State<SuccessionPage> {
                 Image.asset('assets/Successmark.png', height: 100), // Ensure you have the image in your assets folder
                 const SizedBox(height: 30),
                 const Text(
-                  'Registered Successfully',
+                  'Амжилттай бүртгүүллээ',
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class _SuccessionPageState extends State<SuccessionPage> {
                 ),
                 const SizedBox(height: 5),
                 const Text(
-                  'Congratulations!',
+                  'Баяр хүргэе!',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white,
@@ -62,7 +62,7 @@ class _SuccessionPageState extends State<SuccessionPage> {
                 ),
                 const SizedBox(height: 60),
                 nextButton(
-                  displayText: 'Finished', 
+                  displayText: 'Дууслаа', 
                   action: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

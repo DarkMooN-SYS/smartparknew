@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
     final String password = _passwordController.text;
     final String email = _emailController.text;
 
-    if(!isValidString(email, r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')){showToast(message: "Invalid email address"); return;}
+    if(!isValidString(email, r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')){showToast(message: "Буруу имэйл хаяг"); return;}
 
     final User? user = await _auth.signInWithEmailAndPassword(email, password);
 
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       await prefs.setInt('loginTimestamp', DateTime.now().millisecondsSinceEpoch);
       
       if(mounted) { // Check if the widget is still in the tree
-        showToast(message: 'Successfully signed in');
+        showToast(message: 'Амжилттай нэвтэрлээ');
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
             await prefs.setInt('loginTimestamp', DateTime.now().millisecondsSinceEpoch);
 
             if(mounted) { // Check if the widget is still in the tree
-              showToast(message: 'Google sign in successful');
+              showToast(message: 'Google нэвтэрч амжилттай боллоо');
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const MainPage(),
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       
     } catch (e) {
-        showToast(message: 'Some error occurred: $e');
+        showToast(message: 'Алдаа гарлаа: $e');
     }
     setState((){
       _isLoading = false;
@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                      // Space before the Login text
                     const Text(
-                      'Log in',
+                      'Нэвтрэх',
                       style: TextStyle(
                         fontSize: 43,
                         fontWeight: FontWeight.w500,
@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       key: const Key('Email'),
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'Имэйл',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       key: const Key('Password'),
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Нууц үг',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -302,7 +302,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )
                           : const Text(
-                        'Log in',
+                        'Нэвтрэх',
                         style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w400),
                       ),
                     ),
@@ -318,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            'Or Login with',
+                            'Эсвэл нэвтэрнэ үү',
                             style: TextStyle(fontSize: 13, color: Color(0xFF58C6A9)),
                           ),
                         ),
@@ -358,7 +358,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       child: const Text(
-                        "Don't have an account? Sign up",
+                        "Бүртгэлгүй юу? Бүртгүүлэх",
                         style: TextStyle(fontSize: 20, color: Color(0xFF58C6A9), fontWeight: FontWeight.bold),
                       ),
                     ),

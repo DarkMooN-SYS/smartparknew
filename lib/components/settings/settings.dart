@@ -17,7 +17,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool _notificationsEnabled = true;
   bool _isLoading = true;
-  String _username = 'Loading...';
+  String _username = 'Ачаалж байна...';
   String? _profileImageUrl;
 
   @override
@@ -52,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
         }
       } catch (e) {
         print("Error loading user data: $e");
-        _username = 'Error loading data';
+        _username = 'Өгөгдлийг ачаалахад алдаа гарлаа';
         // Keep default _notificationsEnabled = true or set to false based on desired error behavior
       }
     } else {
@@ -149,14 +149,14 @@ class _SettingsPageState extends State<SettingsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeader('Account Settings'),
+        _buildSectionHeader('Бүртгэлийн тохиргоо'),
         _buildSettingsTile(
-          title: 'Edit profile',
+          title: 'Профайлыг засах',
           onTap: () => Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => const UserProfilePage())),
         ),
         _buildSettingsTile(
-          title: 'My vehicles',
+          title: 'Миний машинууд',
           onTap: () => Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => const ViewVehiclePage())),
         ),

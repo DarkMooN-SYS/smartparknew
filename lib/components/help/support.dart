@@ -50,7 +50,7 @@ class _SupportAppState extends State<SupportApp> {
                           const Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Support',
+                              'Дэмжлэг',
                               style: TextStyle(
                                 color: Colors.tealAccent,
                                 fontSize: 18,
@@ -63,7 +63,7 @@ class _SupportAppState extends State<SupportApp> {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'How can we help you?',
+                      'Бид танд хэрхэн тусалж чадах вэ?',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -76,7 +76,7 @@ class _SupportAppState extends State<SupportApp> {
                       children: [
                         _buildCategoryCard(
                           icon: Icons.notifications,
-                          label: 'Questions about Booking',
+                          label: 'Захиалгын талаархи асуултууд',
                           color: const Color(0xFF0D6EFD),
                           onTap: () {
                             Navigator.of(context).push(
@@ -89,7 +89,7 @@ class _SupportAppState extends State<SupportApp> {
                         const SizedBox(height: 16),
                         _buildCategoryCard(
                           icon: Icons.account_circle,
-                          label: 'Questions about Account',
+                          label: 'Бүртгэлийн талаархи асуултууд',
                           color: const Color(0xFFDC3545),
                           onTap: () {
                             Navigator.of(context).push(
@@ -102,7 +102,7 @@ class _SupportAppState extends State<SupportApp> {
                         const SizedBox(height: 16),
                         _buildCategoryCard(
                           icon: Icons.payment,
-                          label: 'Questions about Payment',
+                          label: 'Төлбөрийн талаархи асуултууд',
                           color: const Color(0xFF58C6A9),
                           onTap: () {
                             Navigator.of(context).push(

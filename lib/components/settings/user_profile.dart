@@ -60,7 +60,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         }
       }
     } catch (e) {
-      showToast(message: 'Error loading profile: $e');
+      showToast(message: 'Профайлыг ачаалахад алдаа гарлаа: $e');
     }
     setState(() {
       _isFetching = false;
@@ -75,8 +75,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
     final String username = _nameController.text;
     final String surname = _surnameController.text;
     
-    if(!isValidString(surname, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid surname"); setState(() {_isUploading = false; }); return;}
-    if(!isValidString(username, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid name"); setState(() {_isUploading = false; }); return;}
+    if(!isValidString(surname, r'^[a-zA-Z/\s]+$')){showToast(message: "Буруу овог"); setState(() {_isUploading = false; }); return;}
+    if(!isValidString(username, r'^[a-zA-Z/\s]+$')){showToast(message: "Буруу нэр"); setState(() {_isUploading = false; }); return;}
 
     try {
       User? user = FirebaseAuth.instance.currentUser;
@@ -93,7 +93,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           'profileImageUrl': profileImageUrl, // Save the profile image URL
         }, SetOptions(merge: true));
 
-        showToast(message: 'Profile Updated Successfully!');
+        showToast(message: 'Профайлыг амжилттай шинэчилсэн!');
         if (mounted) {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -103,7 +103,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         }
       }
     } catch (e) {
-      showToast(message: 'Error: $e');
+      showToast(message: 'Алдаа: $e');
     } finally {
       setState(() {
         _isUploading = false;
@@ -120,7 +120,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
-      showToast(message: 'Error uploading image: $e');
+      showToast(message: 'Зураг байршуулахад алдаа гарлаа: $e');
       return null;
     }
   }
@@ -161,7 +161,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       const Text(
-                        'User Profile',
+                        'Профайл',
                         style: TextStyle(
                           color: Color(0xFF58C6A9),
                           fontSize: 20,
@@ -212,7 +212,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               onBackgroundImageError: _profileImage == null && _profileImageUrl == null
                                   ? null
                                   : (error, stackTrace) {
-                                      showToast(message: 'Error loading image: $error');
+                                      showToast(message: 'Зургийг ачаалахад алдаа гарлаа: $error');
                                     },
                               child: _profileImage == null && _profileImageUrl == null
                                   ? const Icon(Icons.person, size: 80, color: Colors.grey)
@@ -242,11 +242,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       ),
                       const SizedBox(height: 30),
                       ProfileField(
-                        label: 'Username',
+                        label: 'Нэр',
                         controller: _nameController,
                       ),
                       ProfileField(
-                        label: 'Surname',
+                        label: 'Овог',
                         controller: _surnameController,
                       ),
                       const SizedBox(height: 40),
@@ -264,7 +264,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             backgroundColor: const Color.fromRGBO(88, 198, 169, 1),
                           ),
                           child: const Text(
-                            'Save',
+                            'Хадгалах',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,

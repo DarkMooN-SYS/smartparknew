@@ -55,7 +55,7 @@ class _LoadingScreenState extends State<LoadingScreen>
               ),
               const SizedBox(height: 20),
               const Text(
-                'Loading',
+                'Ачаалж байна',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,

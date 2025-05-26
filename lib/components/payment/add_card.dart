@@ -33,23 +33,23 @@ class AddCardPageState extends State<AddCardPage> {
 
     if (!isValidString(cardNumber,
         r'^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$')) {
-      showToast(message: "Invalid card number format.");
+      showToast(message: "Картын дугаарын буруу байна.");
       return;
     }
     if (!isValidString(holderName, r'^[a-zA-Z/\s]+$')) {
-      showToast(message: "Invalid Holder Name");
+      showToast(message: "Эзэмшигчийн нэр буруу");
       return;
     }
     if (!isValidString(expiry, r'^\d{2}/\d{2}$')) {
-      showToast(message: "Invalid Expiry, format: 00/00");
+      showToast(message: "Хүчингүй хугацаа, 00/00");
       return;
     }
     if (!isValidString(cvv, r'^\d{3,4}$')) {
-      showToast(message: "Invalid CVV, format 000 or 0000");
+      showToast(message: "CVV буруу, 000 эсвэл 0000");
       return;
     }
     if (!isValidString(bank, r'^[a-zA-Z0-9\s&().-]+$')) {
-      showToast(message: "Invalid Bank Name");
+      showToast(message: "Банкны нэр буруу");
       return;
     }
 
@@ -91,11 +91,11 @@ class AddCardPageState extends State<AddCardPage> {
       } catch (e) {
         if (mounted) {
           // Check if the widget is still mounted
-          showToast(message: 'Failed to save card details: $e');
+          showToast(message: 'Картын дэлгэрэнгүй мэдээллийг хадгалж чадсангүй: $e');
         }
       }
     } else {
-      showToast(message: 'User not found');
+      showToast(message: 'Хэрэглэгч олдсонгүй');
     }
   }
 
@@ -143,7 +143,7 @@ class AddCardPageState extends State<AddCardPage> {
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.transparent,
-                                labelText: 'Card Number',
+                                labelText: 'Картын дугаар',
                                 labelStyle: TextStyle(color: Colors.grey),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
@@ -160,7 +160,7 @@ class AddCardPageState extends State<AddCardPage> {
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.transparent,
-                                labelText: 'Bank',
+                                labelText: 'Банк',
                                 labelStyle: TextStyle(color: Colors.grey),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
@@ -176,7 +176,7 @@ class AddCardPageState extends State<AddCardPage> {
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.transparent,
-                                labelText: 'Holder Name',
+                                labelText: 'Эзэмшигчийн нэр',
                                 labelStyle: TextStyle(color: Colors.grey),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
@@ -249,7 +249,7 @@ class AddCardPageState extends State<AddCardPage> {
                           ]),
                           const SizedBox(height: 60.0),
                           nextButton(
-                            displayText: 'Save',
+                            displayText: 'Хадгалах',
                             action: _saveCardDetails,
                           ),
                         ],

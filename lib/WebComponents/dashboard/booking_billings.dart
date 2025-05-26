@@ -86,7 +86,7 @@ class _BookingBillingsState extends State<BookingBillings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Booking Billings',
+                  'Захиалга хийх тооцоо',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -101,7 +101,7 @@ class _BookingBillingsState extends State<BookingBillings> {
                 : bookings.isEmpty
                     ? Center(
                         child: Text(
-                          "Your booking billings details will be displayed here",
+                          "Таны захиалгын төлбөрийн дэлгэрэнгүй мэдээлэл энд харагдах болно",
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.8),
                             fontSize: 14,
@@ -115,14 +115,14 @@ class _BookingBillingsState extends State<BookingBillings> {
                           final zone = data['zone'] ?? '';
                           final row = data['row'] ?? '';
                           final title =
-                              'Zone/Row : $zone/$row - Parking Booking';
+                              'Бүс/Эгнээ : $zone/$row - Зогсоолын захиалга';
 
                           final date = data['date'] ?? ''; // e.g., "2024-11-14"
                           final time = data['time'] ?? ''; // e.g., "12:00"
                           final dateTimeString = '$date, at $time';
 
                           final price = data['price'] ?? 0; // e.g., 10
-                          String amount = '+R$price';
+                          String amount = '+$price₮';
 
                           // Determine the amount based on booking status
                           final disabled = data['disabled'] ?? false;
@@ -130,10 +130,10 @@ class _BookingBillingsState extends State<BookingBillings> {
 
                           if (disabled) {
                             // Booking was canceled/refunded
-                            amount = '-R$price';
+                            amount = '-$price₮';
                           } else if (!sent) {
                             // Booking is pending
-                            amount = 'Pending';
+                            amount = 'Хүлээгдэж байна';
                           }
 
                           return _buildBillingItem(

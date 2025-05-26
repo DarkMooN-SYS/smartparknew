@@ -27,7 +27,7 @@ class Bookinghelp extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       const Text(
-                        'Booking questions',
+                        'Захиалгын асуултууд',
                         style: TextStyle(
                           color: Color(0xFF5CEAD8),
                           fontSize: 20,
@@ -50,7 +50,7 @@ class Bookinghelp extends StatelessWidget {
           children: [
             _buildQuestionBlock(
               context,
-              'How do I make a booking',
+              'Би яаж захиалга хийх вэ',
               [
                 'assets/help1.png',
                 'assets/help2.png',
@@ -63,22 +63,22 @@ class Bookinghelp extends StatelessWidget {
 
               ],
               [
-                '1   Navigate to home page',
-                '2   Enter a location',
-                '3   Pick a parking zone',
-                '4   Pick a parking floor',
-                '5   Pick a row',
-                '6   Confirm booking',
-                '7   Confirm car',
-                '8   Confirm payment method',
+                '1   Нүүр хуудас руу очих',
+                '2   Байршлаа оруулах',
+                '3   Зогсоолын бүс сонгох',
+                '4   Зогсоолын давхар сонгох',
+                '5   Эгнэ (row) сонгох',
+                '6   Захиалгаа баталгаажуулах',
+                '7   Машинаа баталгаажуулах',
+                '8   Төлбөрийн аргаа баталгаажуулах',
               ],
             ),
             _buildQuestionBlock(
               context,
-              'How do I check my booking',
+              'Би захиалгаа хэрхэн шалгах вэ',
               [],
               [
-                'You can view your current and past bookings by navigating to the booking history page',
+                'Та захиалгын түүхийн хуудас руу орж одоогийн болон өмнөх захиалгаа харах боломжтой',
               ],
             ),
           ],

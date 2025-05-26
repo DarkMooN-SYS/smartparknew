@@ -495,7 +495,7 @@ class _MapViewState extends State<MapView> {
         _locationData == null ||
         _markers.isEmpty ||
         !_isMapReady) {
-      showToast(message: 'Current location or parking spots unavailable.');
+      showToast(message: 'Одоогийн байршил эсвэл зогсоол байхгүй байна.');
       return;
     }
     try {
@@ -517,11 +517,11 @@ class _MapViewState extends State<MapView> {
         _animateCamera(nearestMarker.position, 19.0);
         _mapController?.showMarkerInfoWindow(nearestMarker.markerId);
       } else {
-        showToast(message: 'No parking locations found.');
+        showToast(message: 'Зогсоол олдсонгүй.');
       }
     } catch (e) {
       print('[MapView.Error.findNearestParkingLocation] $e');
-      showToast(message: 'Error finding nearest parking: ${e.toString()}');
+      showToast(message: 'Хамгийн ойрын зогсоолыг олоход алдаа гарлаа: ${e.toString()}');
     }
   }
 
@@ -545,7 +545,7 @@ class _MapViewState extends State<MapView> {
             setState(() => _destinationController.text = p.description ?? '');
           }
         } else {
-          showToast(message: 'Could not get location details.');
+          showToast(message: 'Байршлын мэдээллийг авч чадсангүй.');
         }
       } catch (e) {
         print("[MapView.Error.displaySearchedPrediction] $e");
@@ -569,19 +569,19 @@ class _MapViewState extends State<MapView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                    "Location permission is required to use map features.",
+                    "Газрын зургийг ашиглахын тулд байршлын зөвшөөрөл шаардлагатай.",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _initializeMap, // Re-attempt full initialization
-                  child: const Text("Grant Permission"),
+                  child: const Text("Зөвшөөрөл олгох"),
                 ),
                 if (_permissionStatus == loc.PermissionStatus.deniedForever)
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: const Text(
-                        "Please enable location permission in app settings.",
+                        "Апп тохиргооноос байршлын зөвшөөрлийг идэвхжүүлнэ үү.",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.redAccent)),
                   ),
@@ -695,7 +695,7 @@ class _MapViewState extends State<MapView> {
                           child: TextField(
                             controller: _destinationController,
                             decoration: InputDecoration(
-                              hintText: 'Where are you going?',
+                              hintText: 'Бид хаашаа явж байна найзаа?',
                               border: InputBorder.none,
                               hintStyle: TextStyle(color: Colors.grey[700]),
                               icon: Icon(Icons.search, color: Colors.grey[600]),

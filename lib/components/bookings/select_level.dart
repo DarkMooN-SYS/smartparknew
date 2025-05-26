@@ -159,7 +159,7 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
                         ),
                         const Expanded(
                           child: Text(
-                            'Parking Floors',
+                            'Зогсоолын давхар',
                             style: TextStyle(
                                 color: Color(0xFF58C6A9),
                                 fontSize: 20,
@@ -173,13 +173,13 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
                     const SizedBox(height: 40),
                     const Center(
                       child: Text(
-                        'Choose your parking',
+                        'Зогсоолоо сонго',
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                     ),
                     Center(
                       child: Text(
-                        'Floor on Zone ${widget.selectedZone}',
+                        '${widget.selectedZone} бүсийн давхарт',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 30),
                       ),
@@ -197,7 +197,7 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(
-                          '$totalSlots spaces available',
+                          'Захиалгад боломжтой зай $totalSlots',
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -255,7 +255,7 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
                                   );
                                 }
                               : null,
-                          child: const Text('Continue',
+                          child: const Text('Үргэлжлүүлэх',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18)),
                         ),
@@ -294,7 +294,7 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
                 setState(() {
                   selectedLevel = levels.level;
                   futureBooking = true;
-                  showToast(message: 'This must be a future booking');
+                  showToast(message: 'Энэ нь ирээдүйн захиалга байх ёстой');
                 });
               },
         child: Row(children: [
@@ -303,7 +303,7 @@ class _LevelSelectPageState extends State<LevelSelectPage> {
           Text(levels.level,
               style: const TextStyle(color: Colors.white, fontSize: 18)),
           const Spacer(),
-          Text('${levels.slots} Slots',
+          Text('${levels.slots} Зай боломжтой',
               style: const TextStyle(color: Colors.white, fontSize: 18)),
         ]),
       ),

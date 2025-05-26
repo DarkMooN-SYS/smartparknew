@@ -26,19 +26,19 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
     final String license = _licenseController.text;
 
     if (!isValidString(brand, r'^[a-zA-Z/\s]+$')) {
-      showToast(message: "Invalid Brand");
+      showToast(message: "Буруу брэнд");
       return;
     }
     if (!isValidString(model, r'^[a-zA-Z0-9/\s]+$')) {
-      showToast(message: "Invalid Model");
+      showToast(message: "Буруу загвар");
       return;
     }
     if (!isValidString(color, r'^[a-zA-Z/\s]+$')) {
-      showToast(message: "Invalid Color");
+      showToast(message: "Буруу өнгө");
       return;
     }
     if (!isValidString(license, r'^[a-zA-Z0-9/\s]+$')) {
-      showToast(message: "Invalid License");
+      showToast(message: "Хүчингүй машины дугаар");
       return;
     }
 
@@ -55,7 +55,7 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
         });
       }
     } catch (e) {
-      showToast(message: 'Error: $e');
+      showToast(message: 'Алдаа: $e');
     }
 
     if (mounted) {
@@ -101,7 +101,7 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Car Info',
+                        'Машины мэдээлэл',
                         style: TextStyle(
                           color: Colors.tealAccent,
                           fontSize: 18,
@@ -148,22 +148,22 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
               child: Column(
                 children: [
                   ProfileField(
-                    label: 'Vehicle Brand',
+                    label: 'Тээврийн хэрэгслийн брэнд',
                     value: '',
                     controller: _brandController,
                   ),
                   ProfileField(
-                    label: 'Vehicle Model',
+                    label: 'Тээврийн хэрэгслийн загвар',
                     value: '',
                     controller: _modelController,
                   ),
                   ProfileField(
-                    label: 'Color',
+                    label: 'Өнгө',
                     value: '',
                     controller: _colorController,
                   ),
                   ProfileField(
-                    label: 'License Number',
+                    label: 'Машины дугаар',
                     value: '',
                     controller: _licenseController,
                   ),
@@ -171,7 +171,7 @@ class _CarDetailsPageState extends State<AddVehiclePage> {
                     height: 30,
                   ),
                   nextButton(
-                    displayText: 'Add Vehicle',
+                    displayText: 'Тээврийн хэрэгсэл нэмэх',
                     action: () {
                       _addVehicleDetails();
                     },

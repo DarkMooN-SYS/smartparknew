@@ -99,7 +99,7 @@ class _Registration3State extends State<Registration3> {
 
     try {
       if (_markers.isEmpty) {
-        showToast(message: 'Please add at least one parking zone marker.');
+        showToast(message: 'Дор хаяж нэг зогсоолын бүсийн тэмдэглэгээг нэмнэ үү.');
         return;
       }
 
@@ -111,7 +111,7 @@ class _Registration3State extends State<Registration3> {
       widget.ps.noZones = numZones;
       widget.onRegisterComplete();
     } catch (e) {
-      showToast(message: 'Failed to save parking details: $e');
+      showToast(message: 'Зогсоолын мэдээллийг хадгалж чадсангүй: $e');
     } finally {
       setState(() {
         _isLoading = false;
@@ -127,7 +127,7 @@ class _Registration3State extends State<Registration3> {
         children: [
           const SizedBox(height: 20),
           const Text(
-            'Pin the parking zones below *',
+            'Зогсоолын бүсүүдийг доор байрлуул *',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _Registration3State extends State<Registration3> {
           ),
           const SizedBox(height: 10),
           const Text(
-            'Tap on the map to place parking zone markers at your parking location',
+            'Газрын зураг дээр дараад зогсоол дээрээ зогсоолын бүсийг тэмдэглэнэ үү',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey,
@@ -171,7 +171,7 @@ class _Registration3State extends State<Registration3> {
               Icon(Icons.local_parking, color: Colors.green, size: 30),
               SizedBox(width: 10),
               Text(
-                'Denotes a Parking Zone',
+                'Зогсоолын бүсийг илэрхийлнэ',
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ],
@@ -200,7 +200,7 @@ class _Registration3State extends State<Registration3> {
                         ),
                       )
                     : const Text(
-                        'Save',
+                        'Хадгалах',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

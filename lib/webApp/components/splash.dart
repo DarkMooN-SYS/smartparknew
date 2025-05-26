@@ -9,7 +9,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ParkMe',
+      title: 'ParkSmart',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.urbanistTextTheme(
@@ -100,7 +100,7 @@ class SplashScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(vertical: 15),
                                   ),
                                   child: Text(
-                                    'Log in',
+                                    'Нэвтрэх',
                                     style: TextStyle(
                                       fontSize: constraints.maxWidth * 0.015,
                                       fontWeight: FontWeight.w900,
@@ -121,7 +121,7 @@ class SplashScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(vertical: 15),
                                   ),
                                   child: Text(
-                                    'Client Register',
+                                    'Үйлчлүүлэгчийн бүртгэл',
                                     style: TextStyle(
                                       fontSize: constraints.maxWidth * 0.015,
                                       fontWeight: FontWeight.w900,
@@ -145,7 +145,7 @@ class SplashScreen extends StatelessWidget {
                           const SizedBox(height: 40),
                           Center(
                             child: Text(
-                              '© 2024 DaVinci Code. All rights reserved.',
+                              '© 2025 HardTech Code. All rights reserved.',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: constraints.maxWidth * 0.01,

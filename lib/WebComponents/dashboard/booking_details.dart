@@ -81,7 +81,7 @@ class _BookingDetailsState extends State<BookingDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Booking Details',
+              'Захиалгын дэлгэрэнгүй мэдээлэл',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -94,7 +94,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                 : bookings.isEmpty
                     ? Center(
                         child: Text(
-                          "All your bookings found for this parking spot will be displayed here",
+                          "Энэ зогсоолд олдсон таны бүх захиалгыг энд харуулах болно",
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.8),
                             fontSize: 14,
@@ -108,7 +108,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                           final zone = data['zone'] ?? '';
                           final row = data['row'] ?? '';
                           final title =
-                              'Zone/Row : $zone/$row - Parking Booking';
+                              'Бүс/Эгнээ : $zone/$row - Зогсоолын захиалга';
                           final date = data['date'] ?? '';
                           final time = data['time'] ?? '';
                           final dateTimeString = '$date, at $time';
@@ -162,7 +162,7 @@ class _BookingDetailsState extends State<BookingDetails> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
           child: const Text(
-            'Edit',
+            'Засах',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -192,7 +192,7 @@ class _BookingDetailsState extends State<BookingDetails> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: const Text(
-            'Edit Booking',
+            'Захиалга засах',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           content: SingleChildScrollView(
@@ -205,7 +205,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                     controller: dateController,
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
-                      labelText: 'Date',
+                      labelText: 'Огноо',
                       labelStyle: TextStyle(color: Color(0xFFA0AEC0)),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFA0AEC0)),
@@ -216,7 +216,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a date';
+                        return 'Огноо оруулна уу';
                       }
                       return null;
                     },
@@ -227,7 +227,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                     controller: timeController,
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
-                      labelText: 'Time',
+                      labelText: 'Цаг',
                       labelStyle: TextStyle(color: Color(0xFFA0AEC0)),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFA0AEC0)),
@@ -238,7 +238,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a time';
+                        return 'Цаг оруулна уу';
                       }
                       return null;
                     },
@@ -249,7 +249,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                     controller: durationController,
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
-                      labelText: 'Duration (hours)',
+                      labelText: 'Үргэлжлэх хугацаа (цаг)',
                       labelStyle: TextStyle(color: Color(0xFFA0AEC0)),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFA0AEC0)),
@@ -261,10 +261,10 @@ class _BookingDetailsState extends State<BookingDetails> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter duration';
+                        return 'Үргэлжлэх хугацааг оруулна уу';
                       }
                       if (int.tryParse(value) == null) {
-                        return 'Please enter a valid number';
+                        return 'Хүчинтэй дугаар оруулна уу';
                       }
                       return null;
                     },
@@ -275,7 +275,7 @@ class _BookingDetailsState extends State<BookingDetails> {
           ),
           actions: [
             TextButton(
-              child: const Text('Cancel',
+              child: const Text('Цуцлах',
                   style: TextStyle(color: Color(0xFF58C6A9))),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
@@ -305,7 +305,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                 ),
               ),
               child: const Text(
-                'Save Changes',
+                'Хадгалах',
                 style: TextStyle(color: Colors.white),
               ),
             ),

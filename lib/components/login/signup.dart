@@ -86,7 +86,7 @@ class _SignupPageState extends State<SignupPage> {
             await prefs.setInt('loginTimestamp', DateTime.now().millisecondsSinceEpoch);
 
             if(mounted) { // Check if the widget is still in the tree
-              showToast(message: 'Successfully signed up');
+              showToast(message: 'Амжилттай бүртгүүллээ');
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const AddCardRegistrationPage(),
@@ -94,18 +94,18 @@ class _SignupPageState extends State<SignupPage> {
               );
             }
           } else {
-            showToast(message: 'User with this email already exists');
+            showToast(message: 'Энэ имэйлтэй хэрэглэгч аль хэдийн байна');
           }
         }
       }
       
     } catch (e) {
       if (e is FirebaseAuthException) {
-        showToast(message: 'Authentication error: ${e.message}');
+        showToast(message: 'Баталгаажуулалтын алдаа: ${e.message}');
       } else if (e is PlatformException) {
-        showToast(message: 'Platform error: ${e.message}');
+        showToast(message: 'Платформын алдаа: ${e.message}');
       } else {
-        showToast(message: 'An unexpected error occurred: $e');
+        showToast(message: 'Гэнэтийн алдаа гарлаа: $e');
       }
     }
     setState((){
@@ -164,7 +164,7 @@ class _SignupPageState extends State<SignupPage> {
           showToast(message: 'An Error Occured');
         }
       } else {
-        showToast(message: 'User with this email already exists');
+        showToast(message: 'Энэ имэйлтэй хэрэглэгч аль хэдийн байна');
       }
     } catch (e) {
       showToast(message: 'Error: $e');
@@ -231,7 +231,7 @@ class _SignupPageState extends State<SignupPage> {
                   children: <Widget>[
                      // Space before the Login text
                     const Text(
-                      'Sign up',
+                      'Бүртгүүлэх',
                       style: TextStyle(
                         fontSize: 43,
                         fontWeight: FontWeight.w500,
@@ -242,7 +242,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextField(
                       controller: _usernameController,
                       decoration: InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Нэр',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -281,7 +281,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextField(
                       controller: _noController,
                       decoration: InputDecoration(
-                        labelText: 'Surname',
+                        labelText: 'Овог',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -320,7 +320,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'Имэйл',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -360,7 +360,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextField(
                       controller: _passwordController,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Нууц үг',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700,
                           fontWeight: FontWeight.w500,
@@ -403,7 +403,7 @@ class _SignupPageState extends State<SignupPage> {
                           },
                         ),
                         // Add helper text for password hint
-                        helperText: 'Password must be a minimum length of 8,\nAt least 1 uppercase, lowercase letter,\nAt least 1 number and special character (!@#%^&*)',
+                        helperText: 'Нууц үгийн урт нь хамгийн багадаа 8,\n1-ээс доошгүй том, жижиг үсэг,\nХамгийн багадаа 1 тоо, тусгай тэмдэгт (!@#%^&*) байх ёстой.',
                         helperStyle: TextStyle(
                           color: Colors.grey.shade600,
                           fontSize: 12,
@@ -441,7 +441,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           )
                         : const Text(
-                        'Signup',
+                        'Бүртгүүлэх',
                         style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w400),
                       ),
                     ),
@@ -457,7 +457,7 @@ class _SignupPageState extends State<SignupPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            'Or Sign up with',
+                            'Эсвэл бүртгүүлнэ үү',
                             style: TextStyle(fontSize: 13, color: Color(0xFF58C6A9)),
                           ),
                         ),
@@ -500,7 +500,7 @@ class _SignupPageState extends State<SignupPage> {
                         );
                       },
                       child: const Text(
-                        "Have an account? Login",
+                        "Данстай юу? Нэвтрэх",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color(0xFF58C6A9)),
                       ),
                     ),

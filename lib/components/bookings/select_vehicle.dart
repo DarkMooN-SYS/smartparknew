@@ -202,7 +202,7 @@ class _ViewVehiclePageState extends State<ChooseVehiclePage> {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'Select Vehicle',
+                            'Тээврийн хэрэгслийг сонгоно уу',
                             style: TextStyle(
                               color: Colors.tealAccent,
                               fontSize: 18,
@@ -321,14 +321,14 @@ class _ViewVehiclePageState extends State<ChooseVehiclePage> {
                 )
               : !hasCars ?
                 const Text(
-                  'You dont have any Vehicles',
+                  'Танд тээврийн хэрэгсэл байхгүй',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                   ),
                 )
               : const Text(
-                  'Continue',
+                  'Үргэлжлүүлэх',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.white,

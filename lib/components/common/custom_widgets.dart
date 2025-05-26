@@ -10,7 +10,7 @@ Widget loadingWidget() {
           CircularProgressIndicator(),
           SizedBox(height: 20),
           Text(
-            'Loading',
+            'Ачаалж байна',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -99,7 +99,7 @@ Widget nextButtonWithSkip(
               ),
             ),
             Text(
-              'Skip for now',
+              'Одоохондоо алгасая',
               style: TextStyle(
                 color: Color(0xFF58C6A9),
                 decoration: TextDecoration.underline,

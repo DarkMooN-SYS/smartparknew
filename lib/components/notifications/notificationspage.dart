@@ -33,14 +33,14 @@ class BookedNotification extends Notification {
 
   BookedNotification(String time, this.location, this.parkingslot)
       : super(
-            time, 'Successfully Booked', Icons.check_circle, Colors.tealAccent);
+            time, 'Амжилттай захиалсан', Icons.check_circle, Colors.tealAccent);
 }
 
 class AlertNotification extends Notification {
   final String description;
 
   AlertNotification(String time, this.description)
-      : super(time, 'Parking Violation', Icons.warning, Colors.yellow);
+      : super(time, 'Зогсоолын зөрчил', Icons.warning, Colors.yellow);
 }
 
 class ReminderNotification extends Notification {
@@ -48,7 +48,7 @@ class ReminderNotification extends Notification {
   final String location;
 
   ReminderNotification(String time, this.bookingTime, this.location)
-      : super(time, 'Upcoming Parking Session', Icons.notification_important,
+      : super(time, 'Удахгүй болох зогсоолын цагууд', Icons.notification_important,
             Colors.green);
 }
 

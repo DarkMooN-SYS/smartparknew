@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     final String password = _passwordController.text;
     final String email = _emailController.text;
 
-    if(!isValidString(email, r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')){showToast(message: "Invalid email address"); return;}
+    if(!isValidString(email, r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')){showToast(message: "Буруу имэйл хаяг"); return;}
 
     setState((){
       _isLoading = true;
@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
             .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      showToast(message: "You are not a registered client, go register first!");
+      showToast(message: "Та бүртгүүлсэн үйлчлүүлэгч биш, эхлээд бүртгүүлээрэй!");
       setState((){
         _isLoading = false;
       });
@@ -63,9 +63,9 @@ class _LoginPageState extends State<LoginPage> {
       await prefs.setInt('loginTimestamp', DateTime.now().millisecondsSinceEpoch);
       
       if(mounted) { // Check if the widget is still in the tree
-        showToast(message: 'Successfully signed in');
+        showToast(message: 'Амжилттай нэвтэрлээ');
         Navigator.pushAndRemoveUntil(
-          context,
+          context,  
           MaterialPageRoute(
             builder: (context) => const DashboardScreen(),
           ),
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const SizedBox(height: 40),
                                 // "Welcome back" text
                                 const Text(
-                                  'Welcome back',
+                                  'Эргээд тавтай морил',
                                   style: TextStyle(
                                     fontSize: 45, // Increased font size
                                     fontWeight: FontWeight.w900, // Thicker font weight
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 const SizedBox(height: 10),
                                 const Text(
-                                  'Please enter your details',
+                                  'Мэдээллээ оруулна уу',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white70, // Slightly lighter text color
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const SizedBox(height: 30),
                                 // Email field
                                 const Text(
-                                  'Email',
+                                  'Имэйл',
                                   style: TextStyle(
                                     color: Colors.white, // White text color
                                     fontSize: 18,
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                                     style: const TextStyle(color: Colors.white), // White text color when typing
                                     cursorColor: const Color(0xFF58C6A9), // Green cursor color
                                     decoration: InputDecoration(
-                                      hintText: 'Enter your email',
+                                      hintText: 'Имэйлээ оруулна уу',
                                       hintStyle: const TextStyle(color: Colors.grey),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(color: emailUnderlineColor),
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const SizedBox(height: 20),
                                 // Password field
                                 const Text(
-                                  'Password',
+                                  'Нууц үг',
                                   style: TextStyle(
                                     color: Colors.white, // White text color
                                     fontSize: 18,
@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                                     style: const TextStyle(color: Colors.white), // White text color when typing
                                     cursorColor: const Color(0xFF58C6A9), // Green cursor color
                                     decoration: InputDecoration(
-                                      hintText: 'Enter your password',
+                                      hintText: 'Нууц үгээ оруулна уу',
                                       hintStyle: const TextStyle(color: Colors.grey),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(color: passwordUnderlineColor),
@@ -240,7 +240,7 @@ class _LoginPageState extends State<LoginPage> {
                                             ),
                                           )
                                         : const Text(
-                                        'Log in',
+                                        'Нэвтрэх',
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,

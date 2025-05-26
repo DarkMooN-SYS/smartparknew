@@ -88,7 +88,7 @@ class _InvoicesState extends State<Invoices> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Invoices',
+                  'Нэхэмжлэх',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -103,7 +103,7 @@ class _InvoicesState extends State<Invoices> {
                 : bookings.isEmpty
                     ? Center(
                         child: Text(
-                          "Your invoices details will be displayed here",
+                          "Таны нэхэмжлэхийн дэлгэрэнгүй мэдээлэл энд харагдах болно",
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.8),
                             fontSize: 14,
@@ -132,7 +132,7 @@ class _InvoicesState extends State<Invoices> {
 
                           final invoiceNumber =
                               '#${doc.id.substring(0, 8).toUpperCase()}'; // Shortened doc ID as invoice number
-                          final amount = 'R ${data['price'] ?? 0}';
+                          final amount = '${data['price'] ?? 0}₮';
 
                           return _buildInvoiceItem(context, formattedDate,
                               invoiceNumber, amount, data);
@@ -260,7 +260,7 @@ class _InvoicesState extends State<Invoices> {
                           fontSize: 16, fontWeight: pw.FontWeight.bold),
                     ),
                     pw.Text(
-                      'R$price',
+                      '$price₮',
                       style: pw.TextStyle(
                           fontSize: 16, fontWeight: pw.FontWeight.bold),
                     ),

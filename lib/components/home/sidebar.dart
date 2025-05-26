@@ -169,19 +169,19 @@ class SideMenu extends StatelessWidget {
           _buildListTile(
             context,
             Icons.payment,
-            'Payment methods',
+            'Төлбөрийн аргууд',
             const PaymentMethodPage(),
           ),
           _buildListTile(
             context,
             Icons.history,
-            'Parking History',
+            'Зогсоолын түүх',
             const ParkingHistoryPage(),
           ),
           _buildListTile(
             context,
             Icons.local_offer,
-            'Promotion code',
+            'Урамшууллын код',
             const PromotionCode(),
           ),
           const SizedBox(height: 20),
@@ -190,19 +190,19 @@ class SideMenu extends StatelessWidget {
           _buildListTile(
             context,
             Icons.notifications,
-            'Notification',
+            'Мэдэгдэл',
             const NotificationApp(),
           ),
           _buildListTile(
             context,
             Icons.support,
-            'Support',
+            'Дэмжлэг',
             const SupportApp(),
           ),
           _buildListTile(
             context,
             Icons.settings,
-            'Settings',
+            'Тохиргоо',
             const SettingsPage(),
           ),
         ],
@@ -265,7 +265,7 @@ class SideMenu extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.white),
             title: const Text(
-              'Logout',
+              'Гарах',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

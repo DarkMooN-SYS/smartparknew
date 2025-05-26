@@ -15,7 +15,7 @@ class Registration5 extends StatefulWidget {
 }
 
 class _Registration5State extends State<Registration5> {
-  double _pricePerHour = 20; // Default price
+  double _pricePerHour = 1000; // Default price
   bool _isLoading = false;
 
   Future<void> _clientRegisterParkingDetails() async {
@@ -28,7 +28,7 @@ class _Registration5State extends State<Registration5> {
       
       widget.onRegisterComplete();
     } catch (e) {
-      showToast(message: 'Error: $e');
+      showToast(message: 'Алдаа: $e');
     }
 
     setState((){
@@ -72,7 +72,7 @@ class _Registration5State extends State<Registration5> {
                     ),
                   )
                 : const Text(
-                  'Next',
+                  'Дараах',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class _Registration5State extends State<Registration5> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Select pricing per hour *",
+          "Цагийн үнийг сонгоно уу *",
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -101,7 +101,7 @@ class _Registration5State extends State<Registration5> {
         ),
         const SizedBox(height: 8),
         Text(
-          "R${_pricePerHour.toInt()}",
+          "${_pricePerHour.toInt()}₮",
           style: const TextStyle(
             color: Colors.white,
             fontSize: 36,
@@ -115,8 +115,8 @@ class _Registration5State extends State<Registration5> {
   Widget _buildPriceSlider() {
     return Slider(
       value: _pricePerHour,
-      min: 10,
-      max: 50,
+      min: 500,
+      max: 50000,
       divisions: 40,
       activeColor: const Color(0xFF58C6A9),
       inactiveColor: Colors.grey,

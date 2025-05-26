@@ -33,12 +33,12 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
   // use the variable to replace the text
   // final String appBarTitle = apiResponse['appBarTitle'];
 
-  final String appBarTitle = 'Confirm Booking';
+  final String appBarTitle = 'Захиалга баталгаажуулна уу';
   // final String parkingSlot = 'Parking Slot ${widget.selectedZone}${widget.selectedLevel}${widget.selectedRow}';
-  final String estimateDuration = 'Estimate Duration';
-  final String checkInTimeText = 'Check-in Time:';
-  final String disabledParkingText = 'Disabled Parking';
-  final String bookSpaceButtonText = 'Book Space';
+  final String estimateDuration = 'Тооцоолсон хугацаа';
+  final String checkInTimeText = 'Бүртгүүлэх цаг:';
+  final String disabledParkingText = 'Хөгжлийн бэрхшээлтэй зогсоол';
+  final String bookSpaceButtonText = 'Захиалгын зайг баталгаажуулах';
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -103,7 +103,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
       // if( widget.futureBooking ) { endDateTime = endDateTime.add(const Duration(hours: 24)); }
 
       if (endDateTime.isBefore(now)) {
-        showToast(message: "Invalid time");
+        showToast(message: "Буруу цаг");
         return;
       }
     }
@@ -119,7 +119,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
       // if( widget.futureBooking ) { endDateTime = endDateTime.add(const Duration(hours: 24)); }
 
       if (startDateTime.isBefore(now)) {
-        showToast(message: "Invalid time");
+        showToast(message: "Буруу цаг");
         return;
       }
     }
@@ -182,7 +182,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  'Parking Slot ${widget.selectedZone}${widget.selectedLevel}${widget.selectedRow}',
+                  'Машины зогсоол ${widget.selectedZone}${widget.selectedLevel}${widget.selectedRow}',
                   style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -217,7 +217,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        '${_currentSliderValue.round()} hours - R${(widget.price.toInt() * _currentSliderValue.round()).toInt()}',
+                        '${_currentSliderValue.round()} цаг - ₮${(widget.price.toInt() * _currentSliderValue.round()).toInt()}',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),
@@ -235,7 +235,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                       activeColor: const Color(0xFF58C6A9),
                       inactiveColor: Colors.white.withValues(alpha: 0.5),
                       label:
-                          '${_currentSliderValue.toInt()} hour(s) - R${_currentSliderValue.toInt() * widget.price.toInt()}',
+                          '${_currentSliderValue.toInt()} hour(s) - ₮${_currentSliderValue.toInt() * widget.price.toInt()}',
                       onChanged: (double value) {
                         setState(() {
                           _currentSliderValue = value != 0 ? value : 1;
@@ -275,7 +275,7 @@ class _ConfirmBookingState extends State<ConfirmBookingPage> {
                       child: Row(
                         children: [
                           const Text(
-                            'Check-in Date:',
+                            'Бүртгүүлэх огноо:',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           const SizedBox(width: 8),

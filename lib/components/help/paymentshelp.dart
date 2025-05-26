@@ -27,7 +27,7 @@ class Paymentshelp extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       const Text(
-                        'Payment questions',
+                        'Төлбөрийн асуултууд',
                         style: TextStyle(
                           color: Color(0xFF5CEAD8),
                           fontSize: 20,
@@ -50,29 +50,29 @@ class Paymentshelp extends StatelessWidget {
           children: [
             _buildQuestionBlock(
               context,
-              'How do I add a new card ',
+              'Би яаж шинэ карт нэмэх вэ ',
               [],
               [
-                '1   Open "Payment methods page via the side bar',
-                '2   Click on "Add a new card"'
+                '1   Хажуугийн цэсээр дамжуулан "Төлбөрийн аргууд" хуудсыг нээнэ үү',
+                '2   "Шинэ карт нэмэх" дээр дарна уу"'
               ],
             ),
             _buildQuestionBlock(
               context,
-              'How do I apply a coupon upon payment',
+              'Төлбөр хийхдээ купоныг хэрхэн ашиглах вэ',
               [],
               [
-                'When directed to the payments method page upon booking, click on "Offers" and then choose the relevant coupon to apply'
+                'Захиалга хийх үед төлбөрийн хэрэгслийн хуудас руу очиход "Санал" дээр дараад холбогдох купоныг сонгоод хэрэглээрэй.'
               ],
             ),
             _buildQuestionBlock(
               context,
-              'How do I top up on credit',
+              'Би картанд хэрхэн мөнгө байршуулах вэ',
               [],
               [
-                '1   Open "Payment methods page via the side bar',
-                '2   Click on "Top up"',
-                '3   Enter the amount you wish to top up'
+                '1   Хажуугийн цэсээр дамжуулан "Төлбөрийн аргууд" хуудсыг нээнэ үү',
+                '2   "Цэнэглэх" дээр дарна уу"',
+                '3   Цэнэглэхийг хүссэн дүнгээ оруулна уу'
               ],
             ),
             // Add more question blocks as needed

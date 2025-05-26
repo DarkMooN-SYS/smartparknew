@@ -86,7 +86,7 @@ class EditCardPageState extends State<EditCardPage> {
         });
 
         if (mounted) {
-          showToast(message: "Saved updated Card Information!");
+          showToast(message: "Картын шинэчилсэн мэдээллийг хадгалсан!!");
           Navigator.of(context).pop(true);
         }
       } catch (e) {
@@ -121,7 +121,7 @@ class EditCardPageState extends State<EditCardPage> {
                     ),
                     const Center(
                       child: Text(
-                        'Edit Card',
+                        'Карт засах',
                         style: TextStyle(
                           color: Color(0xFF58C6A9),
                           fontSize: 28.0,
@@ -152,7 +152,7 @@ class EditCardPageState extends State<EditCardPage> {
                   decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.transparent,
-                    labelText: 'Card Number',
+                    labelText: 'Картын дугаар',
                     labelStyle: TextStyle(color: Colors.grey),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -171,7 +171,7 @@ class EditCardPageState extends State<EditCardPage> {
                   decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.transparent,
-                    labelText: 'Bank',
+                    labelText: 'Банк',
                     labelStyle: TextStyle(color: Colors.grey),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -188,7 +188,7 @@ class EditCardPageState extends State<EditCardPage> {
                   decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.transparent,
-                    labelText: 'Holder Name',
+                    labelText: 'Эзэмшигчийн нэр',
                     labelStyle: TextStyle(color: Colors.grey),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -253,7 +253,7 @@ class EditCardPageState extends State<EditCardPage> {
                 ),
                 const SizedBox(height: 60.0),
                 nextButton(
-                  displayText: 'Save', 
+                  displayText: 'Хадгалах', 
                   action: _saveCardDetails,
                 ),
               ],

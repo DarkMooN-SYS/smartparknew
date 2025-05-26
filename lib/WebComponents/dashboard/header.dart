@@ -9,7 +9,7 @@ class Header extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Dashboard',
+          'Хяналтын самбар',
           style: TextStyle(
             color: Colors.white,
             fontSize: 40,

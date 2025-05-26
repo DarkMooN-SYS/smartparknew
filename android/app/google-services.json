@@ -12,7 +12,20 @@
           "package_name": "com.parksmart.ParkMe"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "419907757847-b8m9f5dcngd1fk2lal5bb3a6bk2ds9ch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parksmart.ParkMe",
+            "certificate_hash": "ac43f81a988167785b63aee7fe1bc8355bb17853"
+          }
+        },
+        {
+          "client_id": "419907757847-02upsp505jr91kbkqihm0ispt7ilmk8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD4eswwBVBucUv8lJdCJs3CYdwN2ONFQA0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419907757847-02upsp505jr91kbkqihm0ispt7ilmk8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

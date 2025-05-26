@@ -66,7 +66,7 @@ class _CarDetailsPageState extends State<SelectAddVehicle> {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Car Info',
+                        'Машины мэдээлэл',
                         style: TextStyle(
                           color: Colors.tealAccent,
                           fontSize: 18,
@@ -112,22 +112,22 @@ class _CarDetailsPageState extends State<SelectAddVehicle> {
               child: Column(
                   children: [
                     ProfileField(
-                      label: 'Vehicle Brand',
+                      label: 'Тээврийн хэрэгслийн брэнд',
                       value: '',
                       controller: _brandController,
                     ),
                     ProfileField(
-                      label: 'Vehicle Model',
+                      label: 'Тээврийн хэрэгслийн загвар',
                       value: '',
                       controller: _modelController,
                     ),
                     ProfileField(
-                      label: 'Color',
+                      label: 'Өнгө',
                       value: '',
                       controller: _colorController,
                     ),
                     ProfileField(
-                      label: 'License Number',
+                      label: 'Машины дугаар',
                       value: '',
                       controller: _licenseController,
                     ),
@@ -149,7 +149,7 @@ class _CarDetailsPageState extends State<SelectAddVehicle> {
                       ),
                     ),
                     child: const Text(
-                      'Add Vehicle',
+                      'Тээврийн хэрэгсэл нэмэх',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,

@@ -105,7 +105,7 @@ class _MainPageState extends State<MainPage> {
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
-        if (mounted) showToast(message: "Location service is disabled.");
+        if (mounted) showToast(message: "Байршлын үйлчилгээ идэвхгүй байна.");
         return null;
       }
     }
@@ -115,7 +115,7 @@ class _MainPageState extends State<MainPage> {
         permission == loc.PermissionStatus.deniedForever) {
       permission = await location.requestPermission();
       if (permission != loc.PermissionStatus.granted) {
-        if (mounted) showToast(message: "Location permission denied.");
+        if (mounted) showToast(message: "Байршлын зөвшөөрлийг үгүйсгэв.");
         return null;
       }
     }
@@ -123,7 +123,7 @@ class _MainPageState extends State<MainPage> {
       return await location.getLocation();
     } catch (e) {
       print("Error getting current location for info sheet: $e");
-      if (mounted) showToast(message: "Could not get current location.");
+      if (mounted) showToast(message: "Одоогийн байршлыг авч чадсангүй.");
       return null;
     }
   }
@@ -131,7 +131,7 @@ class _MainPageState extends State<MainPage> {
 //  ! MODAL THAT POPS UP WHEN YOU CLICK ON A PARKING LOT
   void _showParkingInfo() async {
     if (_isDisposed || _currentParkingInfo == null) {
-      showToast(message: "Unable to show parking info: Parking data missing.");
+      showToast(message: "Зогсоолын мэдээллийг харуулах боломжгүй: Зогсоолын мэдээлэл дутуу байна.");
       return;
     }
 
@@ -157,7 +157,7 @@ class _MainPageState extends State<MainPage> {
     if (currentLocation == null) {
       showToast(
           message:
-              "Unable to show parking info: Current location data missing.");
+              "Зогсоолын мэдээллийг харуулах боломжгүй: Одоогийн байршлын өгөгдөл дутуу байна.");
       if (!_isDisposed && mounted) {
         // Ensure loading is turned off
         setState(() {
@@ -258,7 +258,7 @@ class _MainPageState extends State<MainPage> {
                   color: Color.fromARGB(255, 199, 199, 199), thickness: 1),
               const SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text('Cost per hour :',
+                const Text('Нэг цагийн зардал :',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
                 Text('${_currentParkingInfo!.price} ₮/Hr',
                     style: const TextStyle(
@@ -268,7 +268,7 @@ class _MainPageState extends State<MainPage> {
               ]),
               const SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text('Spaces Available :',
+                const Text('Боломжтой зай :',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
                 Text(_currentParkingInfo!.slotsAvailable,
                     style: const TextStyle(
@@ -278,7 +278,7 @@ class _MainPageState extends State<MainPage> {
               ]),
               const SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text('Distance to Venue :',
+                const Text('Байршил хүртэлх зай :',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
                 Text(displayString, // Use the processed display string
                     style: const TextStyle(
@@ -311,7 +311,7 @@ class _MainPageState extends State<MainPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
-                  child: const Text('View Parking',
+                  child: const Text('Зогсоол харах',
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
               ),
@@ -347,11 +347,11 @@ class _MainPageState extends State<MainPage> {
               }),
         title: Text(
           _selectedIndex == 1
-              ? "Payment Options"
+              ? "Төлбөрийн сонголтууд"
               : _selectedIndex == 2
-                  ? "Parking History"
+                  ? "Зогсоолын түүх"
                   : _selectedIndex == 3
-                      ? "Settings"
+                      ? "Тохиргоо"
                       : "",
           style: const TextStyle(color: Colors.tealAccent),
         ),
@@ -395,19 +395,19 @@ class _MainPageState extends State<MainPage> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.home_outlined, size: 30),
                   label: '',
-                  tooltip: 'Map'),
+                  tooltip: 'Газрын зураг'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.wallet, size: 30),
                   label: '',
-                  tooltip: 'Wallet'),
+                  tooltip: 'Түрийвч'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.history, size: 30),
                   label: '',
-                  tooltip: 'History'),
+                  tooltip: 'Түүх'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings_outlined, size: 30),
                   label: '',
-                  tooltip: 'Settings'),
+                  tooltip: 'Тохиргоо'),
             ],
             onTap: (index) {
               if (_isDisposed) return;

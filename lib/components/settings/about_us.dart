@@ -35,7 +35,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       const Text(
-                        'About Us',
+                        'Бидний тухай',
                         style: TextStyle(
                           color: Color(0xFF58C6A9),
                           fontSize: 24,
@@ -71,7 +71,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                     const Column(
                       children: [
                         Text(
-                          'Park Me',
+                          'ParkSmart',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 28,
@@ -109,7 +109,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                   child: const Column(
                     children: [
                       Text(
-                        'About Park Me',
+                        'SmartPark-ийн тухай',
                         style: TextStyle(
                           color: Color(0xFF58C6A9),
                           fontSize: 22,
@@ -118,7 +118,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Park Me is an innovative app designed to make finding and reserving parking spots easy and hassle-free. Key features include real-time parking availability, reservation options, and payment integration.',
+                        'SmartPark бол зогсоолыг хялбар, төвөггүй хайж олох, захиалах зориулалттай шинэлэг програм юм. Гол онцлогууд нь бодит цагийн зогсоол, захиалгын сонголт, төлбөрийн интеграцчлал юм.',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -132,7 +132,7 @@ class AboutUsPageState extends State<AboutUsPage> {
 
                 // Developer information
                 const Text(
-                  'Developer: Smart Parking Solutions Inc.',
+                  'Хөгжүүлэгч: HardTech Solutions Inc.',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
@@ -143,7 +143,7 @@ class AboutUsPageState extends State<AboutUsPage> {
 
                 // Copyright information
                 const Text(
-                  '© 2024 Smart Parking Solutions Inc. All rights reserved.',
+                  '© 2025 HardTech Solutions Inc. All rights reserved.',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 14,
@@ -170,7 +170,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                   child: const Column(
                     children: [
                       Text(
-                        'Contact Us',
+                        'Бидэнтэй холбоо барина уу',
                         style: TextStyle(
                           color: Color(0xFF58C6A9),
                           fontSize: 22,
@@ -179,7 +179,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Email: davincicode.capstone@gmail.com',
+                        'Имэйл: SmartPark.HardTech@gmail.com',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -200,7 +200,7 @@ class AboutUsPageState extends State<AboutUsPage> {
                     );
                   },
                   child: const Text(
-                    'Privacy Policy',
+                    'Нууцлалын бодлого',
                     style: TextStyle(
                       color: Color(0xFF58C6A9),
                       fontSize: 16,
@@ -212,7 +212,7 @@ class AboutUsPageState extends State<AboutUsPage> {
 
                 // Legal disclaimers
                 const Text(
-                  'Legal Disclaimer:\nThe information provided by Park Me is for general informational purposes only. All information on the Site is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site.',
+                  'Хуулийн хариуцлага:\nSmartPark-аас өгсөн мэдээлэл нь зөвхөн ерөнхий мэдээллийн зорилгоор зориулагдсан болно. Сайт дээрх бүх мэдээллийг сайн санааны үүднээс өгсөн боловч бид сайт дээрх аливаа мэдээллийн үнэн зөв, хангалттай, хүчинтэй, найдвартай, хүртээмжтэй, бүрэн бүтэн байдлын талаар шууд болон далд хэлбэрээр ямар нэгэн мэдэгдэл, баталгаа өгөхгүй.',
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 12,

@@ -176,7 +176,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                         ),
                         const Expanded(
                           child: Text(
-                            'Parking Row',
+                            'Зогсоолын эгнээ',
                             style: TextStyle(
                                 color: Color(0xFF58C6A9),
                                 fontSize: 20,
@@ -190,13 +190,13 @@ class SelectRowPageState extends State<SelectRowPage> {
                     const SizedBox(height: 40),
                     const Center(
                       child: Text(
-                        'Choose your parking',
+                        'Зогсоолоо сонго',
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                     ),
                     const Center(
                       child: Text(
-                        'Row',
+                        'Эгнээ',
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                     ),
@@ -212,7 +212,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(
-                          '$totalSlots spaces available',
+                          'Захиалгад боломжтой зай $totalSlots',
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -263,7 +263,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                                   );
                                 }
                               : null,
-                          child: const Text('Continue',
+                          child: const Text('Үргэлжлүүлэх',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18)),
                         ),
@@ -315,7 +315,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                     setState(() {
                       selectedRow = row;
                       futureBooking = true;
-                      showToast(message: 'This must be a future booking');
+                      showToast(message: '  Энэ нь ирээдүйн захиалга байх ёстой');
                     });
                   }
                 : () {
@@ -329,7 +329,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                 if (isSelected)
                   Center(
                     child: Text(
-                      'Row $row Selected',
+                      '$row сонгосон',
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -342,7 +342,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                     left: 2,
                     top: 8,
                     child: Text(
-                      'Row $row',
+                      'Эгнээ $row',
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -354,7 +354,7 @@ class SelectRowPageState extends State<SelectRowPage> {
                     right: 2,
                     top: 8,
                     child: Text(
-                      '${rows.slots} Slots Available',
+                      '${rows.slots} Зогсоол боломжтой',
                       style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),

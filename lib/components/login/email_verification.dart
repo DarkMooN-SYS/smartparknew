@@ -30,7 +30,7 @@ class _VerificationPageState extends State<VerificationPage> {
   Future<void> verification() async {
 
     await widget.user.sendEmailVerification();
-    showToast(message: 'A verification email has been sent to ${widget.email}');
+    showToast(message: '${widget.email} руу баталгаажуулах имэйл илгээсэн.');
 
     // Wait for the email to be verified
     bool emailVerified = false;
@@ -50,7 +50,7 @@ class _VerificationPageState extends State<VerificationPage> {
         );
       }
     } else {
-      showToast(message: 'Email not verified');
+      showToast(message: 'Имэйлийг баталгаажуулаагүй байна. Та дахин оролдоно уу.');
     }
     }
 
@@ -75,7 +75,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       const Text(
-                        'Email Verification',
+                        'Имэйл баталгаажуулалт',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 24,
@@ -84,7 +84,7 @@ class _VerificationPageState extends State<VerificationPage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'We sent you an email to verify your email.',
+                        'Бид таны имэйлийг баталгаажуулахын тулд танд имэйл илгээсэн.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -113,7 +113,7 @@ class _VerificationPageState extends State<VerificationPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                               Text(
-                                'Verifying',
+                                'Баталгаажуулж байна',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -140,7 +140,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                'Wait 30 seconds, then:',
+                                'Дараа нь 30 секунд хүлээнэ үү:',
                                 style: TextStyle(
                                   color: Colors.white
                                 )
@@ -148,7 +148,7 @@ class _VerificationPageState extends State<VerificationPage> {
                               TextButton(
                                 onPressed: verification, 
                                 child: const Text(
-                                  'Resend Email',
+                                  'Дахин илгээх',
                                   style: TextStyle(
                                     color: Color(0xFF58C6A9),
                                     decoration: TextDecoration.underline,

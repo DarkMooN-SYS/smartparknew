@@ -43,10 +43,10 @@ class _CarRegistrationState extends State<CarRegistration> {
           'licenseNumber': license,
         });
 
-        showToast(message: 'Vehicle Added Successfully!');
+        showToast(message: 'Машиныг амжилттай нэмлээ!');
       }
     } catch (e) {
-      showToast(message: 'Error: $e');
+      showToast(message: 'Алдаа: $e');
     }
     
     if (mounted) {
@@ -100,7 +100,7 @@ class _CarRegistrationState extends State<CarRegistration> {
                   children: <Widget>[
                     const SizedBox(height: 30),  // Space before the "Add Your Vehicle" text
                     const Text(
-                      'Add Your Vehicle',
+                      'Машинаа нэмнэ үү',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w500,
@@ -111,7 +111,7 @@ class _CarRegistrationState extends State<CarRegistration> {
                     TextField(
                       controller: _brandController,
                       decoration: InputDecoration(
-                        labelText: 'Vehicle Brand',
+                        labelText: 'Тээврийн хэрэгслийн брэнд',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -150,7 +150,7 @@ class _CarRegistrationState extends State<CarRegistration> {
                     TextField(
                       controller: _modelController,
                       decoration: InputDecoration(
-                        labelText: 'Vehicle Model',
+                        labelText: 'Тээврийн хэрэгслийн загвар',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -189,7 +189,7 @@ class _CarRegistrationState extends State<CarRegistration> {
                     TextField(
                       controller: _colorController,
                       decoration: InputDecoration(
-                        labelText: 'Color',
+                        labelText: 'Өнгө',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -228,7 +228,7 @@ class _CarRegistrationState extends State<CarRegistration> {
                     TextField(
                       controller: _licenseController,
                       decoration: InputDecoration(
-                        labelText: 'License Number',
+                        labelText: 'Машины дугаар',
                         labelStyle: TextStyle(
                           color: Colors.grey.shade700, // Darker grey for label text
                           fontWeight: FontWeight.w500,
@@ -265,7 +265,7 @@ class _CarRegistrationState extends State<CarRegistration> {
                     ),
                     const SizedBox(height: 40),
                     nextButtonWithSkip(
-                      displayText: 'Continue',
+                      displayText: 'Үргэлжлүүлэх',
                       action: validateVehicleDetails,
                       nextPage: const SuccessionPage(),
                       context: context

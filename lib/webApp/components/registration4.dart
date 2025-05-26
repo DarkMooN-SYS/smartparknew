@@ -40,7 +40,7 @@ class _Registration4State extends State<Registration4> {
 
       widget.onRegisterComplete();
     } catch (e) {
-      showToast(message: 'Failed to save parking details: $e');
+      showToast(message: 'Зогсоолын мэдээллийг хадгалж чадсангүй: $e');
     }
       
     setState(() {
@@ -54,14 +54,15 @@ class _Registration4State extends State<Registration4> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildLabeledTextField('Number of basement levels in each zone *', 'Enter number of floors', _noBasementLevelsController),
+          _buildLabeledTextField('Тухайн бүс бүр дэх зоорийн давхарын тоо *', 'Давхарын тоог оруулна уу', _noBasementLevelsController),
           const SizedBox(height: 15),
-          _buildLabeledTextField('Number of upper levels in each zone (including ground) *', 'Enter number of floors', _noUpperLevelsController),
+          _buildLabeledTextField('Тухайн бүс бүр дэх газар дээрх давхарын тоо (газар дээрх давхар орно) *', 'Давхарын тоог оруулна уу', _noUpperLevelsController),
           const SizedBox(height: 15),
-          _buildLabeledTextField('Number of rows on each floor *', 'Enter number of rows', _noRowsController),
+          _buildLabeledTextField('Нэг давхарт байх эгнээний тоо *', 'Эгнээний тоог оруулна уу', _noRowsController),
           const SizedBox(height: 15),
-          _buildLabeledTextField('Number of slots in each row *', 'Enter number of slots', _noSlotsController),
+          _buildLabeledTextField('Нэг эгнээнд байх зогсоолын тоо *', 'Зогсоолын тоог оруулна уу', _noSlotsController),
           const SizedBox(height: 25),
+
           Center(
             child: SizedBox(
               width: 200,
@@ -87,7 +88,7 @@ class _Registration4State extends State<Registration4> {
                     ),
                   )
                 : const Text(
-                  'Next',
+                  'Дараах',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

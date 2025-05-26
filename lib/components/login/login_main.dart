@@ -62,7 +62,7 @@ class LoginMainPageState extends State<LoginMainPage> {
                       vertical: 15,
                     ),
                     child: Text(
-                      'Log in',
+                      'Нэвтрэх',
                       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
                     ),
                   ),
@@ -89,7 +89,7 @@ class LoginMainPageState extends State<LoginMainPage> {
                       vertical: 15,
                     ),
                     child: Text(
-                      'Register',
+                      'Бүртгүүлэх',
                       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
                     ),
                   ),

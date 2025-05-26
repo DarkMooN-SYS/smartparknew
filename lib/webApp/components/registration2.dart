@@ -20,13 +20,13 @@ class _Registration2State extends State<Registration2> {
   final TextEditingController _latitudeController = TextEditingController();
   final TextEditingController _longitudeController = TextEditingController();
   Map<String, String> operationalHours = {
-    'Monday': '--',
-    'Tuesday': '--',
-    'Wednesday': '--',
-    'Thursday': '--',
-    'Friday': '--',
-    'Saturday': '--',
-    'Sunday': '--',
+    'Даваа': '--',
+    'Мягмар': '--',
+    'Лхагва': '--',
+    'Пүрэв': '--',
+    'Баасан': '--',
+    'Бямба': '--',
+    'Ням': '--',
   };
   bool _isLoading = false;
 
@@ -46,7 +46,7 @@ class _Registration2State extends State<Registration2> {
 
       widget.onRegisterComplete();
     } catch (e) {
-      showToast(message: 'Error: $e');
+      showToast(message: 'Алдаа: $e');
     }
 
     setState((){
@@ -61,13 +61,13 @@ class _Registration2State extends State<Registration2> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 40),
-          _buildLabeledTextField('Parking location name *', 'Enter the parking name', _locationController),
+          _buildLabeledTextField('Зогсоолын байршлын нэр *', 'Зогсоолын нэрийг оруулна уу', _locationController),
           const SizedBox(height: 15),
-          _buildLabeledTextField('Parking latitude *', 'Enter the parking latitude', _latitudeController),
+          _buildLabeledTextField('Зогсоолын өргөрөг *', 'Зогсоолын өргөргийг оруулна уу', _latitudeController),
           const SizedBox(height: 15),
-          _buildLabeledTextField('Parking longitude *', 'Enter the parking longitude', _longitudeController),
+          _buildLabeledTextField('Зогсоолын уртраг *', 'Зогсоолын уртрагийг оруулна уу', _longitudeController),
           const SizedBox(height: 15),
-          _buildOperationalHoursField('Operational hours *'),
+          _buildOperationalHoursField('Ажиллах цагийн хуваарь *'),
           const SizedBox(height: 25),
           Center(
             child: SizedBox(
@@ -93,7 +93,7 @@ class _Registration2State extends State<Registration2> {
                     ),
                   )
                 : const Text(
-                  'Next',
+                  'Дараах',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

@@ -112,8 +112,8 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                 position: LatLng(lat, long),
                 icon: zoneIcon ?? BitmapDescriptor.defaultMarker,
                 infoWindow: InfoWindow(
-                  title: 'Zone $zone',
-                  snippet: '$availableSlots slots available',
+                  title: 'Бүс $zone',
+                  snippet: '$availableSlots Зогсоол боломжтой',
                 ),
                 onTap: () {
                   selectZone(zone);
@@ -204,7 +204,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                             const Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Parking Zones',
+                                'Зогсоолын бүсүүд',
                                 style: TextStyle(
                                   color: Colors.tealAccent,
                                   fontSize: 18,
@@ -216,7 +216,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                         ),
                       ),
                       const Text(
-                        'Choose Your Parking\nZone',
+                        'Зогсоолоо\nБүсээ сонгоно уу',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,
@@ -234,7 +234,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                           border: Border.all(color: Colors.white),
                         ),
                         child: Text(
-                          '$totalSlots spaces available',
+                          '$totalSlots талбайнууд боломжтой',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -253,7 +253,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                           ),
                           SizedBox(width: 8),
                           Text(
-                            '  Click on a icon which\ndenotes a parking zone',
+                            '  Зогсоолын бүсийг илэрхийлсэн дүрс дээр дарна уу',
                             style: TextStyle(
                               color: Colors.tealAccent,
                               fontSize: 18,
@@ -305,7 +305,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Zone $selectedZone',
+                                'Бүс $selectedZone',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 24,
@@ -314,7 +314,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                'Spaces Available: ${zones.firstWhere((z) => z.zone == selectedZone).slots} slots',
+                                '"Захиалгад боломжтой зай: ${zones.firstWhere((z) => z.zone == selectedZone).slots} ширхэг"',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -322,7 +322,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                'Distance to Zone: ${widget.distanceAndDurationString}', // Display the string here
+                                'Бүс хүртэлх зай: ${widget.distanceAndDurationString}', // Display the string here
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -360,7 +360,7 @@ class _ZoneSelectPageState extends State<ZoneSelectPage> {
                                     );
                                   }
                                 : null,
-                            child: const Text('Continue',
+                            child: const Text('Үргэлжлүүлэх',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18)),
                           ),

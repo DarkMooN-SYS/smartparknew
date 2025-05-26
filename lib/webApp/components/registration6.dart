@@ -34,7 +34,7 @@ class _Registration6State extends State<Registration6> {
   final Map<String, String> _validBanks = {
     "ABSA": "Absa Bank",
     "CAPITEC": "Capitec Bank",
-    "FNB": "First National Bank",
+    "KHAAN BANK": "First National Bank",
     "INVESTEC": "Investec Bank",
     "NEDBANK": "Nedbank",
     "STANDARD BANK": "Standard Bank",
@@ -66,14 +66,14 @@ class _Registration6State extends State<Registration6> {
     final String accountType = _accountTypeController.text;
     final String bank = _bankController.text;
 
-    if(!isValidString(accountNumber, r'^[0-9]{8,12}$')){showToast(message: "Invalid Account Number. Must be 8-12 digits long."); setState(() => _isLoading = false); return;}
-    if(!isValidString(billingName, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid Holder Name"); setState(() => _isLoading = false); return;}
+    if(!isValidString(accountNumber, r'^[0-9]{8,12}$')){showToast(message: "Дансны дугаар буруу. 8-12 оронтой байх ёстой."); setState(() => _isLoading = false); return;}
+    if(!isValidString(billingName, r'^[a-zA-Z/\s]+$')){showToast(message: "Эзэмшигчийн нэр буруу"); setState(() => _isLoading = false); return;}
     if(!isValidString(accountType, r'^[a-zA-Z/\s]+$')){showToast(message: "Invalid Holder Name"); setState(() => _isLoading = false); return;}
    
     bool isValidBank = _validBanks.keys.map((k) => k.toLowerCase()).contains(bank.toLowerCase()) ||_validBanks.values.map((v) => v.toLowerCase()).contains(bank.toLowerCase());
 
     if (!isValidBank) {
-      showToast(message: "Invalid Bank Name. Please enter a valid South African bank.");
+      showToast(message: "Банкны нэр буруу. Монголын хүчинтэй банк оруулна уу.");
       setState(() => _isLoading = false);
       return;
     }
@@ -90,7 +90,7 @@ class _Registration6State extends State<Registration6> {
         
         widget.onRegisterComplete();
       } catch (e) {
-        showToast(message: 'Failed to save card details: $e');
+        showToast(message: 'Картын дэлгэрэнгүй мэдээллийг хадгалж чадсангүй: $e');
       }
     }
     setState((){
@@ -104,15 +104,15 @@ class _Registration6State extends State<Registration6> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40),
-          _buildLabeledTextField('Enter billing name *', 'Enter name', _billingNameController),
-          const SizedBox(height: 15),
-          _buildLabeledTextField('Account number *', 'Enter number', _accountNumberController),
-          const SizedBox(height: 15),
-          _buildLabeledTextField('Account type *', 'Enter type', _accountTypeController),
-          const SizedBox(height: 15),
-          _buildLabeledTextField('Bank *', 'Enter bank name', _bankController),
-          const SizedBox(height: 25),
+        const SizedBox(height: 40),
+        _buildLabeledTextField('Төлбөр төлөгчийн нэр *', 'Нэрээ оруулна уу', _billingNameController),
+        const SizedBox(height: 15),
+        _buildLabeledTextField('Дансны дугаар *', 'Дугаараа оруулна уу', _accountNumberController),
+        const SizedBox(height: 15),
+        _buildLabeledTextField('Дансны төрөл *', 'Төрлөө оруулна уу', _accountTypeController),
+        const SizedBox(height: 15),
+        _buildLabeledTextField('Банк *', 'Банкны нэрийг оруулна уу', _bankController),
+        const SizedBox(height: 25),
           Center(
             child: SizedBox(
               width: 200,
@@ -138,7 +138,7 @@ class _Registration6State extends State<Registration6> {
                     ),
                   )
                 : const Text(
-                  'Join',
+                  'Нэвтрэх',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

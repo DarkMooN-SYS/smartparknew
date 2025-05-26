@@ -125,7 +125,7 @@ class SplashScreen extends StatelessWidget {
                                         .center,
                                   ),
                                   child: Text(
-                                    'Үйлчлүүлэгчийн бүртгэл',
+                                    'Бүртгүүлэх',
                                     textAlign: TextAlign
                                         .center,
                                     style: TextStyle(

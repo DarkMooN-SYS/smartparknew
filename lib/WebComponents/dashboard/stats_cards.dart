@@ -263,7 +263,7 @@ class _StatsCardsState extends State<StatsCards> {
         _buildStatsCard(
           context,
           title: "Today's Earnings",
-          value: 'R $todaysIncome',
+          value: '₮ $todaysIncome',
           icon: Icons.attach_money,
         ),
       ],

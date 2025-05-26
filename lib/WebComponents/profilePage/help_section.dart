@@ -27,17 +27,17 @@ class HelpSection extends StatelessWidget {
           const SizedBox(height: 39),
           _buildHelpItem(
             'Contact us',
-            'You can reach us at davincicode.capstone@gmail.com or call us at (082) 573-3268.',
+            'You can reach us at HardTech.ParkSmart@gmail.com or call us at (976) 99237962.',
           ),
           const SizedBox(height: 21),
           _buildHelpItem(
             'Billing details',
-            'Update your billing details in your account settings. For assistance, contact our billing department at davincicode.capstone@gmail.com.',
+            'Update your billing details in your account settings. For assistance, contact our billing department at HardTech.ParkSmart@gmail.com.',
           ),
           const SizedBox(height: 21),
           _buildHelpItem(
             'Support',
-            'Visit our support center or email us at davincicode.capstone@gmail.com for help.',
+            'Visit our support center or email us at HardTech.ParkSmart@gmail.com for help.',
           ),
         ],
       ),

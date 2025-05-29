@@ -21,7 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
     // Define the session duration (e.g., 1 day)
     const int sessionDuration = 2 * 60 * 60 * 1000; // 24 hours in milliseconds
 
+    if (isLoggedIn && loginTimestamp != null) {
       int currentTime = DateTime.now().millisecondsSinceEpoch;
+      if (currentTime - loginTimestamp! > sessionDuration) {
         // Session has expired
         isLoggedIn = false;
         await prefs.setBool('isLoggedIn', false);

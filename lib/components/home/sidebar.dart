@@ -278,4 +278,3 @@ class SideMenu extends StatelessWidget {
     );
   }
 }
-}

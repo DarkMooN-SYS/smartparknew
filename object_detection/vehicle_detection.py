@@ -1,12 +1,20 @@
 import cv2
 import time
-import numpy as np # The hero import!
+import numpy as np
 import math
 import os
 import yt_dlp
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+
+# Get absolute base path of the script
+base_path = os.path.dirname(os.path.abspath(__file__))
+
+# File paths (absolute)
+cfg_path = os.path.join(base_path, "yolov3.cfg")
+weights_path = os.path.join(base_path, "yolov3.weights")
+names_path = os.path.join(base_path, "coco.names")
 
 def capture_frame_ffmpeg(youtube_url):
     ydl_opts = {
@@ -34,13 +42,16 @@ def capture_frame_ffmpeg(youtube_url):
     return frame
 
 def detect_cars_in_youtube_stream(youtube_url, output_path):
-    net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
-    
-    with open("coco.names", "r") as f:
+    net = cv2.dnn.readNet(weights_path, cfg_path)
+
+    with open(names_path, "r") as f:
         classes = [line.strip() for line in f.readlines()]
 
     layer_names = net.getLayerNames()
-    output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+    try:
+        output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    except IndexError:
+        output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
     total_car_count = 0
     frames_to_capture = 3

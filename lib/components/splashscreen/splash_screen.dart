@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (isLoggedIn && loginTimestamp != null) {
       int currentTime = DateTime.now().millisecondsSinceEpoch;
-      if (currentTime - loginTimestamp! > sessionDuration) {
+      if (currentTime - loginTimestamp > sessionDuration) {
         // Session has expired
         isLoggedIn = false;
         await prefs.setBool('isLoggedIn', false);

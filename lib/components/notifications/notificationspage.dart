@@ -48,8 +48,8 @@ class ReminderNotification extends Notification {
   final String location;
 
   ReminderNotification(String time, this.bookingTime, this.location)
-      : super(time, 'Удахгүй болох зогсоолын цагууд', Icons.notification_important,
-            Colors.green);
+      : super(time, 'Удахгүй болох зогсоолын цагууд',
+            Icons.notification_important, Colors.green);
 }
 
 List<Notification> today = [
@@ -241,7 +241,7 @@ class _NotificationPageState extends State<NotificationApp> {
                         const Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'Notifications',
+                            'Мэдэгдэл', // 'Notifications'
                             style: TextStyle(
                               color: Colors.tealAccent,
                               fontSize: 18,
@@ -258,7 +258,7 @@ class _NotificationPageState extends State<NotificationApp> {
                                       Color.fromARGB(255, 58, 58, 58)),
                                 ),
                                 child: const Text(
-                                  "Clear all",
+                                  "Бүгдийг цэвэрлэх", // "Clear all"
                                   style: TextStyle(color: Colors.white),
                                 )))
                       ],
@@ -276,7 +276,7 @@ class _NotificationPageState extends State<NotificationApp> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SectionTitle(title: 'Today'),
+                          const SectionTitle(title: 'Өнөөдөр'), // 'Today'
                           for (var notification in today)
                             _buildNotification(notification),
                           if (today.isEmpty)
@@ -286,7 +286,8 @@ class _NotificationPageState extends State<NotificationApp> {
                                   TextStyle(color: Colors.white, fontSize: 25),
                             ),
                           const SizedBox(height: 10),
-                          const SectionTitle(title: 'This Week'),
+                          const SectionTitle(
+                              title: 'Энэ 7 хоног'), // 'This Week'
                           for (var notification in thisweek)
                             _buildNotification(notification),
                           if (thisweek.isEmpty)
@@ -296,7 +297,7 @@ class _NotificationPageState extends State<NotificationApp> {
                                   TextStyle(color: Colors.white, fontSize: 25),
                             ),
                           const SizedBox(height: 10),
-                          const SectionTitle(title: 'Older'),
+                          const SectionTitle(title: 'Өмнөх'), // 'Older'
                           for (var notification in older)
                             _buildNotification(notification),
                           if (older.isEmpty)

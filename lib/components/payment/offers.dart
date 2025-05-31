@@ -74,7 +74,7 @@ class _OfferPageState extends State<OfferPage> {
                             color: Colors.white, size: 30),
                       ),
                       const Text(
-                        'Offers',
+                        'Хөнгөлөлтүүд',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
@@ -89,7 +89,7 @@ class _OfferPageState extends State<OfferPage> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Center(
                       child: Text(
-                        'Available Coupons',
+                        'Идэвхтэй купонууд',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -102,7 +102,7 @@ class _OfferPageState extends State<OfferPage> {
                   if (coupons.isEmpty)
                     const Center(
                       child: Text(
-                        'No Coupons',
+                        'Купон алга',
                         style: TextStyle(color: Colors.grey, fontSize: 16),
                       ),
                     ),
@@ -147,7 +147,7 @@ class _OfferPageState extends State<OfferPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'ZAR R${coupon['amountOff'].toString()} OFF',
+                                        'ZAR ₮${coupon['amountOff'].toString()} хөнгөлөлт',
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -155,7 +155,7 @@ class _OfferPageState extends State<OfferPage> {
                                       ),
                                       const SizedBox(height: 3),
                                       Text(
-                                        coupon['description'],
+                                        'Дараагийн захиалгад ₮${coupon['amountOff'].toString()} хөнгөлөлт авах',
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w300,
@@ -184,7 +184,7 @@ class _OfferPageState extends State<OfferPage> {
                                                                     .white), // Change title text color
                                                           ),
                                                           content: Text(
-                                                            'This coupon will apply R${coupon['amountOff'].toString()} OFF to your next booking.',
+                                                            'Энэ купон дараагийн захиалгад ₮${coupon['amountOff'].toString()} хөнгөлөлт үзүүлнэ.',
                                                             style: const TextStyle(
                                                                 color: Colors
                                                                     .white), // Change content text color
@@ -235,7 +235,7 @@ class _OfferPageState extends State<OfferPage> {
                                                                       ),
                                                                       content:
                                                                           const Text(
-                                                                        'Coupon Applied Successfully.',
+                                                                        'Купон амжилттай идэвхжлээ.',
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white), // Change content text color
@@ -306,8 +306,8 @@ class _OfferPageState extends State<OfferPage> {
                                             ),
                                             child: Text(
                                               isApplied
-                                                  ? 'Coupon Applied!'
-                                                  : 'Apply',
+                                                  ? 'Купон идэвхжсэн!'
+                                                  : 'Идэвхжүүлэх',
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 color: isApplied
@@ -336,7 +336,7 @@ class _OfferPageState extends State<OfferPage> {
                                                                 .white), // Change title text color
                                                       ),
                                                       content: Text(
-                                                        'Cancelling this coupon will no longer apply R${coupon['amountOff']} OFF to your next booking.',
+                                                        'Энэ купоныг цуцалбал дараагийн захиалгад ₮${coupon['amountOff']} хөнгөлөлт үйлчлэхгүй.',
                                                         style: const TextStyle(
                                                             color: Colors
                                                                 .white), // Change content text color
@@ -386,7 +386,7 @@ class _OfferPageState extends State<OfferPage> {
                                                                   ),
                                                                   content:
                                                                       const Text(
-                                                                    'Coupon Cancelled Successfully.',
+                                                                    'Купон амжилттай цуцлагдлаа.',
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .white), // Change content text color
@@ -451,7 +451,7 @@ class _OfferPageState extends State<OfferPage> {
                                                     const Color(0xFF35344A),
                                               ),
                                               child: const Text(
-                                                'Cancel',
+                                                'Цуцлах',
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.white,
@@ -486,7 +486,7 @@ class _OfferPageState extends State<OfferPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                'Invite your friend to get the coupon',
+                                'Найзаа урьж купон аваарай',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
@@ -506,7 +506,7 @@ class _OfferPageState extends State<OfferPage> {
                                   backgroundColor: const Color(0xFF58C6A9),
                                 ),
                                 child: const Text(
-                                  'Start Invite',
+                                  'Урилга илгээх',
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.white,

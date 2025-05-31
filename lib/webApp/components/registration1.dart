@@ -264,7 +264,6 @@ class _Registration1State extends State<Registration1> {
   final TextEditingController _accountHolderController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-
   final FireBaseAuthServices _auth = FireBaseAuthServices();
 
   bool _isLoading = false;

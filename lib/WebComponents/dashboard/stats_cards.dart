@@ -156,7 +156,7 @@ class _StatsCardsState extends State<StatsCards> {
   }
 
   Widget _buildIncomeCard(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 300, // Fixed height for income card
       child: Card(
         color: const Color(0xFF1A1F37),

@@ -151,48 +151,56 @@ class _InvoicesState extends State<Invoices> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        leading: const CircleAvatar(
-          backgroundColor: Color(0xFF58C6A9),
-          child: Icon(Icons.receipt_long, color: Colors.white),
-        ),
-        title: Text(
-          date,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        subtitle: Text(
-          invoiceNumber,
-          style: const TextStyle(
-            color: Color(0xFFA0AEC0),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        trailing: ElevatedButton(
-          onPressed: () {
-            _generateAndOpenPdf(context, data, invoiceNumber, date);
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF58C6A9),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF58C6A9).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.receipt_long, color: Color(0xFF58C6A9)),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          ),
-          child: const Text(
-            'OPEN PDF',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    date,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    invoiceNumber,
+                    style: const TextStyle(
+                      color: Color(0xFFA0AEC0),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+            ElevatedButton.icon(
+              onPressed: () => _generateAndOpenPdf(context, data, invoiceNumber, date),
+              icon: const Icon(Icons.picture_as_pdf, size: 18),
+              label: const Text('PDF'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF58C6A9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              ),
+            ),
+          ],
         ),
       ),
     );

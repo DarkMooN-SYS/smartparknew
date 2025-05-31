@@ -43,7 +43,7 @@ class Sidebar extends StatelessWidget {
           const SizedBox(height: 34),
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.white),
-            title: const Text('Logout', style: TextStyle(color: Colors.white)),
+            title: const Text('Гарах', style: TextStyle(color: Colors.white)),
             onTap: () => _logout(context),
           ),
         ],
@@ -64,7 +64,7 @@ class Sidebar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildMenuItem(
-            'Dashboard',
+            'Хяналтын самбар',
             'assets/Frame 1171275428-1.png',
             isSelected: true,
             onTap: () {},
@@ -72,9 +72,9 @@ class Sidebar extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSubMenuItem('Parking Fees'),
-              _buildSubMenuItem('Invoices'),
-              _buildSubMenuItem('Booking Details'),
+              _buildSubMenuItem('Зогсоолын төлбөр'),
+              _buildSubMenuItem('Нэхэмжлэх'),
+              _buildSubMenuItem('Захиалгын мэдээлэл'),
             ],
           ),
         ],
@@ -104,7 +104,7 @@ class Sidebar extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          'ACCOUNT PAGES',
+          'БҮРТГЭЛИЙН ХУУДАС',
           style: TextStyle(
             color: Colors.white,
             fontSize: 12,
@@ -117,7 +117,7 @@ class Sidebar extends StatelessWidget {
 
   Widget _buildProfileMenuItem(BuildContext context) {
     return _buildMenuItem(
-      'Profile',
+      'Профайл',
       'assets/Component 2.png', // Replace with your local asset
       onTap: () {
         Navigator.push(

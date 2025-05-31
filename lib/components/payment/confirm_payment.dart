@@ -429,7 +429,7 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
       }
       startTime = DateFormat('HH:mm').format(tempStartTime);
       endTime = DateFormat('HH:mm').format(tempStartTime
-          .add(Duration(minutes: (widget.selectedDuration * 60).round())));
+          .add(Duration(minutes: (widget.selectedDuration * 30).round())));
       bookingDate = DateFormat('yyyy-MM-dd').format(widget.selectedDate);
       totalPrice = widget.price * widget.selectedDuration;
 

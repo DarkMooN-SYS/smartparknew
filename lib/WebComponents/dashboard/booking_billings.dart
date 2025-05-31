@@ -150,27 +150,44 @@ class _BookingBillingsState extends State<BookingBillings> {
       BuildContext context, String title, String date, String amount) {
     Color amountColor;
     IconData iconData;
+    Color bgColor;
 
     if (amount.startsWith('+')) {
-      amountColor = const Color(0xFF01B574); // Positive amount color
-      iconData = Icons.arrow_upward; // Icon for positive transactions
+      amountColor = const Color(0xFF00D632);
+      iconData = Icons.arrow_circle_up;
+      bgColor = const Color(0xFF00D632).withOpacity(0.1);
     } else if (amount.startsWith('-')) {
-      amountColor = Colors.red; // Negative amount color
-      iconData = Icons.arrow_downward; // Icon for negative transactions
+      amountColor = const Color(0xFFFF4842);
+      iconData = Icons.arrow_circle_down;
+      bgColor = const Color(0xFFFF4842).withOpacity(0.1);
     } else {
-      amountColor = Colors.yellow; // Pending amount color
-      iconData = Icons.hourglass_empty; // Icon for pending transactions
+      amountColor = const Color(0xFFFFAB00);
+      iconData = Icons.pending;
+      bgColor = const Color(0xFFFFAB00).withOpacity(0.1);
     }
 
-    return Card(
-      color: const Color(0xFF2D3447),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2D3447),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: const Color(0xFF58C6A9),
-          child: Icon(iconData, color: Colors.white),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        leading: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(iconData, color: amountColor, size: 24),
         ),
         title: Text(
           title,
@@ -178,22 +195,29 @@ class _BookingBillingsState extends State<BookingBillings> {
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w600,
+            letterSpacing: 0.2,
           ),
         ),
         subtitle: Text(
           date,
-          style: const TextStyle(
-            color: Color(0xFFA0AEC0),
+          style: TextStyle(
+            color: Colors.white.withOpacity(0.7),
             fontSize: 14,
-            fontWeight: FontWeight.w400,
           ),
         ),
-        trailing: Text(
-          amount,
-          style: TextStyle(
-            color: amountColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+        trailing: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            amount,
+            style: TextStyle(
+              color: amountColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

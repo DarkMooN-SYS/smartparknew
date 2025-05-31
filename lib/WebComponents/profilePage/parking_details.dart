@@ -126,7 +126,7 @@ class _ParkingDetailsState extends State<ParkingDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Parking Layout Details',
+              'Зогсоолын мэдээлэл',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
@@ -134,10 +134,10 @@ class _ParkingDetailsState extends State<ParkingDetails> {
               ),
             ),
             const SizedBox(height: 44),
-            _buildDetailItem('Total Parking Slots', totalSlots.toString()),
-            _buildDetailItem('Zones', totalZones.toString()),
-            _buildDetailItem('Floors', totalFloors.toString()),
-            _buildDetailItem('Rows per Zone', rowsPerZone.toString()),
+            _buildDetailItem('Нийт машины зогсоол', totalSlots.toString()),
+            _buildDetailItem('Бүсүүд', totalZones.toString()),
+            _buildDetailItem('Давхар', totalFloors.toString()),
+            _buildDetailItem('Бүс бүрт эгнээ', rowsPerZone.toString()),
           ],
         ),
       ),

@@ -15,7 +15,7 @@ class Registration5 extends StatefulWidget {
 }
 
 class _Registration5State extends State<Registration5> {
-  double _pricePerHour = 1000; // Default price
+  double _pricePerHour = 500; // Default price
   bool _isLoading = false;
 
   Future<void> _clientRegisterParkingDetails() async {
@@ -115,14 +115,14 @@ class _Registration5State extends State<Registration5> {
   Widget _buildPriceSlider() {
     return Slider(
       value: _pricePerHour,
-      min: 1000,
+      min: 500,
       max: 10000,
-      divisions: 40,
+      divisions: 19,
       activeColor: const Color(0xFF58C6A9),
       inactiveColor: Colors.grey,
       onChanged: (value) {
         setState(() {
-          _pricePerHour = value;
+          _pricePerHour = (value / 500).round() * 500;
         });
       },
     );

@@ -73,10 +73,10 @@ class SplashScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 20), // Adjust padding as necessary
                             child: Center(
                               child: Text(
-                                'Never waste time\nsearching for\nparking again!',
+                                'Цаашид автомашины\nзогсоол хайхад\nцаг үрэхгүй!',
                                 textAlign: TextAlign.center, // Center the text
                                 style: TextStyle(
-                                  fontSize: constraints.maxWidth * 0.06,
+                                  fontSize: constraints.maxWidth * 0.05,
                                   fontWeight: FontWeight.w900,
                                   color: Colors.white,
                                   height: 1.0,

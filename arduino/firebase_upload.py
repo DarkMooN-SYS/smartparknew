@@ -1,7 +1,7 @@
 import serial
 import time
 import firebase_admin
-from firebase_admin import credentials, db
+from firebase_admin import credentials, firestore
 import traceback
 import os
 import sys
@@ -9,8 +9,13 @@ import serial.tools.list_ports
 
 def test_firebase_connection():
     try:
-        ref = db.reference("/parking")  # Test database-ийг үндсэн database-ээр солих
-        current = ref.get()  # Одоогийн утгыг унших
+        db = firestore.client()
+        test_ref = db.collection('arduino_data').document()
+        test_ref.set({
+            'test': True,
+            'timestamp': firestore.SERVER_TIMESTAMP
+        })
+        test_ref.delete()
         print("[OK] Firebase холболт амжилттай")
         return True
     except Exception as e:
@@ -84,16 +89,72 @@ def connect_to_arduino(port='COM7', max_attempts=3):
 current_dir = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(current_dir, "firebase_config.json")
 
+def initialize_firebase():
+    try:
+        # Check if already initialized
+        try:
+            app = firebase_admin.get_app()
+            return True
+        except ValueError:
+            pass
+
+        cred = credentials.Certificate(config_path)
+        firebase_admin.initialize_app(cred)
+        return test_firebase_connection()
+    except Exception as e:
+        print(f"[ERROR] Firebase initialization failed: {e}")
+        return False
+
+def update_slots_available(db, total_occupied: int):
+    try:
+        batch = db.batch()
+        success = False
+        
+        parking_docs = db.collection('parkings').stream()
+        for doc in parking_docs:
+            try:
+                parking_data = doc.to_dict()
+                if not parking_data or 'slots_available' not in parking_data:
+                    continue
+                
+                slots_data = parking_data['slots_available']
+                total_slots = int(slots_data.split('/')[1])
+                price = float(parking_data.get('price', '500'))  # Default price 500
+                
+                updates = {
+                    'slots_available': f"{total_slots - total_occupied}/{total_slots}",
+                    'last_updated': firestore.SERVER_TIMESTAMP,
+                    'arduino_status': {
+                        'slot_1': 'Full' if total_occupied > 0 else 'Empty',
+                        'slot_2': 'Full' if total_occupied > 1 else 'Empty', 
+                        'slot_3': 'Full' if total_occupied > 2 else 'Empty',
+                    },
+                    'current_amount': total_occupied * price  # Calculate total amount
+                }
+                
+                batch.update(doc.reference, updates)
+                success = True
+                
+            except Exception as e:
+                print(f"[ERROR] Failed to update parking {doc.id}: {e}")
+                continue
+        
+        if success:
+            batch.commit()
+            return True
+            
+        return False
+        
+    except Exception as e:
+        print(f"[ERROR] Failed to update parkings: {e}")
+        return False
+
 # Initialize Firebase and test connection
 try:
-    cred = credentials.Certificate(config_path)
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': 'https://parkme-246a0-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    })
-    if not test_firebase_connection():
-        raise Exception("Firebase connection test failed")
+    if not initialize_firebase():
+        raise Exception("Firebase initialization failed")
 except Exception as e:
-    print(f"[ERROR] Firebase initialization failed: {str(e)}")
+    print(f"[ERROR] Setup failed: {e}")
     exit(1)
 
 # Test and initialize serial connection
@@ -114,20 +175,29 @@ def upload_to_firebase(s1: int, s2: int, s3: int, user_id: str) -> bool:
     
     while retry_count < max_retries:
         try:
-            ref = db.reference("/parking")
-            slot_status = {
-                'slot_1': {'status': 'Full' if s1 else 'Empty', 'last_changed': {'.sv': 'timestamp'}},
-                'slot_2': {'status': 'Full' if s2 else 'Empty', 'last_changed': {'.sv': 'timestamp'}},
-                'slot_3': {'status': 'Full' if s3 else 'Empty', 'last_changed': {'.sv': 'timestamp'}},
-                'total_occupied': s1 + s2 + s3,
-                'last_update': {
-                    'by': user_id,
-                    'time': {'.sv': 'timestamp'}
-                }
+            db = firestore.client()
+            total_occupied = s1 + s2 + s3
+            
+            # Update arduino_data collection
+            status_data = {
+                's1': s1,
+                's2': s2,
+                's3': s3,
+                'user_id': user_id,
+                'timestamp': firestore.SERVER_TIMESTAMP,
+                'total_occupied': total_occupied,
+                'parking_id': None  # Will be updated by Cloud Functions
             }
-            ref.update(slot_status)  # set() оронд update() ашиглах
-            print(f"[OK] Зогсоолын төлөв шинэчлэгдлээ: s1={s1}, s2={s2}, s3={s3}")
+            
+            # Add to arduino_data to trigger Cloud Function
+            db.collection('arduino_data').add(status_data)
+            
+            # Update parking slots
+            update_slots_available(db, total_occupied)
+            
+            print(f"[OK] Arduino data uploaded and slots updated")
             return True
+            
         except Exception as e:
             retry_count += 1
             print(f"[ERROR] Firebase алдаа (оролдлого {retry_count}/{max_retries}):", str(e))
@@ -141,8 +211,6 @@ def check_connections():
     """Бүх холболтуудыг шалгах"""
     if not test_firebase_connection():
         print("[ERROR] Firebase холболт тасарсан")
-        return False
-    if not test_serial_connection('COM7'):
         print("[ERROR] Arduino холболт тасарсан")
         return False
     return True
@@ -211,10 +279,10 @@ try:
             time.sleep(2)
             
 except KeyboardInterrupt:
-    cleanup()
-    print("[INFO] Программ амжилттай хаагдлаа")
-    sys.exit(0)
+    print("\n[INFO] Программ зогсоох...")
 except Exception as e:
-    print("[ERROR] Гарах үед алдаа гарлаа:", e)
+    print(f"[ERROR] Програм алдаатай зогслоо: {e}")
+    traceback.print_exc()
+finally:
     cleanup()
-    sys.exit(1)
+    sys.exit(0)

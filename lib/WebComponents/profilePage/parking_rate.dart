@@ -66,41 +66,59 @@ class _ParkingRateState extends State<ParkingRate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity, // Ensures the container fills the width
-      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       decoration: BoxDecoration(
         color: const Color(0xFF1A1F37),
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
-            'Зогсоолын үнэ',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 40,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Roboto',
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            decoration: BoxDecoration(
+              color: const Color(0xFF58C6A9).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: const Text(
+              'Зогсоолын үнэ',
+              style: TextStyle(
+                color: Color(0xFF58C6A9),
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           Text(
-            rate, // Display the dynamically loaded rate
-            style: const TextStyle(
-              color: Color(0xFF58C6A9),
-              fontSize: 128,
+            rate,
+            style: TextStyle(
+              color: const Color(0xFF58C6A9),
+              fontSize: 72,
               fontWeight: FontWeight.w700,
-              fontFamily: 'Roboto',
+              shadows: [
+                Shadow(
+                  color: const Color(0xFF58C6A9).withOpacity(0.3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
           ),
           const Text(
             'цагт',
             style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Roboto',
+              color: Colors.white70,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

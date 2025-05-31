@@ -139,45 +139,54 @@ class _StatsCardsState extends State<StatsCards> {
   }
 
   @override
-  Widget build(BuildContext context) { //Done
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _buildIncomeCard(context)),
-        const SizedBox(width: 20),
-        Expanded(child: _buildStatsColumn(context)),
+        Expanded(
+          flex: 2, // Increase flex for income card
+          child: _buildIncomeCard(context)
+        ),
+        const SizedBox(width: 24), // Increase spacing
+        Expanded(
+          flex: 3, // Increase flex for stats column
+          child: _buildStatsColumn(context)
+        ),
       ],
     );
   }
 
-  Widget _buildIncomeCard(BuildContext context) { //Done
-    return Card(
-      color: const Color(0xFF1A1F37),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            isLoading ?  const Center(child: CircularProgressIndicator()) :
-                _buildCardHeader(context, 'Нийт орлого', '$totalIncome₮'),
-            const SizedBox(height: 24),
-            Text(
-              'СҮҮЛИЙН ЗАХИАЛГА',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: const Color(0xFFA0AEC0),
-                fontWeight: FontWeight.w500,
+  Widget _buildIncomeCard(BuildContext context) {
+    return Container(
+      height: 300, // Fixed height for income card
+      child: Card(
+        color: const Color(0xFF1A1F37),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(32), // Increase padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              isLoading ?  const Center(child: CircularProgressIndicator()) :
+                  _buildCardHeader(context, 'Нийт орлого', '$totalIncome₮'),
+              const SizedBox(height: 24),
+              Text(
+                'СҮҮЛИЙН ЗАХИАЛГА',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: const Color(0xFFA0AEC0),
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            isLoading ?  const Center(child: CircularProgressIndicator()) :
-              isLatestBooking
-                ? _buildLatestBookingInfo(context)
-                : const Text(
-                    'Одоогоор захиалга алга',
-                    style: TextStyle(color: Colors.white),
-                  ),
-          ],
+              const SizedBox(height: 16),
+              isLoading ?  const Center(child: CircularProgressIndicator()) :
+                isLatestBooking
+                  ? _buildLatestBookingInfo(context)
+                  : const Text(
+                      'Одоогоор захиалга алга',
+                      style: TextStyle(color: Colors.white),
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -217,7 +226,7 @@ class _StatsCardsState extends State<StatsCards> {
       contentPadding: EdgeInsets.zero,
       leading: const Icon(Icons.bookmark, color: Colors.white),
       title: Text(
-        'Zone ${latestBooking['zone']} Parking Booking',
+        'Бүс ${latestBooking['zone']} Зогсоолын захиалга',
         style: const TextStyle(
           color: Colors.white,
           fontSize: 16,
@@ -225,7 +234,7 @@ class _StatsCardsState extends State<StatsCards> {
         ),
       ),
       subtitle: Text(
-        'Today, ${latestBooking['time']}',
+        'Өнөөдөр, ${latestBooking['time']}',
         style: const TextStyle(
           color: Color(0xFFA0AEC0),
           fontSize: 14,
@@ -233,7 +242,7 @@ class _StatsCardsState extends State<StatsCards> {
         ),
       ),
       trailing: Text(
-        '+R ${latestBooking['price']}',
+        '${latestBooking['price']}₮',
         style: const TextStyle(
           color: Colors.greenAccent,
           fontSize: 16,
@@ -244,60 +253,97 @@ class _StatsCardsState extends State<StatsCards> {
   }
 
   Widget _buildStatsColumn(BuildContext context) {
-    return Column(
-      children: [
-        _buildStatsCard(
-          context,
-          title: 'Total All-Time Bookings',
-          value: totalBookings.toString(),
-          icon: Icons.local_parking,
-        ),
-        const SizedBox(height: 18),
-        _buildStatsCard(
-          context,
-          title: "Today's Bookings",
-          value: todaysBookings.toString(),
-          icon: Icons.event_available,
-        ),
-        const SizedBox(height: 18),
-        _buildStatsCard(
-          context,
-          title: "Today's Earnings",
-          value: '₮ $todaysIncome',
-          icon: Icons.attach_money,
-        ),
-      ],
+    return SizedBox(
+      height: 300, // Match height with income card
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distribute space evenly
+        children: [
+          _buildStatsCard(
+            context,
+            title: 'Нийт захиалга',
+            value: totalBookings.toString(),
+            icon: Icons.local_parking,
+          ),
+          _buildStatsCard(
+            context,
+            title: "Өнөөдрийн захиалга",
+            value: todaysBookings.toString(),
+            icon: Icons.event_available,
+          ),
+          _buildStatsCard(
+            context,
+            title: "Өнөөдрийн орлого",
+            value: '$todaysIncome₮',
+            icon: Icons.attach_money,
+          ),
+        ],
+      ),
     );
   }
-  Widget _buildStatsCard(BuildContext context, //Done
+  Widget _buildStatsCard(BuildContext context,
       {required String title, required String value, required IconData icon}) {
-    return Card(
-      color: const Color(0xFF1A1F37),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      elevation: 3,
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: const Color(0xFFE9EDF7),
-          child: Icon(icon, color: const Color(0xFF1A1F37)),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Color(0xFFA0AEC0),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+    return Container(
+      height: 90, // Fixed height for each stat card
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1F37),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
-        ),
-        subtitle: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Text(
-              value,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF58C6A9).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: const Color(0xFF58C6A9), size: 24),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.7),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF58C6A9)),
+                          ),
+                        )
+                      : Text(
+                          value,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                ],
               ),
             ),
+          ],
+        ),
       ),
     );
   }

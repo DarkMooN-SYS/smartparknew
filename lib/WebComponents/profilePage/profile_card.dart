@@ -6,14 +6,13 @@ class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key});
 
   @override
-  // _ProfileCardState createState() => _ProfileCardState();
   State<ProfileCard> createState() => _ProfileCardState();
 }
 
 class _ProfileCardState extends State<ProfileCard> {
   String fullName = '';
   String email = '';
-  String address = 'Loading...'; // Initial placeholder text
+  String address = 'Loading...';
 
   @override
   void initState() {
@@ -37,50 +36,100 @@ class _ProfileCardState extends State<ProfileCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      width: MediaQuery.of(context).size.width * 0.3,
+      height: MediaQuery.of(context).size.height * 0.85, // Add fixed height
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24), // Increased padding
+      margin: const EdgeInsets.all(0),
       decoration: BoxDecoration(
         color: const Color(0xFF1A1F37),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 10,
+          ),
+        ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Changed to spaceEvenly
         children: [
-          const CircleAvatar(
-            radius: 112.5,
-            backgroundImage: AssetImage('assets/logo1.png'),
-          ),
-          const SizedBox(height: 69),
-          Text(
-            address,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Roboto',
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xFF58C6A9), width: 2),
+            ),
+            child: const CircleAvatar(
+              radius: 60, // Increased radius
+              backgroundImage: AssetImage('assets/logo1.png'),
+              backgroundColor: Colors.white,
             ),
           ),
-          const SizedBox(height: 34),
-          const SizedBox(height: 33),
-          Text(
-            fullName,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Roboto',
+          const SizedBox(height: 40), // Increased spacing
+          Expanded( // Wrapped in Expanded
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Added spaceEvenly
+                children: [
+                  _buildInfoCard('Company', address, Icons.business),
+                  _buildInfoCard('Full Name', fullName, Icons.person),
+                  _buildInfoCard('Email', email, Icons.email),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 71),
-          Text(
-            email,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Roboto',
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(String title, String value, IconData icon) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12), // Increased margin
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16), // Increased padding
+      decoration: BoxDecoration(
+        color: const Color(0xFF242A4A),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFF58C6A9), width: 1),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: const Color(0xFF58C6A9).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: const Color(0xFF58C6A9), size: 20),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Color(0xFF58C6A9),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 73),
         ],
       ),
     );

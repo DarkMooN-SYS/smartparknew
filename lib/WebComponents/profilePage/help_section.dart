@@ -16,7 +16,7 @@ class HelpSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Help',
+            'Тусламжийн төв',
             style: TextStyle(
               color: Colors.white,
               fontSize: 40,
@@ -26,18 +26,18 @@ class HelpSection extends StatelessWidget {
           ),
           const SizedBox(height: 39),
           _buildHelpItem(
-            'Contact us',
-            'You can reach us at HardTech.ParkSmart@gmail.com or call us at (976) 99237962.',
+            'Холбоо барих',
+            'Та HardTech.ParkSmart@gmail.com хаягаар бидэнтэй холбогдох эсвэл (976) 99237962 утсаар холбогдож болно.',
           ),
           const SizedBox(height: 21),
           _buildHelpItem(
-            'Billing details',
-            'Update your billing details in your account settings. For assistance, contact our billing department at HardTech.ParkSmart@gmail.com.',
+            'Тооцооны дэлгэрэнгүй',
+            'Бүртгэлийн тохиргоон дотроос тооцооны мэдээллээ шинэчилнэ үү. Тусламж авахыг хүсвэл HardTech.ParkSmart@gmail.com хаягаар манай тооцооны хэлтэстэй холбогдоно уу.',
           ),
           const SizedBox(height: 21),
           _buildHelpItem(
-            'Support',
-            'Visit our support center or email us at HardTech.ParkSmart@gmail.com for help.',
+            'Тусламж',
+            'Тусламж авахын тулд манай тусламжийн төвд зочлох эсвэл HardTech.ParkSmart@gmail.com хаягаар бидэнд имэйл илгээнэ үү. Бид таны асуултанд 24 цагийн дотор хариулах болно.',
           ),
         ],
       ),
@@ -46,39 +46,59 @@ class HelpSection extends StatelessWidget {
 
   Widget _buildHelpItem(String title, String content) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
-        color: const Color(0xFF312F4D),
+        color: const Color(0xFF242A4A),
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: const Color(0xFF58C6A9).withOpacity(0.3),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: ExpansionTile(
-        tilePadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
-        backgroundColor: const Color(0xFF312F4D),
-        collapsedBackgroundColor: const Color(0xFF312F4D),
-        iconColor: Colors.white,
-        collapsedIconColor: Colors.white,
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            fontFamily: 'Roboto',
+      child: Theme(
+        data: ThemeData(
+          dividerColor: Colors.transparent,
+          colorScheme: ColorScheme.dark(
+            primary: const Color(0xFF58C6A9).withOpacity(0.8),
           ),
         ),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: Text(
-              content,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-                fontFamily: 'Roboto',
-              ),
+        child: ExpansionTile(
+          tilePadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+          backgroundColor: Colors.transparent,
+          collapsedBackgroundColor: Colors.transparent,
+          iconColor: const Color(0xFF58C6A9),
+          collapsedIconColor: Colors.white70,
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.3,
             ),
           ),
-          const SizedBox(height: 15),
-        ],
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: Text(
+                content,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 15,
+                  height: 1.5,
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -69,7 +69,7 @@ class Sidebar extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          'ACCOUNT PAGES',
+          'БҮРТГЭЛИЙН ХУУДАС',
           style: TextStyle(
             color: Colors.white,
             fontSize: 12,
@@ -83,7 +83,7 @@ class Sidebar extends StatelessWidget {
   Widget _buildProfileMenuItem() {
     return Container(
       width: 220, // Set the width of the container
-      height: 154, // Adjusted height to prevent overflow
+      height: 184, // Adjusted height to prevent overflow
       decoration: BoxDecoration(
         color: const Color(
             0xFF1A1F37), // Set the background color of the container
@@ -93,16 +93,16 @@ class Sidebar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildMenuItem(
-            'Profile',
+            'Профайл',
             'assets/Frame 1171275427.png', // Replace with your local asset for profile icon
             isSelected: true,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSubMenuItem('Parking Layout'),
-              _buildSubMenuItem('Parking Rate'),
-              _buildSubMenuItem('Help'),
+              _buildSubMenuItem('Зогсоолын мэдээлэл'),
+              _buildSubMenuItem('Зогсоолын үнэ'),
+              _buildSubMenuItem('Тусламжийн төв'),
             ],
           ),
         ],

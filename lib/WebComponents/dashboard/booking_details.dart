@@ -129,46 +129,62 @@ class _BookingDetailsState extends State<BookingDetails> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        leading: const CircleAvatar(
-          backgroundColor: Color(0xFF58C6A9),
-          child: Icon(Icons.event_note, color: Colors.white),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        subtitle: Text(
-          date,
-          style: const TextStyle(
-            color: Color(0xFFA0AEC0),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        trailing: ElevatedButton(
-          onPressed: () {
-            _showEditDialog(context, bookingId, data);
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF58C6A9),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF58C6A9).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.event_note, color: Color(0xFF58C6A9)),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
-          child: const Text(
-            'Засах',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    date,
+                    style: const TextStyle(
+                      color: Color(0xFFA0AEC0),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+            ElevatedButton(
+              onPressed: () => _showEditDialog(context, bookingId, data),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF58C6A9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              ),
+              child: const Text(
+                'Засах',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
